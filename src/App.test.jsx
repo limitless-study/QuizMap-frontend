@@ -45,7 +45,7 @@ describe('App', () => {
     it('renders the cardsets page', () => {
       const { container } = renderApp({ path: '/cardsets' });
 
-      expect(container).toHaveTextContent('cardsets');
+      expect(container).toHaveTextContent('운영체제');
     });
   });
 

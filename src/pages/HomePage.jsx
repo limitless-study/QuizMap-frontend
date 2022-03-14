@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 import { Link } from 'react-router-dom';
 
+import Header from '../components/Header';
+
 import img from '../img/done.svg';
 
 const Container = styled.div({
@@ -42,18 +44,23 @@ const Image = styled.img({
 
 export default function HomePage() {
   return (
-    <Container>
-      <Description>
-        <h2>Flashcards</h2>
-        <p>Flashcard Learning Tools</p>
-        <p>Create your own Flashcards!</p>
-        <Button
-          type="button"
-        >
-          <Link to="/cardsets">Start Now!</Link>
-        </Button>
-      </Description>
-      <Image src={img} alt="" />
-    </Container>
+    <div>
+      <header>
+        <Header />
+      </header>
+      <Container>
+        <Description>
+          <h2>Flashcards</h2>
+          <p>Flashcard Learning Tools</p>
+          <p>Create your own Flashcards!</p>
+          <Button
+            type="button"
+          >
+            <Link to="/cardsets">Start Now!</Link>
+          </Button>
+        </Description>
+        <Image src={img} alt="" />
+      </Container>
+    </div>
   );
 }

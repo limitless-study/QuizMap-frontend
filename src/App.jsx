@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import CardsetsPage from './pages/CardsetsPage';
 import CardsPage from './pages/CardsPage';
@@ -13,9 +12,6 @@ function SignupPage() { return (<div>sign up</div>); }
 export default function App() {
   return (
     <div>
-      <header>
-        <Header />
-      </header>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
