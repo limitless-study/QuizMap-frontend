@@ -39,3 +39,10 @@ export function nextCard(cardIndex) {
     dispatch(setFlipped(false));
   };
 }
+
+export function changeCreateFields({ name, value }) {
+  return {
+    type: 'changeCreateFields',
+    payload: { name, value },
+  };
+}

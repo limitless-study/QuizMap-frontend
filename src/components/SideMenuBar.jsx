@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div({
-  padding: '10px',
+  padding: '5px',
   backgroundColor: '#EDEDED',
   '& a': {
-    fontSize: '30px',
+    fontSize: '25px',
     color: 'white',
   },
 });

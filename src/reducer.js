@@ -10,6 +10,11 @@ const initialState = {
     { id: 3, question: '3 + 3 = ?', answer: '6' },
     { id: 4, question: '1 + 1 = ?', answer: '2' },
   ],
+  createFields: {
+    title: '',
+    question: '',
+    answer: '',
+  },
 };
 
 const reducers = {
@@ -24,6 +29,16 @@ const reducers = {
     return {
       ...state,
       cardIndex,
+    };
+  },
+
+  changeCreateFields(state, { payload: { name, value } }) {
+    return {
+      ...state,
+      createFields: {
+        ...state.createFields,
+        [name]: value,
+      },
     };
   },
 };
