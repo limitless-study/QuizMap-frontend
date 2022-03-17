@@ -14,6 +14,39 @@ const SideBar = styled.div({
   backgroundColor: '#EDEDED',
 });
 
+const CreateCardTitle = styled.div({
+  '& input': {
+    fontSize: '15px',
+    border: 'none',
+    borderBottom: '1px solid lightgray',
+    backgroundColor: 'transparent',
+    margin: '10px',
+  },
+  '& input:focus': {
+    outline: 'none',
+    borderBottom: '1px solid gray',
+  },
+});
+
+const CreateCardField = styled.div({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+});
+
+const CreateCard = styled.div({
+  padding: '10px',
+  '& input': {
+    width: '21em',
+    height: '16em',
+    padding: '10px',
+    border: '1px solid lightgray',
+    borderRadius: '10px',
+    boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px;',
+  },
+});
+
 export default function CreateForm({ fields, onChange }) {
   function handleChange(event) {
     const { target: { name, value } } = event;
@@ -25,22 +58,24 @@ export default function CreateForm({ fields, onChange }) {
   return (
     <Wrapper>
       <SideBar>
-        <Label
-          htmlFor="flashcard-title"
-        >
-          flashcard title
-        </Label>
-        <input
-          type="text"
-          id="flashcard-title"
-          name="title"
-          value={title}
-          placeholder="enter new title"
-          onChange={handleChange}
-        />
+        <CreateCardTitle>
+          <Label
+            htmlFor="flashcard-title"
+          >
+            flashcard title
+          </Label>
+          <input
+            type="text"
+            id="flashcard-title"
+            name="title"
+            value={title}
+            placeholder="enter new title"
+            onChange={handleChange}
+          />
+        </CreateCardTitle>
       </SideBar>
-      <div>
-        <div>
+      <CreateCardField>
+        <CreateCard>
           <Label
             htmlFor="flashcard-question"
           >
@@ -54,8 +89,8 @@ export default function CreateForm({ fields, onChange }) {
             placeholder="enter your question here"
             onChange={handleChange}
           />
-        </div>
-        <div>
+        </CreateCard>
+        <CreateCard>
           <Label
             htmlFor="flashcard-answer"
           >
@@ -69,8 +104,8 @@ export default function CreateForm({ fields, onChange }) {
             placeholder="enter your answer here"
             onChange={handleChange}
           />
-        </div>
-      </div>
+        </CreateCard>
+      </CreateCardField>
     </Wrapper>
   );
 }
