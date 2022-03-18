@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { Link } from 'react-router-dom';
+
 const Wrapper = styled.div({
   width: '100vw',
   height: '100vh',
@@ -83,9 +85,33 @@ const AddCarrdButton = styled.button({
   },
 });
 
+const SaveButton = styled.div({
+  position: 'absolute',
+  right: '0',
+  margin: '2em',
+  width: '130px',
+  height: '40px',
+  backgroundColor: '#5B40FF',
+  fontWeight: 'bold',
+  border: 'none',
+  borderRadius: '10px',
+  ':hover': {
+    cursor: 'pointer',
+    backgroundColor: '#2E13D3',
+  },
+  '& a': {
+    color: 'white',
+    display: 'block',
+    width: '130px',
+    height: '40px',
+    lineHeight: '35px',
+    textAlign: 'center',
+  },
+});
+
 export default function CreateForm({
   title, cards, currentCard, currentCardId,
-  onTitleChange, onInputChange, onCardClick, onAddCardClick,
+  onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
   const handleCardClick = (event) => {
     const { target: { id } } = event;
@@ -106,6 +132,14 @@ export default function CreateForm({
 
   return (
     <Wrapper>
+      <SaveButton>
+        <Link
+          to="/cardsets"
+          onClick={onSave}
+        >
+          save
+        </Link>
+      </SaveButton>
       <SideBar>
         <CreateCardTitle>
           <Label
@@ -119,6 +153,7 @@ export default function CreateForm({
             name="title"
             value={title}
             placeholder="enter new title"
+            autoComplete="off"
             onChange={handleTitleChange}
           />
         </CreateCardTitle>
@@ -168,6 +203,7 @@ export default function CreateForm({
             id="flashcard-question"
             name="question"
             value={question}
+            autoComplete="off"
             placeholder="enter your question here"
             onChange={handleInputChange}
           />
@@ -183,6 +219,7 @@ export default function CreateForm({
             id="flashcard-answer"
             name="answer"
             value={answer}
+            autoComplete="off"
             placeholder="enter your answer here"
             onChange={handleInputChange}
           />

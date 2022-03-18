@@ -1,16 +1,20 @@
+const initialCardset = {
+  id: 1,
+  title: '',
+  cards: [
+    {
+      id: 1,
+      question: '',
+      answer: '',
+    },
+  ],
+};
+
 const cardsetState = {
   currentCardId: 1, // 현재 편집중인 card id
   newCardId: 1, // 새롭게 추가할 card id
   cardset: {
-    id: 1,
-    title: '',
-    cards: [
-      {
-        id: 1,
-        question: '',
-        answer: '',
-      },
-    ],
+    ...initialCardset,
   },
 };
 
@@ -66,6 +70,13 @@ const reducers = {
     };
   },
 
+  addNewCardset(state, { payload: { cardset } }) {
+    return {
+      ...state,
+      cardsets: [...state.cardsets, cardset],
+    };
+  },
+
   setNewCardId(state, { payload: { newCardId } }) {
     return {
       ...state,
@@ -90,6 +101,15 @@ const reducers = {
             ? { ...card, [name]: value }
             : card))),
         ],
+      },
+    };
+  },
+
+  initializeCardset(state) {
+    return {
+      ...state,
+      cardset: {
+        ...initialCardset,
       },
     };
   },

@@ -94,3 +94,23 @@ export function updateCard({ currentCardId, name, value }) {
     payload: { currentCardId, name, value },
   };
 }
+
+export function addNewCardset(cardset) {
+  return {
+    type: 'addNewCardset',
+    payload: { cardset },
+  };
+}
+
+export function initializeCardset() {
+  return {
+    type: 'initializeCardset',
+  };
+}
+
+export function saveCardset(cardset) {
+  return (dispatch) => {
+    dispatch(addNewCardset(cardset));
+    dispatch(initializeCardset());
+  };
+}

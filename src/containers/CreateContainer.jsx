@@ -5,6 +5,7 @@ import {
   addNewCard,
   updateCard,
   clickCard,
+  saveCardset,
 } from '../actions';
 
 import { get } from '../utils';
@@ -14,9 +15,14 @@ import CreateForm from '../components/CreateForm';
 export default function CreateContainer() {
   const dispatch = useDispatch();
 
-  const { title, cards } = useSelector(get('cardset'));
+  const cardset = useSelector(get('cardset'));
+  const { title, cards } = cardset;
   const currentCardId = useSelector(get('currentCardId'));
   const currentCard = cards.filter((card) => card.id === currentCardId);
+
+  const handleSave = () => {
+    dispatch(saveCardset(cardset));
+  };
 
   const handleTitleChange = ({ name, value }) => {
     dispatch(changeCardsetTitle({ name, value }));
@@ -42,6 +48,7 @@ export default function CreateContainer() {
         currentCard={currentCard[0]}
         title={title}
         cards={cards}
+        onSave={handleSave}
         onInputChange={handleInputChange}
         onTitleChange={handleTitleChange}
         onCardClick={handleCardClick}
