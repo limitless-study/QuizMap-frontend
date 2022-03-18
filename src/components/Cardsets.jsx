@@ -20,6 +20,11 @@ const Cardset = styled.li({
   borderRadius: '10px',
   backgroundColor: 'white',
   boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px;',
+  '& a': {
+    display: 'block',
+    width: '100%',
+    height: '100%',
+  },
 });
 
 export default function Cardsets({ cardsets }) {
