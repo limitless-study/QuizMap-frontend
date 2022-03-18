@@ -62,7 +62,6 @@ export function setNewCardId(newCardId) {
 }
 
 export function setCurrentCardId(currentCardId) {
-  console.log('setCurrentCardId : ', currentCardId);
   return {
     type: 'setCurrentCardId',
     payload: { currentCardId },
@@ -89,7 +88,6 @@ export function addNewCard() {
   };
 }
 
-// TODO : cards에서 currentCardId의 question, value를 갱신하기
 export function updateCard({ currentCardId, name, value }) {
   return {
     type: 'updateCard',

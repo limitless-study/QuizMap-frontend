@@ -11,6 +11,8 @@ const Label = styled.label({
 });
 
 const SideBar = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
   backgroundColor: '#EDEDED',
   overflow: 'scroll',
 });
@@ -44,7 +46,7 @@ const CreateCard = styled.div({
     padding: '10px',
     border: '1px solid lightgray',
     borderRadius: '10px',
-    boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px;',
+    boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',
   },
 });
 
@@ -59,8 +61,31 @@ const Card = styled.button({
   height: '8em',
 });
 
+const SelectedCard = styled.button({
+  border: '2px solid #2F38FF',
+  backgroundColor: '#F9F9F9',
+  margin: '5px auto',
+  width: '10em',
+  height: '8em',
+});
+
+const AddCarrdButton = styled.button({
+  margin: '0 auto',
+  width: '67%',
+  height: '2.5em',
+  borderRadius: '4px',
+  fontWeight: 'bolder',
+  color: 'white',
+  border: 'none',
+  backgroundColor: '#8B74FF',
+  ':hover': {
+    cursor: 'pointer',
+  },
+});
+
 export default function CreateForm({
-  title, cards, currentCard, onTitleChange, onInputChange, onCardClick, onAddCardClick,
+  title, cards, currentCard, currentCardId,
+  onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
   const handleCardClick = (event) => {
     const { target: { id } } = event;
@@ -98,24 +123,38 @@ export default function CreateForm({
           />
         </CreateCardTitle>
         <CardButtonField>
-          {cards.map((card) => (
-            <Card
-              type="button"
-              key={card.id}
-              id={card.id}
-              onClick={handleCardClick}
-            >
-              {card.question}
-            </Card>
-          ))}
+          {cards.map((card) => {
+            if (card.id === currentCardId) {
+              return (
+                <SelectedCard
+                  type="button"
+                  key={card.id}
+                  id={card.id}
+                  onClick={handleCardClick}
+                >
+                  {card.question}
+                </SelectedCard>
+              );
+            }
+            return (
+              <Card
+                type="button"
+                key={card.id}
+                id={card.id}
+                onClick={handleCardClick}
+              >
+                {card.question}
+              </Card>
+            );
+          })}
         </CardButtonField>
-        <button
+        <AddCarrdButton
           type="button"
           name="add-card"
           onClick={onAddCardClick}
         >
-          Add New Card
-        </button>
+          add new card
+        </AddCarrdButton>
       </SideBar>
       <CreateCardField>
         <CreateCard>

@@ -1,10 +1,3 @@
-const initialCard = {
-  id: 1,
-  question: '',
-  answer: '',
-};
-
-// current cardset
 const cardsetState = {
   currentCardId: 1, // 현재 편집중인 card id
   newCardId: 1, // 새롭게 추가할 card id
@@ -25,15 +18,7 @@ const initialState = {
   cardsets: [],
   cardIndex: 0,
   flipped: false,
-
-  // current cardset
   ...cardsetState,
-
-  // create fields
-  createFields: {
-    question: '',
-    answer: '',
-  },
 };
 
 const reducers = {
