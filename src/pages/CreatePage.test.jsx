@@ -11,21 +11,26 @@ describe('CreatePage', () => {
     jest.clearAllMocks();
 
     useSelector.mockImplementation((selector) => selector({
-      createFields: {
-        title: 'Title',
-        question: 'Question',
-        answer: 'Answer',
+      currentCardId: 1,
+      cardset: {
+        id: 1,
+        title: 'test-title',
+        cards: [
+          {
+            id: 1,
+            question: '',
+            answer: '',
+          },
+        ],
       },
     }));
   });
 
   it('renders CreatePage', () => {
-    const { getByLabelText } = render(
+    render(
       <MemoryRouter>
         <CreatePage />
       </MemoryRouter>,
     );
-
-    expect(getByLabelText('flashcard title')).not.toBeNull();
   });
 });

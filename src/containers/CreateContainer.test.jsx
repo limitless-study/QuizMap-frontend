@@ -7,7 +7,8 @@ import { MemoryRouter } from 'react-router-dom';
 import CreateContainer from './CreateContainer';
 
 import {
-  changeCreateFields,
+  changeCardsetTitle,
+  updateCard,
 } from '../actions';
 
 describe('CreateContainer', () => {
@@ -19,10 +20,17 @@ describe('CreateContainer', () => {
     useDispatch.mockImplementation(() => dispatch);
 
     useSelector.mockImplementation((selector) => selector({
-      createFields: {
-        title: 'Title',
-        question: 'Question',
-        answer: 'Answer',
+      currentCardId: 1,
+      cardset: {
+        id: 1,
+        title: 'test-title',
+        cards: [
+          {
+            id: 1,
+            question: '',
+            answer: '',
+          },
+        ],
       },
     }));
   });
@@ -35,7 +43,7 @@ describe('CreateContainer', () => {
     );
   });
 
-  it('listens change events', () => {
+  it('listens input field change events', () => {
     const { getByLabelText } = render(
       <MemoryRouter>
         <CreateContainer />
@@ -46,8 +54,40 @@ describe('CreateContainer', () => {
       target: { value: 'New Title' },
     });
 
-    expect(dispatch).toBeCalledWith(changeCreateFields({
+    expect(dispatch).toBeCalledWith(changeCardsetTitle({
       name: 'title', value: 'New Title',
     }));
+
+    fireEvent.change(getByLabelText('flashcard question'), {
+      target: { value: 'New Question' },
+    });
+
+    expect(dispatch).toBeCalledWith(updateCard({
+      currentCardId: 1, name: 'question', value: 'New Question',
+    }));
+  });
+
+  it('listens add new card click events', () => {
+    const { getByRole } = render(
+      <MemoryRouter>
+        <CreateContainer />
+      </MemoryRouter>,
+    );
+
+    fireEvent.click(getByRole('button', { name: 'add new card' }));
+
+    expect(dispatch).toBeCalledTimes(1);
+  });
+
+  it('listens sidebar card button click event', () => {
+    const { getAllByRole } = render(
+      <MemoryRouter>
+        <CreateContainer />
+      </MemoryRouter>,
+    );
+
+    fireEvent.click(getAllByRole('button')[0]);
+
+    expect(dispatch).toBeCalledTimes(1);
   });
 });

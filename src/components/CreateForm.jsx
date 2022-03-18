@@ -151,7 +151,7 @@ export default function CreateForm({
         <AddCarrdButton
           type="button"
           name="add-card"
-          onClick={onAddCardClick}
+          onClick={() => onAddCardClick()}
         >
           add new card
         </AddCarrdButton>
