@@ -1,17 +1,36 @@
-import cardsets from './fixtures/cardsets';
+const initialCard = {
+  id: 1,
+  question: '',
+  answer: '',
+};
+
+// current cardset
+const cardsetState = {
+  currentCardId: 1, // 현재 편집중인 card id
+  newCardId: 1, // 새롭게 추가할 card id
+  cardset: {
+    id: 1,
+    title: '',
+    cards: [
+      {
+        id: 1,
+        question: '',
+        answer: '',
+      },
+    ],
+  },
+};
 
 const initialState = {
-  cardsets,
+  cardsets: [],
   cardIndex: 0,
   flipped: false,
-  cards: [
-    { id: 1, question: '사과를 영어로 하면?', answer: 'apple' },
-    { id: 2, question: '과일을 영어로 하면?', answer: 'fruit' },
-    { id: 3, question: '3 + 3 = ?', answer: '6' },
-    { id: 4, question: '1 + 1 = ?', answer: '2' },
-  ],
+
+  // current cardset
+  ...cardsetState,
+
+  // create fields
   createFields: {
-    title: '',
     question: '',
     answer: '',
   },
@@ -32,12 +51,60 @@ const reducers = {
     };
   },
 
+  changeCardsetTitle(state, { payload: { name, value } }) {
+    return {
+      ...state,
+      cardset: {
+        ...state.cardset,
+        [name]: value,
+      },
+    };
+  },
+
   changeCreateFields(state, { payload: { name, value } }) {
     return {
       ...state,
       createFields: {
         ...state.createFields,
         [name]: value,
+      },
+    };
+  },
+
+  makeCard(state, { payload: { id, question, answer } }) {
+    return {
+      ...state,
+      cardset: {
+        ...state.cardset,
+        cards: [...state.cardset.cards, { id, question, answer }],
+      },
+    };
+  },
+
+  setNewCardId(state, { payload: { newCardId } }) {
+    return {
+      ...state,
+      newCardId,
+    };
+  },
+
+  setCurrentCardId(state, { payload: { currentCardId } }) {
+    return {
+      ...state,
+      currentCardId,
+    };
+  },
+
+  updateCard(state, { payload: { currentCardId, name, value } }) {
+    return {
+      ...state,
+      cardset: {
+        ...state.cardset,
+        cards: [
+          ...(state.cardset.cards.map((card) => (card.id === currentCardId
+            ? { ...card, [name]: value }
+            : card))),
+        ],
       },
     };
   },

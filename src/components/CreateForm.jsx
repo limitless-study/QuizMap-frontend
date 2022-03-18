@@ -12,6 +12,7 @@ const Label = styled.label({
 
 const SideBar = styled.div({
   backgroundColor: '#EDEDED',
+  overflow: 'scroll',
 });
 
 const CreateCardTitle = styled.div({
@@ -47,13 +48,36 @@ const CreateCard = styled.div({
   },
 });
 
-export default function CreateForm({ fields, onChange }) {
-  function handleChange(event) {
+const CardButtonField = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+const Card = styled.button({
+  margin: '5px auto',
+  width: '10em',
+  height: '8em',
+});
+
+export default function CreateForm({
+  title, cards, currentCard, onTitleChange, onInputChange, onCardClick, onAddCardClick,
+}) {
+  const handleCardClick = (event) => {
+    const { target: { id } } = event;
+    onCardClick(Number(id));
+  };
+
+  function handleTitleChange(event) {
     const { target: { name, value } } = event;
-    onChange({ name, value });
+    onTitleChange({ name, value });
   }
 
-  const { title, question, answer } = fields;
+  function handleInputChange(event) {
+    const { target: { name, value } } = event;
+    onInputChange({ name, value });
+  }
+
+  const { question, answer } = currentCard;
 
   return (
     <Wrapper>
@@ -70,9 +94,28 @@ export default function CreateForm({ fields, onChange }) {
             name="title"
             value={title}
             placeholder="enter new title"
-            onChange={handleChange}
+            onChange={handleTitleChange}
           />
         </CreateCardTitle>
+        <CardButtonField>
+          {cards.map((card) => (
+            <Card
+              type="button"
+              key={card.id}
+              id={card.id}
+              onClick={handleCardClick}
+            >
+              {card.question}
+            </Card>
+          ))}
+        </CardButtonField>
+        <button
+          type="button"
+          name="add-card"
+          onClick={onAddCardClick}
+        >
+          Add New Card
+        </button>
       </SideBar>
       <CreateCardField>
         <CreateCard>
@@ -87,7 +130,7 @@ export default function CreateForm({ fields, onChange }) {
             name="question"
             value={question}
             placeholder="enter your question here"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
         </CreateCard>
         <CreateCard>
@@ -102,7 +145,7 @@ export default function CreateForm({ fields, onChange }) {
             name="answer"
             value={answer}
             placeholder="enter your answer here"
-            onChange={handleChange}
+            onChange={handleInputChange}
           />
         </CreateCard>
       </CreateCardField>

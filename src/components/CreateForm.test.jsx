@@ -10,6 +10,7 @@ describe('CreateForm', () => {
   const dispatch = jest.fn();
 
   const handleChange = jest.fn();
+  const handleClick = jest.fn();
 
   const createFields = {
     title: 'Title',
@@ -29,6 +30,7 @@ describe('CreateForm', () => {
         <CreateForm
           fields={createFields}
           onChange={handleChange}
+          onClick={handleClick}
         />
       </MemoryRouter>,
     );
@@ -38,17 +40,33 @@ describe('CreateForm', () => {
     expect(getByLabelText('flashcard answer')).not.toBeNull();
   });
 
-  it('listens change events', () => {
+  it('listens input change events', () => {
     const { getByLabelText } = render(
       <MemoryRouter>
         <CreateForm
           fields={createFields}
           onChange={handleChange}
+          onClick={handleClick}
         />
       </MemoryRouter>,
     );
 
     fireEvent.change(getByLabelText('flashcard title'), { target: { value: 'new title' } });
     expect(handleChange).toBeCalled();
+  });
+
+  it('listens button click events', () => {
+    const { getByRole } = render(
+      <MemoryRouter>
+        <CreateForm
+          fields={createFields}
+          onChange={handleChange}
+          onClick={handleClick}
+        />
+      </MemoryRouter>,
+    );
+
+    fireEvent.click(getByRole('button', { target: { name: 'add-card' } }));
+    expect(handleClick).toBeCalled();
   });
 });
