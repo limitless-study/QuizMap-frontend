@@ -33,7 +33,7 @@ export default function Cardsets({ cardsets }) {
     <CardsetsContainer>
       {cardsets.map((cardset) => (
         <Cardset key={cardset.id}>
-          <Link to={`/cardsets/${cardset.id}`}>
+          <Link to={`/cardset/${cardset.id}`}>
             {cardset.title}
           </Link>
         </Cardset>

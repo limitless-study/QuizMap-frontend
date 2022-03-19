@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import CardsPage from './CardsPage';
+import LearnPage from './LearnPage';
 
-describe('CardsPage', () => {
+describe('LearnPage', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
@@ -27,7 +27,7 @@ describe('CardsPage', () => {
   it('renders Cards Page', () => {
     render(
       <MemoryRouter>
-        <CardsPage />
+        <LearnPage />
       </MemoryRouter>,
     );
   });
