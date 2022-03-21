@@ -31,8 +31,6 @@ export default function RootContainer() {
           >
             <Link to={`/cardsets/${cardset.id}`}>
               {cardset.title}
-              ,
-              {cardset.id}
             </Link>
           </div>
         ))}
