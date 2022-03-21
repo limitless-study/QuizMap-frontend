@@ -128,7 +128,6 @@ export function setCardsetInfo(cardsetInfo) {
 }
 
 export function loadCardsetInfo(cardsetId) {
-  console.log('CHECK 1:', typeof (cardsetId), cardsetId);
   return (dispatch) => {
     const cardsetInfo = fetchCardsetInfo(cardsetId);
     dispatch(setCardsetInfo(cardsetInfo));
@@ -146,5 +145,19 @@ export function loadCardsetChildren(cardsetId) {
   return (dispatch) => {
     const cardsetChildren = fetchCardsetChildren(cardsetId);
     dispatch(setCardsetChildren(cardsetChildren));
+  };
+}
+
+export function setRootCardsets(rootCardsets) {
+  return {
+    type: 'setRootCardsets',
+    payload: { rootCardsets },
+  };
+}
+
+export function loadRootCardsets() {
+  return (dispatch) => {
+    const rootCardsets = fetchCardsetChildren(0);
+    dispatch(setRootCardsets(rootCardsets));
   };
 }

@@ -23,6 +23,7 @@ const cardsetState = {
 const initialState = {
   cardsets: [...cardsets],
   cardsetInfo: {},
+  rootCardsets: [],
   cardsetChildren: [],
 
   cardIndex: 0,
@@ -130,6 +131,13 @@ const reducers = {
     return {
       ...state,
       cardsetChildren,
+    };
+  },
+
+  setRootCardsets(state, { payload: { rootCardsets } }) {
+    return {
+      ...state,
+      rootCardsets,
     };
   },
 };

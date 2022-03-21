@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import SideMenuBar from '../components/SideMenuBar';
-import CardsetsContainer from '../containers/CardsetsContainer';
+import CardsetContainer from '../containers/CardsetContainer';
 
 const Wrapper = styled.div({
   width: '100vw',
@@ -13,7 +13,7 @@ export default function CardsetsPage() {
   return (
     <Wrapper>
       <SideMenuBar />
-      <CardsetsContainer />
+      <CardsetContainer />
     </Wrapper>
   );
 }

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  loadCardsetChildren,
+  loadRootCardsets,
 } from '../actions';
 
 import { get } from '../utils';
@@ -14,10 +14,10 @@ export default function RootContainer() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadCardsetChildren(0));
+    dispatch(loadRootCardsets(0));
   });
 
-  const root = useSelector(get('cardsetChildren'));
+  const root = useSelector(get('rootCardsets'));
 
   return (
     <div>

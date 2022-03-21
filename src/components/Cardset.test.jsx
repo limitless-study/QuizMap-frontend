@@ -2,9 +2,9 @@ import { render } from '@testing-library/react';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import Cardsets from './Cardsets';
+import Cardset from './Cardset';
 
-describe('Cardsets', () => {
+describe('Cardset', () => {
   const cardsets = [
     { id: 1, title: 'Card Set #1' },
     { id: 2, title: 'Card Set #2' },
@@ -12,10 +12,10 @@ describe('Cardsets', () => {
     { id: 4, title: 'Card Set #4' },
   ];
 
-  it('renders Cardsets', () => {
+  it('renders Cardset', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <Cardsets cardsets={cardsets} />
+        <Cardset cardsets={cardsets} />
       </MemoryRouter>,
     );
 

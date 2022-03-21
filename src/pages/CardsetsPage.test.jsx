@@ -17,7 +17,7 @@ describe('CardsetsPage', () => {
     }));
   });
 
-  it('renders Cardsets Page', () => {
+  it('renders Cardset Page', () => {
     render(
       <MemoryRouter>
         <CardsetsPage />
