@@ -56,7 +56,7 @@ export default function HomePage() {
           <Button
             type="button"
           >
-            <Link to="/cardsets">Start Now!</Link>
+            <Link to="/root">Start Now!</Link>
           </Button>
         </Description>
         <Image src={img} alt="" />

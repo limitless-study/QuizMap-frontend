@@ -1,4 +1,5 @@
 import cardsets from './fixtures/cardsets';
+import root from './fixtures/root';
 
 const initialCardset = {
   id: 1,
@@ -21,6 +22,7 @@ const cardsetState = {
 };
 
 const initialState = {
+  root: [...root],
   cardsets: [...cardsets],
   cardIndex: 0,
   flipped: false,
