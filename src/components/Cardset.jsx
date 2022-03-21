@@ -18,7 +18,7 @@ const StudioButton = styled.button({
 
 export default function Cardset({ cardsetInfo, cardsetChildren }) {
   const {
-    id, name, cardsetCount, cardCount,
+    id, name, cardSetCount, cardCount,
   } = cardsetInfo;
 
   // TODO: 임시 URL을 실제 /cardsets/${cardset.id}로 수정
@@ -27,7 +27,7 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
       <div>
         <h1>{name}</h1>
         <p>
-          {`${cardsetCount} Cardsets, ${cardCount} Cards`}
+          {`${cardSetCount} Cardsets, ${cardCount} Cards`}
           <StudioButton
             type="button"
           >
