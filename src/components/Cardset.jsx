@@ -28,6 +28,13 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
         <h1>{name}</h1>
         <p>
           {`${cardsetCount} Cardsets, ${cardCount} Cards`}
+          <StudioButton
+            type="button"
+          >
+            <Link to={`/studio/${id}`}>
+              수정
+            </Link>
+          </StudioButton>
         </p>
       </div>
       {cardsetChildren.map((child) => {
@@ -50,7 +57,6 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
                 type="button"
               >
                 학습
-
               </button>
             </CardsetBox>
           );
