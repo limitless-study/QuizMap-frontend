@@ -1,36 +1,59 @@
 const cardsets = [
   {
     id: 1,
-    title: '운영체제',
+    title: '상식 퀴즈',
+    type: 'cardset',
     cards: [
-      { id: 1, question: '사과를 영어로 하면?', answer: 'apple' },
-      { id: 2, question: '과일을 영어로 하면?', answer: 'fruit' },
+      {
+        id: 2, type: 'card', question: '사과는?', answer: '빨갛다',
+      },
+      {
+        id: 3, type: 'card', question: '과일은?', answer: '맛있다',
+      },
+      {
+        id: 4,
+        type: 'cardset',
+        title: '숫자 상식',
+        cards: [
+          {
+            id: 5, type: 'card', question: '1+1', answer: '2',
+          },
+          {
+            id: 8, type: 'card', question: '2+2', answer: '4',
+          },
+          {
+            id: 11,
+            title: '숫자의 역사',
+            type: 'cardset',
+            cards: [
+              {
+                id: 12, type: 'card', question: '숫자의 시작', answer: '~~',
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
   {
-    id: 2,
-    title: '네트워크',
+    id: 6,
+    title: '영어',
+    type: 'cardset',
     cards: [
-      { id: 3, question: '3 + 3 = ?', answer: '6' },
-      { id: 4, question: '1 + 1 = ?', answer: '2' },
+      {
+        id: 7, type: 'card', question: '영어를 영어로 하면?', answer: 'english',
+      },
     ],
-  },
-  {
-    id: 3,
-    title: '자료구조',
-    cards: [
-      { id: 1, question: '사과를 영어로 하면?', answer: 'apple' },
-      { id: 4, question: '1 + 1 = ?', answer: '2' },
-    ],
-  },
-  {
-    id: 4,
-    title: '알고리즘',
-    cards: [
-      { id: 2, question: '과일을 영어로 하면?', answer: 'fruit' },
-      { id: 3, question: '3 + 3 = ?', answer: '6' },
-      { id: 4, question: '1 + 1 = ?', answer: '2' },
-    ],
+    cardset: {
+      id: 9,
+      title: '영단어 기본',
+      type: 'cardset',
+      cards: [
+        {
+          id: 10, type: 'card', question: '남자를 영어로', answer: 'man',
+        },
+      ],
+    },
   },
 ];
 

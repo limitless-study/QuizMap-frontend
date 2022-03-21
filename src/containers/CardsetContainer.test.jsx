@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import CardsetsContainer from './CardsetsContainer';
+import CardsetContainer from './CardsetContainer';
 
 import cardsets from '../fixtures/cardsets';
 
-describe('CardsetsContainer', () => {
+describe('CardsetContainer', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -17,10 +17,10 @@ describe('CardsetsContainer', () => {
     }));
   });
 
-  it('renders CardsetsContainer', () => {
+  it('renders CardsetContainer', () => {
     render(
       <MemoryRouter>
-        <CardsetsContainer />
+        <CardsetContainer />
       </MemoryRouter>,
     );
   });

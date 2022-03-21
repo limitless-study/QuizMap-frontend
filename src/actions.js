@@ -1,3 +1,8 @@
+import {
+  fetchCardsetInfo,
+  fetchCardsetChildren,
+} from './services/api';
+
 export function setFlipped(flipped) {
   return {
     type: 'setFlipped',
@@ -112,5 +117,47 @@ export function saveCardset(cardset) {
   return (dispatch) => {
     dispatch(addNewCardset(cardset));
     dispatch(initializeCardset());
+  };
+}
+
+export function setCardsetInfo(cardsetInfo) {
+  return {
+    type: 'setCardsetInfo',
+    payload: { cardsetInfo },
+  };
+}
+
+export function loadCardsetInfo(cardsetId) {
+  return (dispatch) => {
+    const cardsetInfo = fetchCardsetInfo(cardsetId);
+    dispatch(setCardsetInfo(cardsetInfo));
+  };
+}
+
+export function setCardsetChildren(cardsetChildren) {
+  return {
+    type: 'setCardsetChildren',
+    payload: { cardsetChildren },
+  };
+}
+
+export function loadCardsetChildren(cardsetId) {
+  return (dispatch) => {
+    const cardsetChildren = fetchCardsetChildren(cardsetId);
+    dispatch(setCardsetChildren(cardsetChildren));
+  };
+}
+
+export function setRootCardsets(rootCardsets) {
+  return {
+    type: 'setRootCardsets',
+    payload: { rootCardsets },
+  };
+}
+
+export function loadRootCardsets() {
+  return (dispatch) => {
+    const rootCardsets = fetchCardsetChildren(0);
+    dispatch(setRootCardsets(rootCardsets));
   };
 }

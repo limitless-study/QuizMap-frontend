@@ -1,3 +1,5 @@
+import cardsets from './fixtures/cardsets';
+
 const initialCardset = {
   id: 1,
   title: '',
@@ -11,15 +13,19 @@ const initialCardset = {
 };
 
 const cardsetState = {
-  currentCardId: 1, // 현재 편집중인 card id
   newCardId: 1, // 새롭게 추가할 card id
+  currentCardId: 1, // 현재 편집중인 card id
   cardset: {
     ...initialCardset,
   },
 };
 
 const initialState = {
-  cardsets: [],
+  cardsets: [...cardsets],
+  cardsetInfo: {},
+  rootCardsets: [],
+  cardsetChildren: [],
+
   cardIndex: 0,
   flipped: false,
   ...cardsetState,
@@ -111,6 +117,27 @@ const reducers = {
       cardset: {
         ...initialCardset,
       },
+    };
+  },
+
+  setCardsetInfo(state, { payload: { cardsetInfo } }) {
+    return {
+      ...state,
+      cardsetInfo,
+    };
+  },
+
+  setCardsetChildren(state, { payload: { cardsetChildren } }) {
+    return {
+      ...state,
+      cardsetChildren,
+    };
+  },
+
+  setRootCardsets(state, { payload: { rootCardsets } }) {
+    return {
+      ...state,
+      rootCardsets,
     };
   },
 };
