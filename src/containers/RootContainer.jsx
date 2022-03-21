@@ -1,24 +1,40 @@
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
-import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  loadCardsetChildren,
+} from '../actions';
 
 import { get } from '../utils';
 
 export default function RootContainer() {
-  const root = useSelector(get('root'));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadCardsetChildren(0));
+  });
+
+  const root = useSelector(get('cardsetChildren'));
 
   return (
     <div>
       <h1>
-        My Cardsets
+        My Cardset
       </h1>
       <div>
         {root.map((cardset) => (
-          <Link to={`/cardsets/${cardset.id}`}>
-            {cardset.title}
-          </Link>
+          <div
+            key={cardset.id}
+          >
+            <Link to={`/cardsets/${cardset.id}`}>
+              {cardset.title}
+              ,
+              {cardset.id}
+            </Link>
+          </div>
         ))}
       </div>
     </div>

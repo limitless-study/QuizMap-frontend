@@ -1,5 +1,4 @@
 import cardsets from './fixtures/cardsets';
-import root from './fixtures/root';
 
 const initialCardset = {
   id: 1,
@@ -22,8 +21,10 @@ const cardsetState = {
 };
 
 const initialState = {
-  root: [...root],
   cardsets: [...cardsets],
+  cardsetInfo: {},
+  cardsetChildren: [],
+
   cardIndex: 0,
   flipped: false,
   ...cardsetState,
@@ -115,6 +116,20 @@ const reducers = {
       cardset: {
         ...initialCardset,
       },
+    };
+  },
+
+  setCardsetInfo(state, { payload: { cardsetInfo } }) {
+    return {
+      ...state,
+      cardsetInfo,
+    };
+  },
+
+  setCardsetChildren(state, { payload: { cardsetChildren } }) {
+    return {
+      ...state,
+      cardsetChildren,
     };
   },
 };
