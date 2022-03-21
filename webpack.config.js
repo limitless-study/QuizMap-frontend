@@ -41,6 +41,7 @@ module.exports = {
   plugins: [
     new HTMLWeebPackPlugin({
       template: './index.html',
+      publicPath: '/',
     }),
 
     new webpack.DefinePlugin({
