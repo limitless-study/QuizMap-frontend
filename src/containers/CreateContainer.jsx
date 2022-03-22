@@ -5,6 +5,7 @@ import {
   addNewCard,
   updateCard,
   clickCard,
+  saveCardset,
 } from '../actions';
 
 import { get } from '../utils';
@@ -21,7 +22,7 @@ export default function CreateContainer({ id }) {
 
   const handleSave = () => {
     // TODO: 새로 추가된 카드, 수정한 카드, 제목 수정 여부를 redux에 저장
-    // dispatch(saveCardset(cardset));
+    dispatch(saveCardset({ cardsetId: id, cardsetTitle: title, cards }));
   };
 
   const handleAddCardButtonClick = () => {

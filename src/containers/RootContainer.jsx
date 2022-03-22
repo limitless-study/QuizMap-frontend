@@ -2,22 +2,14 @@ import { Link } from 'react-router-dom';
 
 import { useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-
-import {
-  loadRootCardsets,
-} from '../actions';
+import { useSelector } from 'react-redux';
 
 import { get } from '../utils';
 
 export default function RootContainer() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadRootCardsets(0));
-  });
-
   const root = useSelector(get('rootCardsets'));
+
+  console.log('root:', root);
 
   return (
     <div>

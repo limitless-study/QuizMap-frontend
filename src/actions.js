@@ -134,8 +134,8 @@ export function setCardsetInfo(cardsetInfo) {
 }
 
 export function loadCardsetInfo(cardsetId) {
-  return (dispatch) => {
-    const cardsetInfo = fetchCardsetInfo(cardsetId);
+  return async (dispatch) => {
+    const cardsetInfo = await fetchCardsetInfo(cardsetId);
     dispatch(setCardsetInfo(cardsetInfo));
   };
 }
@@ -148,8 +148,8 @@ export function setCardsetChildren(cardsetChildren) {
 }
 
 export function loadCardsetChildren(cardsetId) {
-  return (dispatch) => {
-    const cardsetChildren = fetchCardsetChildren(cardsetId);
+  return async (dispatch) => {
+    const cardsetChildren = await fetchCardsetChildren(cardsetId);
     dispatch(setCardsetChildren(cardsetChildren));
   };
 }
@@ -162,8 +162,8 @@ export function setRootCardsets(rootCardsets) {
 }
 
 export function loadRootCardsets() {
-  return (dispatch) => {
-    const rootCardsets = fetchCardsetChildren(0);
+  return async (dispatch) => {
+    const rootCardsets = await fetchCardsetChildren(1);
     dispatch(setRootCardsets(rootCardsets));
   };
 }
@@ -176,8 +176,8 @@ export function setCards(cards) {
 }
 
 export function loadCards(id) {
-  return (dispatch, getstate) => {
-    const cardsetCards = fetchCardsetCards(id);
+  return async (dispatch, getstate) => {
+    const cardsetCards = await fetchCardsetCards(id);
 
     if (cardsetCards.length === 0) {
       dispatch(makeCard(null, 1, '', ''));
