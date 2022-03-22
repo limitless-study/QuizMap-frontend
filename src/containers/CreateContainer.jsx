@@ -2,15 +2,12 @@ import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useHistory } from 'react-router-dom';
-
 import {
-  loadCards,
   changeCardsetTitle,
   addNewCard,
   updateCard,
   clickCard,
-  loadCardsetInfo,
+  initializeCardsetStudio,
 } from '../actions';
 
 import { get } from '../utils';
@@ -20,16 +17,16 @@ import CreateForm from '../components/CreateForm';
 export default function CreateContainer({ id }) {
   const dispatch = useDispatch();
 
-  // [error] too many rendering
-  // TODO: /:id 가 바뀔 때 useEffect가 실행되도록
-  dispatch(loadCards(Number(id)));
-  dispatch(loadCardsetInfo(Number(id)));
-  const { name: cardsetName } = useSelector(get('cardsetInfo'));
-  dispatch(changeCardsetTitle({ cardsetTitle: cardsetName }));
-
+  /* useEffect(() => {
+    console.log('CEHECKECKEE');
+    dispatch(initializeCardsetStudio(id));
+  }, [id]);
+*/
   const title = useSelector(get('cardsetTitle'));
+  console.log('title, ', title);
   const cards = useSelector(get('cards'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
+  console.log('cards', cards, 'currentCardIndex', currentCardIndex);
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   const handleSave = () => {
@@ -50,6 +47,7 @@ export default function CreateContainer({ id }) {
   };
 
   const handleCardClick = (cardIndex) => {
+    console.log('handleClickCard', cardIndex);
     dispatch(clickCard(cardIndex));
   };
 

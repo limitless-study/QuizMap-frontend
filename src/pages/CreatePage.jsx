@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
 
+import { useEffect } from 'react';
 import CreateContainer from '../containers/CreateContainer';
 
 import {
-  loadCards,
-  loadCardsetInfo,
+  initializeCardsetStudio,
 } from '../actions';
 
-import { get } from '../utils';
-
 export default function CreatePage({ params }) {
+  const dispatch = useDispatch();
+
   const { id } = params || useParams();
+
+  dispatch(initializeCardsetStudio(id));
 
   return (
     <div>

@@ -79,6 +79,7 @@ export function setNewCardIndex(newCardIndex) {
 }
 
 export function clickCard(cardIndex) {
+  console.log('CLICK CARD:', cardIndex);
   return (dispatch) => {
     dispatch(setCurrentCardIndex(cardIndex));
   };
@@ -190,5 +191,20 @@ export function loadCards(id) {
       });
       dispatch(setCards(cards));
     }
+  };
+}
+
+export function initializeCardsetStudio(id) {
+  console.log('id:', id);
+  return (dispatch, getState) => {
+    dispatch(loadCards(id));
+    dispatch(loadCardsetInfo(id));
+
+    const { cardsetInfo } = getState();
+    const { name } = cardsetInfo;
+
+    console.log('cardsetInfo, ', cardsetInfo, name);
+
+    dispatch(changeCardsetTitle({ cardsetTitle: name }));
   };
 }

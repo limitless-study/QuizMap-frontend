@@ -114,6 +114,7 @@ export default function CreateForm({
   onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
   const handleCardClick = (card) => {
+    console.log('card', card);
     const { cardIndex } = card;
     onCardClick(cardIndex);
   };
@@ -176,7 +177,7 @@ export default function CreateForm({
                 type="button"
                 key={card.cardIndex}
                 id={card.id}
-                onClick={handleCardClick}
+                onClick={() => handleCardClick(card)}
               >
                 {card.question}
               </Card>
