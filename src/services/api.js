@@ -1,6 +1,7 @@
 import cardsetInfo from '../fixtures/cardsetInfo';
 import cardsetChildren from '../fixtures/cardsetChildren';
 import rootCardsetChildren from '../fixtures/rootCardsetChildren';
+import cardsetCards from '../fixtures/cardsetCards';
 
 export function fetchCardsetInfo(cardsetId) {
   // TODO: 임의의 cardsetInfo로 대체
@@ -17,36 +18,5 @@ export function fetchCardsetChildren(cardsetId) {
 }
 
 export function fetchCardsetCards(id) {
-  return [
-    {
-      id: 1,
-      question: '1+1?',
-      answer: '2',
-    },
-    {
-      id: 2,
-      question: '2+2?',
-      answer: '4',
-    },
-    {
-      id: 3,
-      question: '2+2?',
-      answer: '4',
-    },
-    {
-      id: 4,
-      question: '2+2?',
-      answer: '4',
-    },
-    {
-      id: 5,
-      question: '2+2?',
-      answer: '4',
-    },
-    {
-      id: 14,
-      question: '2+2?',
-      answer: '4',
-    },
-  ];
+  return cardsetCards[id].children;
 }

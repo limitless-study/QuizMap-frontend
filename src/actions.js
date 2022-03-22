@@ -196,6 +196,9 @@ export function loadCards(id) {
 export function initializeCardsetStudio(id) {
   console.log('initializeCardsetStudio', id);
   return (dispatch, getState) => {
+    dispatch(setCurrentCardIndex(1));
+    dispatch(setNewCardIndex(1));
+
     dispatch(loadCards(id));
     dispatch(loadCardsetInfo(id));
 

@@ -1,5 +1,3 @@
-import cardsets from './fixtures/cardsets';
-
 const initialState = {
   // cardset 보기 page state
   cardsets: [],
