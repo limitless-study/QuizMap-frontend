@@ -110,17 +110,17 @@ const SaveButton = styled.div({
 });
 
 export default function CreateForm({
-  title, cards, currentCard, currentCardId,
+  currentCardIndex, currentCard, title, cards,
   onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
-  const handleCardClick = (event) => {
-    const { target: { id } } = event;
-    onCardClick(Number(id));
+  const handleCardClick = (card) => {
+    const { cardIndex } = card;
+    onCardClick(cardIndex);
   };
 
   function handleTitleChange(event) {
-    const { target: { name, value } } = event;
-    onTitleChange({ name, value });
+    const { target: { value } } = event;
+    onTitleChange({ value });
   }
 
   function handleInputChange(event) {
@@ -159,13 +159,13 @@ export default function CreateForm({
         </CreateCardTitle>
         <CardButtonField>
           {cards.map((card) => {
-            if (card.id === currentCardId) {
+            if (card.cardIndex === currentCardIndex) {
               return (
                 <SelectedCard
                   type="button"
-                  key={card.id}
+                  key={card.cardIndex}
                   id={card.id}
-                  onClick={handleCardClick}
+                  onClick={() => handleCardClick(card)}
                 >
                   {card.question}
                 </SelectedCard>
@@ -174,7 +174,7 @@ export default function CreateForm({
             return (
               <Card
                 type="button"
-                key={card.id}
+                key={card.cardIndex}
                 id={card.id}
                 onClick={handleCardClick}
               >

@@ -15,3 +15,18 @@ export function fetchCardsetChildren(cardsetId) {
   }
   return cardsetChildren[cardsetId].children;
 }
+
+export function fetchCardsetCards(id) {
+  return [
+    {
+      id: 1,
+      question: '1+1?',
+      answer: '2',
+    },
+    {
+      id: 14,
+      question: '2+2?',
+      answer: '4',
+    },
+  ];
+}

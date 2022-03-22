@@ -1,34 +1,21 @@
 import cardsets from './fixtures/cardsets';
 
-const initialCardset = {
-  id: 1,
-  title: '',
-  cards: [
-    {
-      id: 1,
-      question: '',
-      answer: '',
-    },
-  ],
-};
-
-const cardsetState = {
-  newCardId: 1, // 새롭게 추가할 card id
-  currentCardId: 1, // 현재 편집중인 card id
-  cardset: {
-    ...initialCardset,
-  },
-};
-
 const initialState = {
-  cardsets: [...cardsets],
+  // cardset 보기 page state
+  cardsets: [],
   cardsetInfo: {},
   rootCardsets: [],
   cardsetChildren: [],
 
+  // studio cardsetState
+  cards: [],
+  cardsetTitle: '',
+  newCardIndex: 1,
+  currentCardIndex: 1,
+
+  // 학습 mode
   cardIndex: 0,
   flipped: false,
-  ...cardsetState,
 };
 
 const reducers = {
@@ -46,13 +33,10 @@ const reducers = {
     };
   },
 
-  changeCardsetTitle(state, { payload: { name, value } }) {
+  changeCardsetTitle(state, { payload: { cardsetTitle } }) {
     return {
       ...state,
-      cardset: {
-        ...state.cardset,
-        [name]: value,
-      },
+      cardsetTitle,
     };
   },
 
@@ -66,13 +50,16 @@ const reducers = {
     };
   },
 
-  makeCard(state, { payload: { id, question, answer } }) {
+  makeCard(state, {
+    payload: {
+      id, cardIndex, question, answer,
+    },
+  }) {
     return {
       ...state,
-      cardset: {
-        ...state.cardset,
-        cards: [...state.cardset.cards, { id, question, answer }],
-      },
+      cards: [...state.cards, {
+        id, cardIndex, question, answer,
+      }],
     };
   },
 
@@ -83,31 +70,29 @@ const reducers = {
     };
   },
 
-  setNewCardId(state, { payload: { newCardId } }) {
+  // studio state
+  setNewCardIndex(state, { payload: { newCardIndex } }) {
     return {
       ...state,
-      newCardId,
+      newCardIndex,
     };
   },
 
-  setCurrentCardId(state, { payload: { currentCardId } }) {
+  setCurrentCardIndex(state, { payload: { currentCardIndex } }) {
     return {
       ...state,
-      currentCardId,
+      currentCardIndex,
     };
   },
 
-  updateCard(state, { payload: { currentCardId, name, value } }) {
+  updateCard(state, { payload: { currentCardIndex, name, value } }) {
     return {
       ...state,
-      cardset: {
-        ...state.cardset,
-        cards: [
-          ...(state.cardset.cards.map((card) => (card.id === currentCardId
-            ? { ...card, [name]: value }
-            : card))),
-        ],
-      },
+      cards: [
+        ...(state.cards.map((card) => (card.cardIndex === currentCardIndex
+          ? { ...card, [name]: value }
+          : card))),
+      ],
     };
   },
 
@@ -138,6 +123,20 @@ const reducers = {
     return {
       ...state,
       rootCardsets,
+    };
+  },
+
+  setCards(state, { payload: { cards } }) {
+    return {
+      ...state,
+      cards,
+    };
+  },
+
+  setNewCardIndex(state, { payload: { newCardIndex } }) {
+    return {
+      ...state,
+      newCardIndex,
     };
   },
 };

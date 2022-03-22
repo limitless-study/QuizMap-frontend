@@ -1,6 +1,7 @@
 import {
   fetchCardsetInfo,
   fetchCardsetChildren,
+  fetchCardsetCards,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -45,58 +46,63 @@ export function nextCard(cardIndex) {
   };
 }
 
-export function changeCardsetTitle({ name, value }) {
+export function changeCardsetTitle({ cardsetTitle }) {
   return {
     type: 'changeCardsetTitle',
-    payload: { name, value },
+    payload: { cardsetTitle },
   };
 }
 
-export function makeCard({ id, question, answer }) {
+export function makeCard({
+  id, cardIndex, question, answer,
+}) {
   return {
     type: 'makeCard',
-    payload: { id, question, answer },
+    payload: {
+      id, cardIndex, question, answer,
+    },
   };
 }
 
-export function setNewCardId(newCardId) {
+export function setCurrentCardIndex(currentCardIndex) {
   return {
-    type: 'setNewCardId',
-    payload: { newCardId },
+    type: 'setCurrentCardIndex',
+    payload: { currentCardIndex },
   };
 }
 
-export function setCurrentCardId(currentCardId) {
+export function setNewCardIndex(newCardIndex) {
   return {
-    type: 'setCurrentCardId',
-    payload: { currentCardId },
+    type: 'setNewCardIndex',
+    payload: { newCardIndex },
   };
 }
 
-export function clickCard(id) {
+export function clickCard(cardIndex) {
   return (dispatch) => {
-    dispatch(setCurrentCardId(id));
+    dispatch(setCurrentCardIndex(cardIndex));
   };
 }
 
 export function addNewCard() {
   return (dispatch, getState) => {
-    const { newCardId } = getState();
+    const { newCardIndex } = getState();
 
-    dispatch(setCurrentCardId(newCardId + 1));
-    dispatch(setNewCardId(newCardId + 1));
+    dispatch(setCurrentCardIndex(newCardIndex + 1));
+    dispatch(setNewCardIndex(newCardIndex + 1));
     dispatch(makeCard({
-      id: newCardId + 1,
+      id: null,
+      cardIndex: newCardIndex + 1,
       question: '',
       answer: '',
     }));
   };
 }
 
-export function updateCard({ currentCardId, name, value }) {
+export function updateCard({ currentCardIndex, name, value }) {
   return {
     type: 'updateCard',
-    payload: { currentCardId, name, value },
+    payload: { currentCardIndex, name, value },
   };
 }
 
@@ -159,5 +165,30 @@ export function loadRootCardsets() {
   return (dispatch) => {
     const rootCardsets = fetchCardsetChildren(0);
     dispatch(setRootCardsets(rootCardsets));
+  };
+}
+
+export function setCards(cards) {
+  return {
+    type: 'setCards',
+    payload: { cards },
+  };
+}
+
+export function loadCards(id) {
+  return (dispatch, getstate) => {
+    const cardsetCards = fetchCardsetCards(id);
+
+    if (cardsetCards.length === 0) {
+      dispatch(makeCard(null, 1, '', ''));
+    } else {
+      const cards = cardsetCards.map((card) => {
+        const { newCardIndex } = getstate();
+        Object.assign(card, { cardIndex: newCardIndex });
+        dispatch(setNewCardIndex(newCardIndex + 1));
+        return card;
+      });
+      dispatch(setCards(cards));
+    }
   };
 }

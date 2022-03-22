@@ -1,11 +1,16 @@
+import { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useHistory } from 'react-router-dom';
+
 import {
+  loadCards,
   changeCardsetTitle,
   addNewCard,
   updateCard,
   clickCard,
-  saveCardset,
+  loadCardsetInfo,
 } from '../actions';
 
 import { get } from '../utils';
@@ -15,40 +20,43 @@ import CreateForm from '../components/CreateForm';
 export default function CreateContainer({ id }) {
   const dispatch = useDispatch();
 
-  // TODO: id로 현재 cardset의 cards를 다 가져오기
+  // [error] too many rendering
+  // TODO: /:id 가 바뀔 때 useEffect가 실행되도록
+  dispatch(loadCards(Number(id)));
+  dispatch(loadCardsetInfo(Number(id)));
+  const { name: cardsetName } = useSelector(get('cardsetInfo'));
+  dispatch(changeCardsetTitle({ cardsetTitle: cardsetName }));
 
-  // TODO: 새로 추가된 카드, 수정한 카드, 제목 수정 여부를 redux에 저장
-
-  const cardset = useSelector(get('cardset'));
-  const { title, cards } = cardset;
-  const currentCardId = useSelector(get('currentCardId'));
-  const currentCard = cards.filter((card) => card.id === currentCardId);
+  const title = useSelector(get('cardsetTitle'));
+  const cards = useSelector(get('cards'));
+  const currentCardIndex = useSelector(get('currentCardIndex'));
+  const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   const handleSave = () => {
-    dispatch(saveCardset(cardset));
-  };
-
-  const handleTitleChange = ({ name, value }) => {
-    dispatch(changeCardsetTitle({ name, value }));
-  };
-
-  const handleInputChange = ({ name, value }) => {
-    dispatch(updateCard({ currentCardId, name, value }));
+    // TODO: 새로 추가된 카드, 수정한 카드, 제목 수정 여부를 redux에 저장
+    // dispatch(saveCardset(cardset));
   };
 
   const handleAddCardButtonClick = () => {
-    // TODO: 만약 편집기를 불러올 때 마지막 newCardId는 어떻게 알 수 있지? (모든 id들중 max를 찾나?)
     dispatch(addNewCard());
   };
 
-  const handleCardClick = (id) => {
-    dispatch(clickCard(id));
+  const handleTitleChange = ({ value: cardsetTitle }) => {
+    dispatch(changeCardsetTitle({ cardsetTitle }));
+  };
+
+  const handleInputChange = ({ name, value }) => {
+    dispatch(updateCard({ currentCardIndex, name, value }));
+  };
+
+  const handleCardClick = (cardIndex) => {
+    dispatch(clickCard(cardIndex));
   };
 
   return (
     <div>
       <CreateForm
-        currentCardId={currentCardId}
+        currentCardIndex={currentCardIndex}
         currentCard={currentCard[0]}
         title={title}
         cards={cards}
