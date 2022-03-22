@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
 
-import { useEffect } from 'react';
 import CreateContainer from '../containers/CreateContainer';
 
 import {

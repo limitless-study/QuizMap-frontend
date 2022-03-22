@@ -79,7 +79,6 @@ export function setNewCardIndex(newCardIndex) {
 }
 
 export function clickCard(cardIndex) {
-  console.log('CLICK CARD:', cardIndex);
   return (dispatch) => {
     dispatch(setCurrentCardIndex(cardIndex));
   };
@@ -195,16 +194,25 @@ export function loadCards(id) {
 }
 
 export function initializeCardsetStudio(id) {
-  console.log('id:', id);
+  console.log('initializeCardsetStudio', id);
   return (dispatch, getState) => {
     dispatch(loadCards(id));
     dispatch(loadCardsetInfo(id));
 
-    const { cardsetInfo } = getState();
+    const { cardsetInfo, cards } = getState();
     const { name } = cardsetInfo;
 
-    console.log('cardsetInfo, ', cardsetInfo, name);
+    console.log('cards', cards);
 
     dispatch(changeCardsetTitle({ cardsetTitle: name }));
+  };
+}
+
+export function initializeCardsetPage(id) {
+  console.log('initializeCardsetPage', id);
+  return (dispatch) => {
+    dispatch(loadRootCardsets());
+    dispatch(loadCardsetInfo(id));
+    dispatch(loadCardsetChildren(id));
   };
 }

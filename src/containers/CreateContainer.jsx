@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -7,7 +5,6 @@ import {
   addNewCard,
   updateCard,
   clickCard,
-  initializeCardsetStudio,
 } from '../actions';
 
 import { get } from '../utils';
@@ -17,16 +14,9 @@ import CreateForm from '../components/CreateForm';
 export default function CreateContainer({ id }) {
   const dispatch = useDispatch();
 
-  /* useEffect(() => {
-    console.log('CEHECKECKEE');
-    dispatch(initializeCardsetStudio(id));
-  }, [id]);
-*/
   const title = useSelector(get('cardsetTitle'));
-  console.log('title, ', title);
   const cards = useSelector(get('cards'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
-  console.log('cards', cards, 'currentCardIndex', currentCardIndex);
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   const handleSave = () => {
@@ -47,7 +37,6 @@ export default function CreateContainer({ id }) {
   };
 
   const handleCardClick = (cardIndex) => {
-    console.log('handleClickCard', cardIndex);
     dispatch(clickCard(cardIndex));
   };
 

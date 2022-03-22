@@ -24,6 +24,26 @@ export function fetchCardsetCards(id) {
       answer: '2',
     },
     {
+      id: 2,
+      question: '2+2?',
+      answer: '4',
+    },
+    {
+      id: 3,
+      question: '2+2?',
+      answer: '4',
+    },
+    {
+      id: 4,
+      question: '2+2?',
+      answer: '4',
+    },
+    {
+      id: 5,
+      question: '2+2?',
+      answer: '4',
+    },
+    {
       id: 14,
       question: '2+2?',
       answer: '4',
