@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useEffect } from 'react';
 import {
   changeCardsetTitle,
   addNewCard,
@@ -15,39 +16,39 @@ import CreateForm from '../components/CreateForm';
 export default function CreateContainer({ id }) {
   const dispatch = useDispatch();
 
-  // TODO: id로 현재 cardset의 cards를 다 가져오기
-  // 새로 추가된 카드, 수정한 카드, 제목 수정 여부를 redux에 저장
+  const title = useSelector(get('cardsetTitle'));
+  const cards = useSelector(get('cards'));
 
-  const cardset = useSelector(get('cardset'));
-  const { title, cards } = cardset;
-  const currentCardId = useSelector(get('currentCardId'));
-  const currentCard = cards.filter((card) => card.id === currentCardId);
+  console.log(cards);
+
+  const currentCardIndex = useSelector(get('currentCardIndex'));
+  const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   const handleSave = () => {
-    dispatch(saveCardset(cardset));
-  };
-
-  const handleTitleChange = ({ name, value }) => {
-    dispatch(changeCardsetTitle({ name, value }));
-  };
-
-  const handleInputChange = ({ name, value }) => {
-    dispatch(updateCard({ currentCardId, name, value }));
+    // TODO: 새로 추가된 카드, 수정한 카드, 제목 수정 여부를 redux에 저장
+    dispatch(saveCardset({ cardsetId: id, cardsetTitle: title, cards }));
   };
 
   const handleAddCardButtonClick = () => {
-    // TODO: 만약 편집기를 불러올 때 마지막 newCardId는 어떻게 알 수 있지? (모든 id들중 max를 찾나?)
     dispatch(addNewCard());
   };
 
-  const handleCardClick = (id) => {
-    dispatch(clickCard(id));
+  const handleTitleChange = ({ value: cardsetTitle }) => {
+    dispatch(changeCardsetTitle({ cardsetTitle }));
+  };
+
+  const handleInputChange = ({ name, value }) => {
+    dispatch(updateCard({ currentCardIndex, name, value }));
+  };
+
+  const handleCardClick = (cardIndex) => {
+    dispatch(clickCard(cardIndex));
   };
 
   return (
     <div>
       <CreateForm
-        currentCardId={currentCardId}
+        currentCardIndex={currentCardIndex}
         currentCard={currentCard[0]}
         title={title}
         cards={cards}

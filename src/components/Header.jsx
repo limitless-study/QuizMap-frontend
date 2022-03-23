@@ -47,7 +47,7 @@ export default function Header() {
         <li><Link to="/cardsets">cardsets</Link></li>
         <li><Link to="/login">log in</Link></li>
         <li><Link to="/signup">sign up</Link></li>
-        <NewCardsetButton><Link to="/create">New Cardset</Link></NewCardsetButton>
+        <NewCardsetButton><Link to={`/cardsets/${1}`}>New Cardset</Link></NewCardsetButton>
       </MenuItems>
     </MenuBar>
   );

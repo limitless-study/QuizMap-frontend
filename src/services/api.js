@@ -1,17 +1,74 @@
-import cardsetInfo from '../fixtures/cardsetInfo';
-import cardsetChildren from '../fixtures/cardsetChildren';
-import rootCardsetChildren from '../fixtures/rootCardsetChildren';
-
-export function fetchCardsetInfo(cardsetId) {
-  // TODO: 임의의 cardsetInfo로 대체
-  const info = cardsetInfo[cardsetId];
-  return info;
+export async function fetchCardsetInfo(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/info`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 }
 
-export function fetchCardsetChildren(cardsetId) {
-  // TODO: 임의의 cardsetChildren로 대체
-  if (cardsetId === 0) {
-    return rootCardsetChildren;
-  }
-  return cardsetChildren[cardsetId].children;
+export async function fetchCardsetChildren(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/children`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchCardsetCards(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/cards`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export async function patchCardsetTitle({ id, name }) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${id}`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id, name }),
+  });
+  const { name: title } = await response.json();
+  return title;
+}
+
+export async function postNewCardset(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/cardset`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name: 'Untitled' }),
+  });
+  const { id } = await response.json();
+  return id;
+}
+
+export async function patchCardsetCard({
+  cardsetId, cardId, question, answer,
+}) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/card/${cardId}`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ question, answer }),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function postNewCard({ cardsetId, question, answer }) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/card`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ question, answer }),
+  });
+  const data = await response.json();
+  return data;
 }

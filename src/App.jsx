@@ -17,13 +17,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/cardsets/:id" element={<CardsetPage />} />
         <Route path="/studio/:id" element={<CreatePage />} />
+        <Route path="/cardsets/:id" element={<CardsetPage />} />
         <Route path="/learn/:id" element={<LearnPage />} />
         <Route path="/root" element={<RootPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/create" element={<CreatePage />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </div>
