@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useEffect } from 'react';
 import {
   changeCardsetTitle,
   addNewCard,
@@ -17,6 +18,9 @@ export default function CreateContainer({ id }) {
 
   const title = useSelector(get('cardsetTitle'));
   const cards = useSelector(get('cards'));
+
+  console.log(cards);
+
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 

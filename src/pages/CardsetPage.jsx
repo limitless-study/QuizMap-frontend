@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useDispatch } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
@@ -13,7 +15,9 @@ export default function CardsetPage({ params }) {
 
   const { id } = params || useParams();
 
-  dispatch(initializeCardsetPage(id));
+  useEffect(() => {
+    dispatch(initializeCardsetPage(id));
+  }, [id]);
 
   return (
     <div>

@@ -3,16 +3,42 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 const CardsetBox = styled.div({
-  backgroundColor: 'lightblue',
+  width: '400px',
+  fontWeight: 'bold',
+  marginBottom: '10px',
+  marginLeft: '10px',
+  backgroundColor: '#EDEDED',
+  padding: '6px',
 });
 
 const CardBox = styled.div({
-  backgroundColor: 'lightgreen',
+  fontWeight: 'bold',
+  marginBottom: '10px',
+  marginLeft: '10px',
+  padding: '6px',
+  width: '400px',
+  backgroundColor: '#FAFAFA',
+});
+
+const CardsetInfo = styled.div({
+  color: '#c2c2c2',
+  fontWeight: 'bolder',
+  fontSize: '22px',
 });
 
 const StudioButton = styled.button({
+  marginLeft: '3px',
+  backgroundColor: 'lightgray',
+  borderRadius: '3px',
+  padding: '2px',
+  fontWeight: 'bold',
+  border: 'none',
+  color: 'white',
   '& a': {
     display: 'block',
+    fontWeight: 'bold',
+    border: 'none',
+    color: 'white',
   },
 });
 
@@ -21,12 +47,11 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
     id, name, cardSetCount, cardCount,
   } = cardsetInfo;
 
-  // TODO: 임시 URL을 실제 /cardsets/${cardset.id}로 수정
   return (
     <div>
       <div>
         <h1>{name}</h1>
-        <p>
+        <CardsetInfo>
           {`${cardSetCount} Cardsets, ${cardCount} Cards`}
           <StudioButton
             type="button"
@@ -35,8 +60,9 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
               수정
             </Link>
           </StudioButton>
-        </p>
+        </CardsetInfo>
       </div>
+      <h2>Cards</h2>
       {cardsetChildren.map((child) => {
         if (child.type === 'CARDSET') {
           return (
@@ -53,11 +79,11 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
                   수정
                 </Link>
               </StudioButton>
-              <button
+              <StudioButton
                 type="button"
               >
                 학습
-              </button>
+              </StudioButton>
             </CardsetBox>
           );
         }

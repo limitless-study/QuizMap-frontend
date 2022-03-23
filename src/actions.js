@@ -163,7 +163,8 @@ export function setRootCardsets(rootCardsets) {
 
 export function loadRootCardsets() {
   return async (dispatch) => {
-    const rootCardsets = await fetchCardsetChildren(1);
+    const root = await fetchCardsetChildren(1);
+    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
   };
 }
@@ -194,28 +195,27 @@ export function loadCards(id) {
 }
 
 export function initializeCardsetStudio(id) {
-  console.log('initializeCardsetStudio', id);
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(setCurrentCardIndex(1));
     dispatch(setNewCardIndex(1));
 
-    dispatch(loadCards(id));
-    dispatch(loadCardsetInfo(id));
+    await dispatch(loadCards(id));
+    await dispatch(loadCardsetInfo(id));
 
     const { cardsetInfo, cards } = getState();
     const { name } = cardsetInfo;
 
     console.log('cards', cards);
 
-    dispatch(changeCardsetTitle({ cardsetTitle: name }));
+    await dispatch(changeCardsetTitle({ cardsetTitle: name }));
   };
 }
 
 export function initializeCardsetPage(id) {
   console.log('initializeCardsetPage', id);
-  return (dispatch) => {
-    dispatch(loadRootCardsets());
-    dispatch(loadCardsetInfo(id));
-    dispatch(loadCardsetChildren(id));
+  return async (dispatch) => {
+    await dispatch(loadRootCardsets());
+    await dispatch(loadCardsetInfo(id));
+    await dispatch(loadCardsetChildren(id));
   };
 }

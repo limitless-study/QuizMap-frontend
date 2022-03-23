@@ -7,21 +7,41 @@ const Wrapper = styled.div({
   backgroundColor: '#EDEDED',
 });
 
+const Logo = styled.h1({
+  width: '5em',
+  '& a': {
+    color: 'white',
+  },
+});
+
+const MenuContainer = styled.ul({
+  width: '100%',
+});
+
+const Menu = styled.li({
+  right: '0',
+  backgroundColor: '#DDDDDD',
+  margin: '10px 0',
+  borderRadius: '20px 0px 0px 20px',
+  padding: '5px 0 5px 10px',
+  fontWeight: 'bolder',
+});
+
 export default function SideMenuBar({ menus }) {
   return (
     <Wrapper>
-      <h1>
+      <Logo>
         <Link to="/">Limitless</Link>
-      </h1>
-      <ul>
+      </Logo>
+      <MenuContainer>
         {menus.map((menu) => (
-          <li
+          <Menu
             key={menu.id}
           >
             <Link to={`/cardsets/${menu.id}`}>{menu.title}</Link>
-          </li>
+          </Menu>
         ))}
-      </ul>
+      </MenuContainer>
     </Wrapper>
   );
 }

@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 
+import { useEffect } from 'react';
 import RootContainer from '../containers/RootContainer';
 
 import {
@@ -9,7 +10,9 @@ import {
 export default function RootPage() {
   const dispatch = useDispatch();
 
-  dispatch(loadRootCardsets(0));
+  useEffect(() => {
+    dispatch(loadRootCardsets());
+  });
 
   return (
     <div>

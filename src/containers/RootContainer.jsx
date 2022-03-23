@@ -9,8 +9,6 @@ import { get } from '../utils';
 export default function RootContainer() {
   const root = useSelector(get('rootCardsets'));
 
-  console.log('root:', root);
-
   return (
     <div>
       <h1>

@@ -94,15 +94,6 @@ const reducers = {
     };
   },
 
-  initializeCardset(state) {
-    return {
-      ...state,
-      cardset: {
-        ...initialCardset,
-      },
-    };
-  },
-
   setCardsetInfo(state, { payload: { cardsetInfo } }) {
     return {
       ...state,
@@ -128,13 +119,6 @@ const reducers = {
     return {
       ...state,
       cards,
-    };
-  },
-
-  setNewCardIndex(state, { payload: { newCardIndex } }) {
-    return {
-      ...state,
-      newCardIndex,
     };
   },
 };
