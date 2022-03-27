@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useEffect } from 'react';
 import {
   changeCardsetTitle,
   addNewCard,
@@ -18,14 +17,9 @@ export default function CreateContainer({ id }) {
 
   const title = useSelector(get('cardsetTitle'));
   const cards = useSelector(get('cards'));
-
-  console.log(cards);
-
   const currentCardIndex = useSelector(get('currentCardIndex'));
-  const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   const handleSave = () => {
-    // TODO: 새로 추가된 카드, 수정한 카드, 제목 수정 여부를 redux에 저장
     dispatch(saveCardset({ cardsetId: id, cardsetTitle: title, cards }));
   };
 
@@ -49,7 +43,6 @@ export default function CreateContainer({ id }) {
     <div>
       <CreateForm
         currentCardIndex={currentCardIndex}
-        currentCard={currentCard[0]}
         title={title}
         cards={cards}
         onSave={handleSave}

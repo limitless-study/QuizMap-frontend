@@ -15,10 +15,9 @@ export default function CreatePage({ params }) {
 
   const { id } = params || useParams();
 
-  async function loadInitialData() {
-    await dispatch(initializeCardsetStudio(id));
-  }
-  loadInitialData();
+  useEffect(() => {
+    dispatch(initializeCardsetStudio(id));
+  });
 
   return (
     <div>

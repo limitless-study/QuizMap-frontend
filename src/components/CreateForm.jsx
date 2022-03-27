@@ -110,11 +110,10 @@ const SaveButton = styled.div({
 });
 
 export default function CreateForm({
-  currentCardIndex, currentCard, title, cards,
+  currentCardIndex, title, cards,
   onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
   const handleCardClick = (card) => {
-    console.log('card', card);
     const { cardIndex } = card;
     onCardClick(cardIndex);
   };
@@ -129,7 +128,14 @@ export default function CreateForm({
     onInputChange({ name, value });
   }
 
-  const { question, answer } = currentCard;
+  if (cards.length === 0) {
+    return (
+      <div>Loading...</div>
+    );
+  }
+
+  const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
+  const { question, answer } = currentCard[0];
 
   return (
     <Wrapper>
