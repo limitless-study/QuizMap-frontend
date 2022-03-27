@@ -91,7 +91,7 @@ export function addNewCard() {
     dispatch(setCurrentCardIndex(newCardIndex + 1));
     dispatch(setNewCardIndex(newCardIndex + 1));
     dispatch(makeCard({
-      id: null,
+      id: undefined,
       cardIndex: newCardIndex + 1,
       question: '',
       answer: '',
@@ -181,7 +181,7 @@ export function loadCards(id) {
     const cardsetCards = await fetchCardsetCards(id);
 
     if (cardsetCards.length === 0) {
-      dispatch(makeCard(null, 1, '', ''));
+      dispatch(makeCard(-1, 1, '', ''));
     } else {
       const cards = cardsetCards.map((card) => {
         const { newCardIndex } = getstate();
@@ -202,17 +202,14 @@ export function initializeCardsetStudio(id) {
     await dispatch(loadCards(id));
     await dispatch(loadCardsetInfo(id));
 
-    const { cardsetInfo, cards } = getState();
+    const { cardsetInfo } = getState();
     const { name } = cardsetInfo;
 
-    console.log('cards', cards);
-
-    await dispatch(changeCardsetTitle({ cardsetTitle: name }));
+    dispatch(changeCardsetTitle({ cardsetTitle: name }));
   };
 }
 
 export function initializeCardsetPage(id) {
-  console.log('initializeCardsetPage', id);
   return async (dispatch) => {
     await dispatch(loadRootCardsets());
     await dispatch(loadCardsetInfo(id));

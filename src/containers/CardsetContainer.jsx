@@ -1,8 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
 
-import { useEffect } from 'react';
 import Cardset from '../components/Cardset';
 import SideMenuBar from '../components/SideMenuBar';
 
@@ -15,6 +14,8 @@ const Wrapper = styled.div({
 });
 
 export default function CardsetContainer({ id }) {
+  console.log('CardsetContainer id:', id);
+
   const menus = useSelector(get('rootCardsets'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
