@@ -46,10 +46,24 @@ export function nextCard(cardIndex) {
   };
 }
 
-export function changeCardsetTitle({ cardsetTitle }) {
+export function setTitleChanged(isTitleChanged) {
   return {
-    type: 'changeCardsetTitle',
+    type: 'setTitleChanged',
+    payload: { isTitleChanged },
+  };
+}
+
+export function setCardsetTitle(cardsetTitle) {
+  return {
+    type: 'setCardsetTitle',
     payload: { cardsetTitle },
+  };
+}
+
+export function changeCardsetTitle(cardsetTitle) {
+  return (dispatch) => {
+    dispatch(setCardsetTitle(cardsetTitle));
+    dispatch(setTitleChanged(true));
   };
 }
 
@@ -119,9 +133,9 @@ export function initializeCardset() {
   };
 }
 
-export function saveCardset(cardset) {
+export function saveCardset({ cardsetId, cardsetTitle, cards }) {
   return (dispatch) => {
-    dispatch(addNewCardset(cardset));
+    dispatch(addNewCardset());
     dispatch(initializeCardset());
   };
 }
@@ -207,6 +221,7 @@ export function loadCards(id) {
 
 export function initializeCardsetStudio(id) {
   return async (dispatch, getState) => {
+    dispatch(setTitleChanged(false));
     dispatch(setCurrentCardIndex(1));
     dispatch(setNewCardIndex(1));
     dispatch(initializeCards([]));
@@ -217,7 +232,7 @@ export function initializeCardsetStudio(id) {
     const { cardsetInfo } = getState();
     const { name } = cardsetInfo;
 
-    dispatch(changeCardsetTitle({ cardsetTitle: name }));
+    dispatch(setCardsetTitle(name));
   };
 }
 

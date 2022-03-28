@@ -18,6 +18,9 @@ export default function CreateContainer({ id }) {
   const title = useSelector(get('cardsetTitle'));
   const cards = useSelector(get('cards'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
+  const isTitleChanged = useSelector(get('isTitleChanged'));
+
+  console.log('isTitleChanged', isTitleChanged);
 
   const handleSave = () => {
     dispatch(saveCardset({ cardsetId: id, cardsetTitle: title, cards }));
@@ -28,7 +31,7 @@ export default function CreateContainer({ id }) {
   };
 
   const handleTitleChange = ({ value: cardsetTitle }) => {
-    dispatch(changeCardsetTitle({ cardsetTitle }));
+    dispatch(changeCardsetTitle(cardsetTitle));
   };
 
   const handleInputChange = ({ name, value }) => {

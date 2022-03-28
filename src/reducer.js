@@ -10,6 +10,7 @@ const initialState = {
   cardsetTitle: '',
   newCardIndex: 1,
   currentCardIndex: 1,
+  isTitleChanged: false,
 
   // 학습 mode
   cardIndex: 0,
@@ -31,7 +32,7 @@ const reducers = {
     };
   },
 
-  changeCardsetTitle(state, { payload: { cardsetTitle } }) {
+  setCardsetTitle(state, { payload: { cardsetTitle } }) {
     return {
       ...state,
       cardsetTitle,
@@ -69,6 +70,13 @@ const reducers = {
   },
 
   // studio state
+  setTitleChanged(state, { payload: { isTitleChanged } }) {
+    return {
+      ...state,
+      isTitleChanged,
+    };
+  },
+
   setNewCardIndex(state, { payload: { newCardIndex } }) {
     return {
       ...state,
