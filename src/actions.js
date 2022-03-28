@@ -68,12 +68,12 @@ export function changeCardsetTitle(cardsetTitle) {
 }
 
 export function makeCard({
-  id, cardIndex, question, answer,
+  id, cardIndex, question, answer, cardChanged, cardAdded,
 }) {
   return {
     type: 'makeCard',
     payload: {
-      id, cardIndex, question, answer,
+      id, cardIndex, question, answer, cardChanged, cardAdded,
     },
   };
 }
@@ -109,6 +109,8 @@ export function addNewCard() {
       cardIndex: newCardIndex,
       question: '',
       answer: '',
+      cardChanged: false,
+      cardAdded: true,
     }));
   };
 }
@@ -116,7 +118,9 @@ export function addNewCard() {
 export function updateCard({ currentCardIndex, name, value }) {
   return {
     type: 'updateCard',
-    payload: { currentCardIndex, name, value },
+    payload: {
+      currentCardIndex, name, value, cardChanged: true,
+    },
   };
 }
 
@@ -212,8 +216,9 @@ export function loadCards(id) {
     } else {
       const cards = cardsetCards.map((card) => {
         const { newCardIndex } = getState();
-        // TODO:
         Object.assign(card, { cardIndex: newCardIndex });
+        Object.assign(card, { cardChanged: false });
+        Object.assign(card, { cardAdded: false });
         dispatch(setNewCardIndex(newCardIndex + 1));
         return card;
       });

@@ -51,13 +51,13 @@ const reducers = {
 
   makeCard(state, {
     payload: {
-      id, cardIndex, question, answer,
+      id, cardIndex, question, answer, cardChanged, cardAdded,
     },
   }) {
     return {
       ...state,
       cards: [...state.cards, {
-        id, cardIndex, question, answer,
+        id, cardIndex, question, answer, cardChanged, cardAdded,
       }],
     };
   },
@@ -91,12 +91,20 @@ const reducers = {
     };
   },
 
-  updateCard(state, { payload: { currentCardIndex, name, value } }) {
+  updateCard(state, {
+    payload: {
+      currentCardIndex, name, value, cardChanged,
+    },
+  }) {
     return {
       ...state,
       cards: [
         ...(state.cards.map((card) => (card.cardIndex === currentCardIndex
-          ? { ...card, [name]: value }
+          ? {
+            ...card,
+            [name]: value,
+            cardChanged,
+          }
           : card))),
       ],
     };
