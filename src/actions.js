@@ -199,6 +199,7 @@ export function initializeCards(cards) {
 export function loadCards(id) {
   return async (dispatch, getState) => {
     const cardsetCards = await fetchCardsetCards(id);
+    const { newCardIndex } = getState();
 
     if (cardsetCards.length === 0) {
       dispatch(makeCard({
@@ -207,9 +208,9 @@ export function loadCards(id) {
         question: '',
         answer: '',
       }));
+      dispatch(setNewCardIndex(newCardIndex + 1));
     } else {
       const cards = cardsetCards.map((card) => {
-        const { newCardIndex } = getState();
         Object.assign(card, { cardIndex: newCardIndex });
         dispatch(setNewCardIndex(newCardIndex + 1));
         return card;
