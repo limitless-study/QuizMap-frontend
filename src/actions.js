@@ -91,7 +91,7 @@ export function addNewCard() {
     dispatch(setCurrentCardIndex(newCardIndex));
     dispatch(setNewCardIndex(newCardIndex + 1));
     dispatch(makeCard({
-      id: undefined,
+      id: -1,
       cardIndex: newCardIndex,
       question: '',
       answer: '',
@@ -186,10 +186,13 @@ export function loadCards(id) {
   return async (dispatch, getState) => {
     const cardsetCards = await fetchCardsetCards(id);
 
-    console.log('cardsetCards', cardsetCards);
-
     if (cardsetCards.length === 0) {
-      dispatch(makeCard(-1, 1, '', ''));
+      dispatch(makeCard({
+        id: -1,
+        cardIndex: 1,
+        question: '',
+        answer: '',
+      }));
     } else {
       const cards = cardsetCards.map((card) => {
         const { newCardIndex } = getState();
