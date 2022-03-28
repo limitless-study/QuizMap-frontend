@@ -110,7 +110,7 @@ const SaveButton = styled.div({
 });
 
 export default function CreateForm({
-  currentCardIndex, title, cards,
+  cardsetId, currentCardIndex, title, cards,
   onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
   const handleCardClick = (card) => {
@@ -134,18 +134,14 @@ export default function CreateForm({
     );
   }
 
-  console.log('cards', cards);
-
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
   const { question, answer } = currentCard[0];
-
-  console.log('currentCard', currentCard);
 
   return (
     <Wrapper>
       <SaveButton>
         <Link
-          to="/cardsets"
+          to={`/cardsets/${cardsetId}`}
           onClick={onSave}
         >
           save

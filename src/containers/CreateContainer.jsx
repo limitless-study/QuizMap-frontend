@@ -42,6 +42,7 @@ export default function CreateContainer({ id }) {
   return (
     <div>
       <CreateForm
+        cardsetId={id}
         currentCardIndex={currentCardIndex}
         title={title}
         cards={cards}
