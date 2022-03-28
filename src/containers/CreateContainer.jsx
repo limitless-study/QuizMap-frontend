@@ -20,7 +20,7 @@ export default function CreateContainer({ id }) {
   const currentCardIndex = useSelector(get('currentCardIndex'));
 
   const handleSave = () => {
-    dispatch(saveCardset({ cardsetId: id, cardsetTitle: title, cards }));
+    dispatch(saveCardset({ cardsetId: id }));
   };
 
   const handleAddCardButtonClick = () => {

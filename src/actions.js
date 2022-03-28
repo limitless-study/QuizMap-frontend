@@ -2,6 +2,9 @@ import {
   fetchCardsetInfo,
   fetchCardsetChildren,
   fetchCardsetCards,
+  patchCardsetTitle,
+  postNewCard,
+  patchCardsetCard,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -137,8 +140,32 @@ export function initializeCardset() {
   };
 }
 
-export function saveCardset({ cardsetId, cardsetTitle, cards }) {
-  return (dispatch) => {
+export function saveCardset({ cardsetId }) {
+  return (dispatch, getState) => {
+    // patch title
+    const { isTitleChanged } = getState();
+
+    if (isTitleChanged) {
+      const { cardsetTitle } = getState();
+      patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
+    }
+
+    const { cards } = getState();
+
+    cards.forEach((card) => {
+      if (card.cardAdded) {
+        // post added cards
+        postNewCard({ cardsetId, question: card.question, answer: card.answer });
+      }
+
+      if (card.cardChanged) {
+        // patch changed cards
+        patchCardsetCard({
+          cardsetId, cardId: card.id, question: card.question, answer: card.answer,
+        });
+      }
+    });
+
     dispatch(addNewCardset());
     dispatch(initializeCardset());
   };
