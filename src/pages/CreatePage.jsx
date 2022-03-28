@@ -17,7 +17,7 @@ export default function CreatePage({ params }) {
 
   useEffect(() => {
     dispatch(initializeCardsetStudio(id));
-  });
+  }, [id]);
 
   return (
     <div>

@@ -134,8 +134,12 @@ export default function CreateForm({
     );
   }
 
+  console.log('cards', cards);
+
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
   const { question, answer } = currentCard[0];
+
+  console.log('currentCard', currentCard);
 
   return (
     <Wrapper>
