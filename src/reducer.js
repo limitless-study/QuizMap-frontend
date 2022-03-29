@@ -11,6 +11,7 @@ const initialState = {
   newCardIndex: 1,
   currentCardIndex: 1,
   isTitleChanged: false,
+  cardsetId: 0,
 
   // 학습 mode
   cardIndex: 0,
@@ -29,6 +30,13 @@ const reducers = {
     return {
       ...state,
       cardIndex,
+    };
+  },
+
+  setCardsetId(state, { payload: { cardsetId } }) {
+    return {
+      ...state,
+      cardsetId,
     };
   },
 
@@ -59,13 +67,6 @@ const reducers = {
       cards: [...state.cards, {
         id, cardIndex, question, answer, cardChanged, cardAdded,
       }],
-    };
-  },
-
-  addNewCardset(state, { payload: { cardset } }) {
-    return {
-      ...state,
-      cardsets: [...state.cardsets, cardset],
     };
   },
 

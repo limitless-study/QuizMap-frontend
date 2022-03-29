@@ -85,6 +85,21 @@ const AddCarrdButton = styled.button({
   },
 });
 
+const AddCardsetButtonField = styled.button({
+  margin: '0 auto',
+  marginTop: '5px',
+  width: '67%',
+  height: '2.5em',
+  borderRadius: '4px',
+  fontWeight: 'bolder',
+  color: 'white',
+  border: 'none',
+  backgroundColor: '#C5BAFF',
+  ':hover': {
+    cursor: 'pointer',
+  },
+});
+
 const SaveButton = styled.div({
   position: 'absolute',
   right: '0',
@@ -111,7 +126,7 @@ const SaveButton = styled.div({
 
 export default function CreateForm({
   cardsetId, currentCardIndex, title, cards,
-  onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
+  onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick, onAddCardsetClick,
 }) {
   const handleCardClick = (card) => {
     const { cardIndex } = card;
@@ -197,6 +212,13 @@ export default function CreateForm({
         >
           add new card
         </AddCarrdButton>
+        <AddCardsetButtonField
+          type="button"
+          name="add-button"
+          onClick={() => onAddCardsetClick()}
+        >
+          add new cardset
+        </AddCardsetButtonField>
       </SideBar>
       <CreateCardField>
         <CreateCard>
