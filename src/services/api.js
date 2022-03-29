@@ -46,9 +46,9 @@ export async function postNewCardset(cardsetId) {
 }
 
 export async function patchCardsetCard({
-  cardsetId, cardId, question, answer,
+  cardId, question, answer,
 }) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/card/${cardId}`;
+  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}`;
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
