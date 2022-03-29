@@ -1,8 +1,13 @@
+import { useLayoutEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useNavigate } from 'react-router-dom';
 
 import {
   changeCardsetTitle,
   addNewCard,
+  addNewCardset,
   updateCard,
   clickCard,
   saveCardset,
@@ -15,9 +20,16 @@ import CreateForm from '../components/CreateForm';
 export default function CreateContainer({ id }) {
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const title = useSelector(get('cardsetTitle'));
   const cards = useSelector(get('cards'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
+  const cardsetId = useSelector(get('cardsetId'));
+
+  useLayoutEffect(() => {
+    navigate(`/studio/${cardsetId}`);
+  }, [cardsetId]);
 
   const handleSave = () => {
     dispatch(saveCardset({ cardsetId: id }));
@@ -25,6 +37,10 @@ export default function CreateContainer({ id }) {
 
   const handleAddCardButtonClick = () => {
     dispatch(addNewCard());
+  };
+
+  const handleAddCardsetButtonClick = () => {
+    dispatch(addNewCardset(id));
   };
 
   const handleTitleChange = ({ value: cardsetTitle }) => {
@@ -51,6 +67,7 @@ export default function CreateContainer({ id }) {
         onTitleChange={handleTitleChange}
         onCardClick={handleCardClick}
         onAddCardClick={handleAddCardButtonClick}
+        onAddCardsetClick={handleAddCardsetButtonClick}
       />
     </div>
   );

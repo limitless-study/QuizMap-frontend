@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   fetchCardsetInfo,
   fetchCardsetChildren,
@@ -5,6 +6,7 @@ import {
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
+  postNewCardset,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -60,6 +62,13 @@ export function setCardsetTitle(cardsetTitle) {
   return {
     type: 'setCardsetTitle',
     payload: { cardsetTitle },
+  };
+}
+
+export function setCardsetId(cardsetId) {
+  return {
+    type: 'setCardsetId',
+    payload: { cardsetId },
   };
 }
 
@@ -126,14 +135,6 @@ export function updateCard({ currentCardIndex, name, value }) {
     },
   };
 }
-
-export function addNewCardset(cardset) {
-  return {
-    type: 'addNewCardset',
-    payload: { cardset },
-  };
-}
-
 export function initializeCardset() {
   return {
     type: 'initializeCardset',
@@ -156,18 +157,21 @@ export function saveCardset({ cardsetId }) {
       if (card.cardAdded) {
         // post added cards
         postNewCard({ cardsetId, question: card.question, answer: card.answer });
-      }
-
-      if (card.cardChanged) {
+      } else if (card.cardChanged) {
         // patch changed cards
         patchCardsetCard({
           cardsetId, cardId: card.id, question: card.question, answer: card.answer,
         });
       }
     });
+  };
+}
 
-    dispatch(addNewCardset());
-    dispatch(initializeCardset());
+export function addNewCardset(id) {
+  return async (dispatch) => {
+    await dispatch(saveCardset(id));
+    // TODO: Saving... 뜨도록?
+    dispatch(setCardsetId(await postNewCardset(id)));
   };
 }
 
@@ -238,6 +242,8 @@ export function loadCards(id) {
         cardIndex: 1,
         question: '',
         answer: '',
+        cardChanged: false,
+        cardAdded: true,
       }));
       dispatch(setNewCardIndex(newCardIndex + 1));
     } else {
