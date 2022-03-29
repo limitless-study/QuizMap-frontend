@@ -110,7 +110,7 @@ const SaveButton = styled.div({
 });
 
 export default function CreateForm({
-  currentCardIndex, title, cards,
+  cardsetId, currentCardIndex, title, cards,
   onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick,
 }) {
   const handleCardClick = (card) => {
@@ -141,7 +141,7 @@ export default function CreateForm({
     <Wrapper>
       <SaveButton>
         <Link
-          to="/cardsets"
+          to={`/cardsets/${cardsetId}`}
           onClick={onSave}
         >
           save

@@ -2,6 +2,9 @@ import {
   fetchCardsetInfo,
   fetchCardsetChildren,
   fetchCardsetCards,
+  patchCardsetTitle,
+  postNewCard,
+  patchCardsetCard,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -46,20 +49,34 @@ export function nextCard(cardIndex) {
   };
 }
 
-export function changeCardsetTitle({ cardsetTitle }) {
+export function setTitleChanged(isTitleChanged) {
   return {
-    type: 'changeCardsetTitle',
+    type: 'setTitleChanged',
+    payload: { isTitleChanged },
+  };
+}
+
+export function setCardsetTitle(cardsetTitle) {
+  return {
+    type: 'setCardsetTitle',
     payload: { cardsetTitle },
   };
 }
 
+export function changeCardsetTitle(cardsetTitle) {
+  return (dispatch) => {
+    dispatch(setCardsetTitle(cardsetTitle));
+    dispatch(setTitleChanged(true));
+  };
+}
+
 export function makeCard({
-  id, cardIndex, question, answer,
+  id, cardIndex, question, answer, cardChanged, cardAdded,
 }) {
   return {
     type: 'makeCard',
     payload: {
-      id, cardIndex, question, answer,
+      id, cardIndex, question, answer, cardChanged, cardAdded,
     },
   };
 }
@@ -88,13 +105,15 @@ export function addNewCard() {
   return (dispatch, getState) => {
     const { newCardIndex } = getState();
 
-    dispatch(setCurrentCardIndex(newCardIndex + 1));
+    dispatch(setCurrentCardIndex(newCardIndex));
     dispatch(setNewCardIndex(newCardIndex + 1));
     dispatch(makeCard({
-      id: undefined,
-      cardIndex: newCardIndex + 1,
+      id: -1,
+      cardIndex: newCardIndex,
       question: '',
       answer: '',
+      cardChanged: false,
+      cardAdded: true,
     }));
   };
 }
@@ -102,7 +121,9 @@ export function addNewCard() {
 export function updateCard({ currentCardIndex, name, value }) {
   return {
     type: 'updateCard',
-    payload: { currentCardIndex, name, value },
+    payload: {
+      currentCardIndex, name, value, cardChanged: true,
+    },
   };
 }
 
@@ -119,9 +140,33 @@ export function initializeCardset() {
   };
 }
 
-export function saveCardset(cardset) {
-  return (dispatch) => {
-    dispatch(addNewCardset(cardset));
+export function saveCardset({ cardsetId }) {
+  return (dispatch, getState) => {
+    // patch title
+    const { isTitleChanged } = getState();
+
+    if (isTitleChanged) {
+      const { cardsetTitle } = getState();
+      patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
+    }
+
+    const { cards } = getState();
+
+    cards.forEach((card) => {
+      if (card.cardAdded) {
+        // post added cards
+        postNewCard({ cardsetId, question: card.question, answer: card.answer });
+      }
+
+      if (card.cardChanged) {
+        // patch changed cards
+        patchCardsetCard({
+          cardsetId, cardId: card.id, question: card.question, answer: card.answer,
+        });
+      }
+    });
+
+    dispatch(addNewCardset());
     dispatch(initializeCardset());
   };
 }
@@ -176,16 +221,31 @@ export function setCards(cards) {
   };
 }
 
+export function initializeCards(cards) {
+  return (dispatch) => {
+    dispatch(setCards(cards));
+  };
+}
+
 export function loadCards(id) {
-  return async (dispatch, getstate) => {
+  return async (dispatch, getState) => {
     const cardsetCards = await fetchCardsetCards(id);
 
     if (cardsetCards.length === 0) {
-      dispatch(makeCard(-1, 1, '', ''));
+      const { newCardIndex } = getState();
+      dispatch(makeCard({
+        id: -1,
+        cardIndex: 1,
+        question: '',
+        answer: '',
+      }));
+      dispatch(setNewCardIndex(newCardIndex + 1));
     } else {
       const cards = cardsetCards.map((card) => {
-        const { newCardIndex } = getstate();
+        const { newCardIndex } = getState();
         Object.assign(card, { cardIndex: newCardIndex });
+        Object.assign(card, { cardChanged: false });
+        Object.assign(card, { cardAdded: false });
         dispatch(setNewCardIndex(newCardIndex + 1));
         return card;
       });
@@ -196,16 +256,18 @@ export function loadCards(id) {
 
 export function initializeCardsetStudio(id) {
   return async (dispatch, getState) => {
+    dispatch(setTitleChanged(false));
     dispatch(setCurrentCardIndex(1));
     dispatch(setNewCardIndex(1));
+    dispatch(initializeCards([]));
 
-    await dispatch(loadCards(id));
     await dispatch(loadCardsetInfo(id));
+    await dispatch(loadCards(id));
 
     const { cardsetInfo } = getState();
     const { name } = cardsetInfo;
 
-    dispatch(changeCardsetTitle({ cardsetTitle: name }));
+    dispatch(setCardsetTitle(name));
   };
 }
 

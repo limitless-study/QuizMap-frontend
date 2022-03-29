@@ -10,6 +10,7 @@ const initialState = {
   cardsetTitle: '',
   newCardIndex: 1,
   currentCardIndex: 1,
+  isTitleChanged: false,
 
   // 학습 mode
   cardIndex: 0,
@@ -31,7 +32,7 @@ const reducers = {
     };
   },
 
-  changeCardsetTitle(state, { payload: { cardsetTitle } }) {
+  setCardsetTitle(state, { payload: { cardsetTitle } }) {
     return {
       ...state,
       cardsetTitle,
@@ -50,13 +51,13 @@ const reducers = {
 
   makeCard(state, {
     payload: {
-      id, cardIndex, question, answer,
+      id, cardIndex, question, answer, cardChanged, cardAdded,
     },
   }) {
     return {
       ...state,
       cards: [...state.cards, {
-        id, cardIndex, question, answer,
+        id, cardIndex, question, answer, cardChanged, cardAdded,
       }],
     };
   },
@@ -69,6 +70,13 @@ const reducers = {
   },
 
   // studio state
+  setTitleChanged(state, { payload: { isTitleChanged } }) {
+    return {
+      ...state,
+      isTitleChanged,
+    };
+  },
+
   setNewCardIndex(state, { payload: { newCardIndex } }) {
     return {
       ...state,
@@ -83,12 +91,20 @@ const reducers = {
     };
   },
 
-  updateCard(state, { payload: { currentCardIndex, name, value } }) {
+  updateCard(state, {
+    payload: {
+      currentCardIndex, name, value, cardChanged,
+    },
+  }) {
     return {
       ...state,
       cards: [
         ...(state.cards.map((card) => (card.cardIndex === currentCardIndex
-          ? { ...card, [name]: value }
+          ? {
+            ...card,
+            [name]: value,
+            cardChanged,
+          }
           : card))),
       ],
     };

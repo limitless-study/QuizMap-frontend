@@ -13,9 +13,7 @@ const Wrapper = styled.div({
   display: 'flex',
 });
 
-export default function CardsetContainer({ id }) {
-  console.log('CardsetContainer id:', id);
-
+export default function CardsetContainer() {
   const menus = useSelector(get('rootCardsets'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));

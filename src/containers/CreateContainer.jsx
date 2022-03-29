@@ -20,7 +20,7 @@ export default function CreateContainer({ id }) {
   const currentCardIndex = useSelector(get('currentCardIndex'));
 
   const handleSave = () => {
-    dispatch(saveCardset({ cardsetId: id, cardsetTitle: title, cards }));
+    dispatch(saveCardset({ cardsetId: id }));
   };
 
   const handleAddCardButtonClick = () => {
@@ -28,7 +28,7 @@ export default function CreateContainer({ id }) {
   };
 
   const handleTitleChange = ({ value: cardsetTitle }) => {
-    dispatch(changeCardsetTitle({ cardsetTitle }));
+    dispatch(changeCardsetTitle(cardsetTitle));
   };
 
   const handleInputChange = ({ name, value }) => {
@@ -42,6 +42,7 @@ export default function CreateContainer({ id }) {
   return (
     <div>
       <CreateForm
+        cardsetId={id}
         currentCardIndex={currentCardIndex}
         title={title}
         cards={cards}
