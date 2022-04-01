@@ -9,7 +9,7 @@ const Wrapper = styled.div({
 });
 
 const Logo = styled.h1({
-  width: '5em',
+  width: '7em',
   marginBottom: '5px',
   paddingLeft: '5px',
   '& a': {
@@ -23,6 +23,7 @@ const MenuContainer = styled.ul({
   paddingLeft: '20px',
   overflow: 'hidden',
 });
+
 const SelectedMenu = styled.li({
   right: '0',
   backgroundColor: '#F4F4F4',

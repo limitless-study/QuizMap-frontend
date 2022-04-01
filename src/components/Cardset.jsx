@@ -13,6 +13,7 @@ const Wrapper = styled.div({
 
 const Title = styled.div({
   display: 'flex',
+  alignItems: 'center',
 });
 
 const Header = styled.div({
@@ -21,7 +22,8 @@ const Header = styled.div({
 });
 
 const SubTitle = styled.h2({
-  width: '90%',
+  width: '91%',
+  marginBottom: '10px',
   color: '#686868',
   borderBottom: '1px solid #C6C6C6',
 });
@@ -30,11 +32,14 @@ const CardsetBoxField = styled.li({
   width: '90%',
   fontWeight: 'bold',
   marginBottom: '10px',
-  backgroundColor: '#FAFAFA',
-  padding: '5px',
+  backgroundColor: '#F3F3F3',
+  padding: '5px 0px 5px 5px',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  '& a:hover': {
+    textDecoration: 'underline',
+  },
 });
 
 const CardBoxField = styled.li({
@@ -42,7 +47,7 @@ const CardBoxField = styled.li({
   fontWeight: 'bold',
   marginBottom: '10px',
   backgroundColor: '#FAFAFA',
-  padding: '5px',
+  padding: '5px 0px 5px 5px',
   display: 'flex',
   alignItems: 'center',
 });
@@ -60,16 +65,18 @@ const CardsetInfo = styled.div({
 const IconBox = styled.button({
   width: '28px',
   height: '28px',
-  fontSize: '18px',
+  fontSize: '15px',
   backgroundColor: '#D4D4D4',
   borderRadius: '2px',
   border: 'none',
   color: 'white',
+  marginRight: '5px',
   '& a': {
     display: 'block',
     fontWeight: 'bold',
     border: 'none',
     color: 'white',
+    textAlign: 'center',
   },
 });
 
