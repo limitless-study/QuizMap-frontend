@@ -1,23 +1,59 @@
 import { Link } from 'react-router-dom';
 
+import { BsCheckLg } from 'react-icons/bs';
+import { FaFolder, FaPen, FaPlayCircle } from 'react-icons/fa';
+
 import styled from '@emotion/styled';
 
-const CardsetBox = styled.div({
-  width: '400px',
-  fontWeight: 'bold',
-  marginBottom: '10px',
-  marginLeft: '10px',
-  backgroundColor: '#EDEDED',
-  padding: '6px',
+const Wrapper = styled.div({
+  width: '100%',
+  height: '100%',
+  padding: '20px',
 });
 
-const CardBox = styled.div({
+const Title = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const Header = styled.div({
+  alignItems: 'center',
+  marginBottom: '10px',
+});
+
+const SubTitle = styled.h2({
+  width: '91%',
+  marginBottom: '10px',
+  color: '#686868',
+  borderBottom: '1px solid #C6C6C6',
+});
+
+const CardsetBoxField = styled.li({
+  width: '90%',
   fontWeight: 'bold',
   marginBottom: '10px',
-  marginLeft: '10px',
-  padding: '6px',
-  width: '400px',
+  backgroundColor: '#F3F3F3',
+  padding: '5px 0px 5px 5px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  '& a:hover': {
+    textDecoration: 'underline',
+  },
+});
+
+const CardBoxField = styled.li({
+  width: '90%',
+  fontWeight: 'bold',
+  marginBottom: '10px',
   backgroundColor: '#FAFAFA',
+  padding: '5px 0px 5px 5px',
+  display: 'flex',
+  alignItems: 'center',
+});
+
+const CardsetBoxTitle = styled.div({
+  display: 'flex',
 });
 
 const CardsetInfo = styled.div({
@@ -26,19 +62,21 @@ const CardsetInfo = styled.div({
   fontSize: '22px',
 });
 
-const StudioButton = styled.button({
-  marginLeft: '3px',
-  backgroundColor: 'lightgray',
-  borderRadius: '3px',
-  padding: '2px',
-  fontWeight: 'bold',
+const IconBox = styled.button({
+  width: '28px',
+  height: '28px',
+  fontSize: '15px',
+  backgroundColor: '#D4D4D4',
+  borderRadius: '2px',
   border: 'none',
   color: 'white',
+  marginRight: '5px',
   '& a': {
     display: 'block',
     fontWeight: 'bold',
     border: 'none',
     color: 'white',
+    textAlign: 'center',
   },
 });
 
@@ -48,51 +86,75 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
   } = cardsetInfo;
 
   return (
-    <div>
-      <div>
-        <h1>{name}</h1>
-        <CardsetInfo>
-          {`${cardSetCount} Cardsets, ${cardCount} Cards`}
-          <StudioButton
+    <Wrapper>
+      <Header>
+        <Title>
+          <h1>{name}</h1>
+          <IconBox
             type="button"
           >
             <Link to={`/studio/${id}`}>
-              수정
+              <FaPen />
             </Link>
-          </StudioButton>
+          </IconBox>
+          <IconBox
+            type="button"
+          >
+            <FaPlayCircle />
+          </IconBox>
+
+        </Title>
+        <CardsetInfo>
+          {`${cardSetCount} Cardsets, ${cardCount} Cards`}
         </CardsetInfo>
-      </div>
-      <h2>Cards</h2>
-      {cardsetChildren.map((child) => {
-        if (child.type === 'CARDSET') {
+      </Header>
+      <SubTitle>
+        Cards
+      </SubTitle>
+      <ul>
+        {cardsetChildren.map((child) => {
+          if (child.type === 'CARDSET') {
+            return (
+              <CardsetBoxField
+                key={child.id}
+              >
+                <CardsetBoxTitle>
+                  <IconBox>
+                    <FaFolder />
+                  </IconBox>
+                  <Link to={`/cardsets/${child.id}`}>
+                    {child.title}
+                  </Link>
+                </CardsetBoxTitle>
+                <div>
+                  <IconBox
+                    type="button"
+                  >
+                    <Link to={`/studio/${child.id}`}>
+                      <FaPen />
+                    </Link>
+                  </IconBox>
+                  <IconBox
+                    type="button"
+                  >
+                    <FaPlayCircle />
+                  </IconBox>
+                </div>
+              </CardsetBoxField>
+            );
+          }
           return (
-            <CardsetBox
+            <CardBoxField
               key={child.id}
             >
-              <Link to={`/cardsets/${child.id}`}>
-                {child.title}
-              </Link>
-              <StudioButton
-                type="button"
-              >
-                <Link to={`/studio/${child.id}`}>
-                  수정
-                </Link>
-              </StudioButton>
-              <StudioButton
-                type="button"
-              >
-                학습
-              </StudioButton>
-            </CardsetBox>
+              <IconBox>
+                <BsCheckLg />
+              </IconBox>
+              {child.title}
+            </CardBoxField>
           );
-        }
-        return (
-          <CardBox key={child.id}>
-            {child.title}
-          </CardBox>
-        );
-      })}
-    </div>
+        })}
+      </ul>
+    </Wrapper>
   );
 }
