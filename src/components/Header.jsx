@@ -26,11 +26,12 @@ const MenuItems = styled.ul({
   },
 });
 
-const NewCardsetButton = styled.li({
+const MyCardsetButton = styled.li({
   backgroundColor: '#5B40FF',
   padding: '3px 15px',
   borderRadius: '7px',
   '& a': {
+    display: 'block',
     color: 'white',
   },
 });
@@ -44,10 +45,11 @@ export default function Header() {
       <MenuItems>
         <li><Link to="/">home</Link></li>
         <li><Link to="/about">about</Link></li>
-        <li><Link to="/cardsets">cardsets</Link></li>
         <li><Link to="/login">log in</Link></li>
         <li><Link to="/signup">sign up</Link></li>
-        <NewCardsetButton><Link to={`/cardsets/${1}`}>New Cardset</Link></NewCardsetButton>
+        <MyCardsetButton>
+          <Link to="/root">My Cardsets</Link>
+        </MyCardsetButton>
       </MenuItems>
     </MenuBar>
   );

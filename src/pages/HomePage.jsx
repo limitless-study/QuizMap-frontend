@@ -34,6 +34,7 @@ const Button = styled.button({
   boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
   fontSize: '24px',
   '& a': {
+    display: 'block',
     color: 'white',
   },
 });

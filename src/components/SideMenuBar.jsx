@@ -10,6 +10,7 @@ const Wrapper = styled.div({
 const Logo = styled.h1({
   width: '5em',
   '& a': {
+    fontSize: '28px',
     color: 'white',
   },
 });
@@ -31,7 +32,9 @@ export default function SideMenuBar({ menus }) {
   return (
     <Wrapper>
       <Logo>
-        <Link to="/">Limitless</Link>
+        <Link to="/">
+          Limitless
+        </Link>
       </Logo>
       <MenuContainer>
         {menus.map((menu) => (
