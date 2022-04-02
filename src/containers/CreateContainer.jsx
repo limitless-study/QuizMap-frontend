@@ -32,7 +32,7 @@ export default function CreateContainer({ id }) {
   }, [cardsetId]);
 
   const handleSave = () => {
-    dispatch(saveCardset({ cardsetId: id }));
+    dispatch(saveCardset(cardsetId));
   };
 
   const handleAddCardButtonClick = () => {

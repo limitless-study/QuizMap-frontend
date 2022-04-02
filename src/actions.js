@@ -132,13 +132,14 @@ export function initializeCardset() {
   };
 }
 
-export function saveCardset({ cardsetId }) {
+export function saveCardset(cardsetId) {
   return (dispatch, getState) => {
     // patch title
     const { isTitleChanged } = getState();
 
     if (isTitleChanged) {
       const { cardsetTitle } = getState();
+      console.log('cardsetTitle', cardsetTitle);
       patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
     }
 
