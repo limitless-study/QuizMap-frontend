@@ -5,6 +5,7 @@ import LearnPage from './pages/LearnPage';
 import CreatePage from './pages/CreatePage';
 import CardsetPage from './pages/CardsetPage';
 import RootPage from './pages/RootPage';
+import MindMapPage from './pages/MindMapPage';
 
 // TODO: delete these and make each pages
 function AboutPage() { return (<div>about</div>); }
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/root" element={<RootPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/mindmap/:id" element={<MindMapPage />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </div>

@@ -65,8 +65,6 @@ const Menu = styled.li({
 export default function SideMenuBar({ menus }) {
   const { id } = useParams();
 
-  console.log('id:', id);
-
   return (
     <Wrapper>
       <Logo>

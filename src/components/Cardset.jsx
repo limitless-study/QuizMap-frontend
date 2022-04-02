@@ -53,6 +53,23 @@ const IconBox = styled.button({
   },
 });
 
+const MindMapButton = styled.button({
+  padding: '0 7px',
+  height: '28px',
+  fontSize: '15px',
+  backgroundColor: '#F9F9F9',
+  borderRadius: '2px',
+  border: 'none',
+  transition: 'box-shadow 0.3s',
+  boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
+  '& a': {
+    display: 'block',
+  },
+  ':hover': {
+    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 3px 3px 0px',
+  },
+});
+
 export default function Cardset({ cardsetInfo, cardsetChildren }) {
   const {
     id, name, cardSetCount, cardCount,
@@ -77,6 +94,11 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
               <FaPlayCircle />
             </Link>
           </IconBox>
+          <MindMapButton
+            type="button"
+          >
+            <Link to={`/mindmap/${id}`}>Convert to Mindmap</Link>
+          </MindMapButton>
 
         </Title>
         <CardsetInfo>
