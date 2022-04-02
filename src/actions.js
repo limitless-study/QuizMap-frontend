@@ -52,8 +52,8 @@ export function nextCard(cardIndex) {
 
     if (cardIndex + 1 <= cards.length) {
       dispatch(setCurrentCardIndex(cardIndex + 1));
+      dispatch(setFlipped(false));
     }
-    dispatch(setFlipped(false));
   };
 }
 
