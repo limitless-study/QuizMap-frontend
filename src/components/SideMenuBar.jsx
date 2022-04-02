@@ -62,8 +62,8 @@ const Menu = styled.li({
   },
 });
 
-export default function SideMenuBar({ menus }) {
-  const { id } = useParams();
+export default function SideMenuBar({ menus, cardsetId }) {
+  const { id } = cardsetId || useParams();
 
   return (
     <Wrapper>

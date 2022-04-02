@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-import SideMenuBar from '../components/SideMenuBar';
 import CardsetContainer from '../containers/CardsetContainer';
 
 const Wrapper = styled.div({
@@ -12,7 +11,6 @@ const Wrapper = styled.div({
 export default function CardsetsPage() {
   return (
     <Wrapper>
-      <SideMenuBar />
       <CardsetContainer />
     </Wrapper>
   );
