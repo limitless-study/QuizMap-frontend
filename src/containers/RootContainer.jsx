@@ -14,6 +14,7 @@ import SideMenuBar from '../components/SideMenuBar';
 
 import {
   addNewCardset,
+  setCardsetId,
 } from '../actions';
 
 const Wrapper = styled.div({
@@ -43,23 +44,23 @@ const CardsetsContainer = styled.div({
 });
 
 const CardsetCard = styled.div({
+  display: 'table',
   backgroundColor: '#F3F3F3',
   width: '220px',
   height: '160px',
-  padding: '10px',
+  padding: '20px',
   textAlign: 'left',
-  lineHeight: '160px',
   borderRadius: '10px',
   border: '1px solid #E7E7E7',
   boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',
   transition: 'border 0.5s',
   '& a': {
+    height: '160px',
+    display: 'block',
     color: '#303030',
     fontSize: '20px',
     fontWeight: 'bolder',
-    display: 'inline-block',
-    width: '100%',
-    height: '100%',
+    verticalAlign: 'middle',
   },
   ':hover': {
     border: '2px solid #2F38FF',
@@ -69,11 +70,10 @@ const CardsetCard = styled.div({
 
 const AddCardsetButton = styled.button({
   backgroundColor: 'white',
-  width: '240px',
-  height: '180px',
+  width: '260px',
+  height: '200px',
   textAlign: 'center',
   lineHeight: '180px',
-  padding: '10px',
   borderRadius: '10px',
   border: '1px solid #E7E7E7',
   boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',

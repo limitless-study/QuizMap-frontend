@@ -32,7 +32,7 @@ export default function CreateContainer({ id }) {
   }, [cardsetId]);
 
   const handleSave = () => {
-    dispatch(saveCardset(cardsetId));
+    dispatch(saveCardset(id));
   };
 
   const handleAddCardButtonClick = () => {
@@ -56,19 +56,17 @@ export default function CreateContainer({ id }) {
   };
 
   return (
-    <div>
-      <CreateForm
-        cardsetId={id}
-        currentCardIndex={currentCardIndex}
-        title={title}
-        cards={cards}
-        onSave={handleSave}
-        onInputChange={handleInputChange}
-        onTitleChange={handleTitleChange}
-        onCardClick={handleCardClick}
-        onAddCardClick={handleAddCardButtonClick}
-        onAddCardsetClick={handleAddCardsetButtonClick}
-      />
-    </div>
+    <CreateForm
+      cardsetId={id}
+      currentCardIndex={currentCardIndex}
+      title={title}
+      cards={cards}
+      onSave={handleSave}
+      onInputChange={handleInputChange}
+      onTitleChange={handleTitleChange}
+      onCardClick={handleCardClick}
+      onAddCardClick={handleAddCardButtonClick}
+      onAddCardsetClick={handleAddCardsetButtonClick}
+    />
   );
 }
