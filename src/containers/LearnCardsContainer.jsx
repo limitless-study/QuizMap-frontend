@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
@@ -11,6 +13,32 @@ import {
   flipCard,
   nextCard,
 } from '../actions';
+
+const Header = styled.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '10px',
+  fontSize: '24px',
+  fontWeight: 'bolder',
+  borderBottom: '1px solid #DDDDDD',
+});
+
+const FinishButton = styled.button({
+  backgroundColor: '#5B40FF',
+  width: '100px',
+  height: '40px',
+  borderRadius: '6px',
+  border: 'none',
+  cursor: 'pointer',
+  ':hover': {
+    backgroundColor: '#3716FF',
+  },
+  '& a': {
+    color: 'white',
+    fontSize: '14px',
+    fontWeight: 'bolder',
+  },
+});
 
 const CardItemsContainer = styled.div({
   width: '100vw',
@@ -31,6 +59,7 @@ export default function LearnCardsContainer() {
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
+  const { id, name } = useSelector(get('cardsetInfo'));
 
   const handleFlip = () => {
     dispatch(flipCard());
@@ -50,16 +79,28 @@ export default function LearnCardsContainer() {
   const { question, answer } = currentCard[0];
 
   return (
-    <CardItemsContainer>
-      <CardItemsWrapper>
-        <Card
-          content={flipped ? answer : question}
-        />
-        <CardButtons
-          onFlip={handleFlip}
-          onClick={handleClick}
-        />
-      </CardItemsWrapper>
-    </CardItemsContainer>
+    <div>
+      <Header>
+        <div>{name}</div>
+        <div>
+          <FinishButton
+            type="button"
+          >
+            <Link to={`/cardsets/${id}`}>끝내기</Link>
+          </FinishButton>
+        </div>
+      </Header>
+      <CardItemsContainer>
+        <CardItemsWrapper>
+          <Card
+            content={flipped ? answer : question}
+          />
+          <CardButtons
+            onFlip={handleFlip}
+            onClick={handleClick}
+          />
+        </CardItemsWrapper>
+      </CardItemsContainer>
+    </div>
   );
 }
