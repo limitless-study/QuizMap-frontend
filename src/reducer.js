@@ -16,6 +16,9 @@ const initialState = {
   // learn page
   isLastPage: false,
   flipped: false,
+
+  // mind map page
+  mindMapCards: [],
 };
 
 const reducers = {
@@ -136,6 +139,13 @@ const reducers = {
     return {
       ...state,
       isLastPage,
+    };
+  },
+
+  setMindMapCards(state, { payload: { mindMapCards } }) {
+    return {
+      ...state,
+      mindMapCards,
     };
   },
 };

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
@@ -6,11 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
 
-import MindElixir from 'mind-elixir';
-
 import SideMenuBar from '../components/SideMenuBar';
+import MindMap from '../components/MindMap';
 
 import {
+  loadMindMapCards,
   loadRootCardsets,
 } from '../actions';
 
@@ -22,39 +22,23 @@ const Wrapper = styled.div({
   display: 'flex',
 });
 
-const MindMapField = styled.div({
-  width: '82vw',
-  height: '100vh',
-});
-
 export default function MindMapPage({ params }) {
   const { id } = params || useParams();
 
   const dispatch = useDispatch();
 
   const menus = useSelector(get('rootCardsets'));
+  const mindMapCards = useSelector(get('mindMapCards'));
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(loadRootCardsets());
-    const mindmap = new MindElixir({
-      el: '#map',
-      direction: MindElixir.LEFT,
-      data: MindElixir.new('new topic'),
-      draggable: true, // default true
-      contextMenu: true, // default true
-      toolBar: true, // default true
-      nodeMenu: true, // default true
-      keypress: true, // default true
-    });
-    mindmap.init();
+    dispatch(loadMindMapCards(id));
   }, [id]);
 
   return (
     <Wrapper>
       <SideMenuBar menus={menus} />
-      <div>
-        <MindMapField id="map" />
-      </div>
+      <MindMap mindMapCards={mindMapCards} />
     </Wrapper>
   );
 }

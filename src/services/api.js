@@ -19,6 +19,13 @@ export async function fetchCardsetCards(cardsetId) {
   return data;
 }
 
+export async function fetchMindMapCards(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
 export async function patchCardsetTitle({ id, name }) {
   const url = `http://lhjkes.ddns.net:1205/api/cardsets/${id}`;
   const response = await fetch(url, {
