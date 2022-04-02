@@ -28,7 +28,7 @@ const CardItemsWrapper = styled.div({
   transform: 'translate(-50%, -50%)',
 });
 
-export default function CardsContainer() {
+export default function LearnCardsContainer() {
   const dispatch = useDispatch();
 
   useEffect(() => {

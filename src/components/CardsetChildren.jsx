@@ -79,7 +79,9 @@ export default function CardsetChildren({ cardsetChildren }) {
                 <IconBox
                   type="button"
                 >
-                  <FaPlayCircle />
+                  <Link to={`/learn/${child.id}`}>
+                    <FaPlayCircle />
+                  </Link>
                 </IconBox>
               </div>
             </CardsetBoxField>

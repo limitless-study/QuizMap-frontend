@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import {
   fetchCardsetInfo,
   fetchCardsetChildren,
@@ -282,5 +281,12 @@ export function initializeCardsetPage(id) {
     await dispatch(loadRootCardsets());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCardsetChildren(id));
+  };
+}
+
+export function initializeLearnPage(id) {
+  return async (dispatch) => {
+    await dispatch(loadCardsetInfo(id));
+    await dispatch(loadCards(id));
   };
 }
