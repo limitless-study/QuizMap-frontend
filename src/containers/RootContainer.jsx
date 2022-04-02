@@ -115,7 +115,7 @@ export default function RootContainer() {
               key={cardset.id}
             >
               <Link to={`/cardsets/${cardset.id}`}>
-                {cardset.title}
+                {cardset.topic}
               </Link>
             </CardsetCard>
           ))}

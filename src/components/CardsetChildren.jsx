@@ -78,7 +78,7 @@ export default function CardsetChildren({ cardsetChildren }) {
                   <FaFolder />
                 </IconBox>
                 <Link to={`/cardsets/${child.id}`}>
-                  {child.title}
+                  {child.topic}
                 </Link>
               </CardsetBoxTitle>
               <div>
@@ -107,7 +107,7 @@ export default function CardsetChildren({ cardsetChildren }) {
             <IconBox>
               <BsCheckLg />
             </IconBox>
-            {child.title}
+            {child.topic}
           </CardBoxField>
         );
       })}

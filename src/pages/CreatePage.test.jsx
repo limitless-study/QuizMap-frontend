@@ -14,7 +14,7 @@ describe('CreatePage', () => {
       currentCardId: 1,
       cardset: {
         id: 1,
-        title: 'test-title',
+        topic: 'test-topic',
         cards: [
           {
             id: 1,

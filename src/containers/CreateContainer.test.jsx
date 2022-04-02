@@ -23,7 +23,7 @@ describe('CreateContainer', () => {
       currentCardId: 1,
       cardset: {
         id: 1,
-        title: 'test-title',
+        topic: 'test-topic',
         cards: [
           {
             id: 1,
@@ -50,12 +50,12 @@ describe('CreateContainer', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.change(getByLabelText('flashcard title'), {
+    fireEvent.change(getByLabelText('flashcard topic'), {
       target: { value: 'New Title' },
     });
 
     expect(dispatch).toBeCalledWith(changeCardsetTitle({
-      name: 'title', value: 'New Title',
+      name: 'topic', value: 'New Title',
     }));
 
     fireEvent.change(getByLabelText('flashcard question'), {

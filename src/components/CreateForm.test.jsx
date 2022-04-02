@@ -30,7 +30,7 @@ describe('CreateForm', () => {
         <CreateForm
           currentCardId={1}
           currentCard={currentCard}
-          title="test-title"
+          topic="test-topic"
           cards={cards}
           onInputChange={handleInputChange}
           onTitleChange={handleTitleChange}
@@ -50,7 +50,7 @@ describe('CreateForm', () => {
   it('renders CreateForm', () => {
     const { getByLabelText } = renderCreateForm();
 
-    expect(getByLabelText('flashcard title')).not.toBeNull();
+    expect(getByLabelText('flashcard topic')).not.toBeNull();
     expect(getByLabelText('flashcard question')).not.toBeNull();
     expect(getByLabelText('flashcard answer')).not.toBeNull();
   });
@@ -58,7 +58,7 @@ describe('CreateForm', () => {
   it('listens input change events', () => {
     const { getByLabelText } = renderCreateForm();
 
-    fireEvent.change(getByLabelText('flashcard title'), { target: { value: 'new title' } });
+    fireEvent.change(getByLabelText('flashcard topic'), { target: { value: 'new topic' } });
     expect(handleTitleChange).toBeCalled();
 
     fireEvent.change(getByLabelText('flashcard question'), { target: { value: 'new question' } });

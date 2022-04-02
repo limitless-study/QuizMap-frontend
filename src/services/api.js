@@ -28,8 +28,8 @@ export async function patchCardsetTitle({ id, name }) {
     },
     body: JSON.stringify({ id, name }),
   });
-  const { name: title } = await response.json();
-  return title;
+  const { name: topic } = await response.json();
+  return topic;
 }
 
 export async function postNewCardset(cardsetId) {

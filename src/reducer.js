@@ -14,6 +14,7 @@ const initialState = {
   cardsetId: 0,
 
   // learn page
+  isLastPage: false,
   flipped: false,
 };
 
@@ -128,6 +129,13 @@ const reducers = {
     return {
       ...state,
       cards,
+    };
+  },
+
+  setIsLastPage(state, { payload: { isLastPage } }) {
+    return {
+      ...state,
+      isLastPage,
     };
   },
 };

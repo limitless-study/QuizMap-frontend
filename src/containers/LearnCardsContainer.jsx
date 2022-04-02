@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 
 import Card from '../components/Card';
 import CardButtons from '../components/CardButtons';
+import LastLearningPage from '../components/LastLearningPage';
 
 import { get } from '../utils';
 
@@ -35,6 +36,7 @@ const FinishButton = styled.button({
     backgroundColor: '#3716FF',
   },
   '& a': {
+    display: 'block',
     color: 'white',
     fontSize: '14px',
     fontWeight: 'bolder',
@@ -61,6 +63,13 @@ export default function LearnCardsContainer() {
   const flipped = useSelector(get('flipped'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const { id, name } = useSelector(get('cardsetInfo'));
+  const isLastPage = useSelector(get('isLastPage'));
+
+  if (isLastPage) { // ! 지우기
+    return (
+      <LastLearningPage id={id} />
+    );
+  }
 
   if (cards.length === 0) {
     return (
