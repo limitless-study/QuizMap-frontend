@@ -72,3 +72,23 @@ export async function postNewCard({ cardsetId, question, answer }) {
   const data = await response.json();
   return data;
 }
+
+export async function deleteCardset(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}`;
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
+export async function deleteCard(cardId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}`;
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
