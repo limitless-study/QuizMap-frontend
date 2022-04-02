@@ -5,8 +5,21 @@ import styled from '@emotion/styled';
 import { BsCheckLg } from 'react-icons/bs';
 import { FaFolder, FaPen, FaPlayCircle } from 'react-icons/fa';
 
+const Wrapper = styled.ul({
+  width: '95%',
+  maxHeight: '75%',
+  overflow: 'auto',
+  '::-webkit-scrollbar': {
+    width: '10px',
+  },
+  '::-webkit-scrollbar-thumb': {
+    backgroundColor: '#F1F1F1',
+    borderRadius: '10px',
+  },
+});
+
 const CardsetBoxField = styled.li({
-  width: '90%',
+  width: '97%',
   fontWeight: 'bold',
   marginBottom: '10px',
   backgroundColor: '#F3F3F3',
@@ -20,7 +33,7 @@ const CardsetBoxField = styled.li({
 });
 
 const CardBoxField = styled.li({
-  width: '90%',
+  width: '97%',
   fontWeight: 'bold',
   marginBottom: '10px',
   backgroundColor: '#FAFAFA',
@@ -53,7 +66,7 @@ const IconBox = styled.button({
 
 export default function CardsetChildren({ cardsetChildren }) {
   return (
-    <ul>
+    <Wrapper>
       {cardsetChildren.map((child) => {
         if (child.type === 'CARDSET') {
           return (
@@ -98,6 +111,6 @@ export default function CardsetChildren({ cardsetChildren }) {
           </CardBoxField>
         );
       })}
-    </ul>
+    </Wrapper>
   );
 }

@@ -7,6 +7,7 @@ import {
   postNewCard,
   patchCardsetCard,
   postNewCardset,
+  postCardFeedbackNumber,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -134,6 +135,7 @@ export function initializeCardset() {
 
 export function saveCardset(cardsetId) {
   return (dispatch, getState) => {
+    console.log('cardsetId', cardsetId);
     // patch title
     const { isTitleChanged } = getState();
 
@@ -262,6 +264,13 @@ export function loadLearnCardsInSequence(cardsetId) {
       return card;
     });
     dispatch(setCards(learnCards));
+  };
+}
+
+export function saveCardScore(cardId, feedbackNumber) {
+  return async () => {
+    const data = await postCardFeedbackNumber(cardId, feedbackNumber);
+    console.log('saveCardScore', data);
   };
 }
 

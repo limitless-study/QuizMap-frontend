@@ -14,7 +14,9 @@ const WrongButton = styled.button({
   border: 'none',
   borderRadius: '30px',
   color: 'white',
+  transition: 'box-shadow 0.3s',
   ':hover': {
+    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',
   },
 });
@@ -24,7 +26,9 @@ const FlipButton = styled.button({
   marginRight: '15px',
   border: 'none',
   borderRadius: '30px',
+  transition: 'box-shadow 0.3s',
   ':hover': {
+    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',
   },
 });
@@ -35,22 +39,26 @@ const CorrectButton = styled.button({
   border: 'none',
   borderRadius: '30px',
   color: 'white',
+  transition: 'box-shadow 0.3s',
   ':hover': {
+    boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',
   },
 });
 
 export default function CardButtons({ onFlip, onClick }) {
-  const handleClick = (event) => {
-    const { target: { innerHTML } } = event;
-    onClick(innerHTML);
+  const wrongNumber = 0;
+  const correntNumber = 1;
+
+  const handleClick = (feedbackNumber) => {
+    onClick(feedbackNumber);
   };
 
   return (
     <CardButtonsWrapper>
       <WrongButton
         type="button"
-        onClick={handleClick}
+        onClick={() => handleClick(wrongNumber)}
       >
         X
       </WrongButton>
@@ -62,7 +70,7 @@ export default function CardButtons({ onFlip, onClick }) {
       </FlipButton>
       <CorrectButton
         type="button"
-        onClick={handleClick}
+        onClick={() => handleClick(correntNumber)}
       >
         O
       </CorrectButton>

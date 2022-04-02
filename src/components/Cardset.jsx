@@ -8,7 +8,7 @@ import CardsetChildren from './CardsetChildren';
 
 const Wrapper = styled.div({
   width: '100%',
-  height: '100%',
+  height: '93%',
   padding: '20px',
 });
 
