@@ -1,4 +1,8 @@
-import { useParams, useEffect } from 'react-router-dom';
+import { useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { useParams } from 'react-router-dom';
 
 import LearnCardsContainer from '../containers/LearnCardsContainer';
 
@@ -9,8 +13,10 @@ import {
 export default function LearnPage({ params }) {
   const { id } = params || useParams();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatchEvent(initializeLearnPage(id));
+    dispatch(initializeLearnPage(id));
   }, [id]);
 
   return (

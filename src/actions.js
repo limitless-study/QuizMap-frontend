@@ -15,17 +15,25 @@ export function setFlipped(flipped) {
   };
 }
 
-export function setCardIndex(cardIndex) {
+export function setCurrentCardIndex(currentCardIndex) {
   return {
-    type: 'setCardIndex',
-    payload: { cardIndex },
+    type: 'setCurrentCardIndex',
+    payload: { currentCardIndex },
+  };
+}
+
+export function setNewCardIndex(newCardIndex) {
+  return {
+    type: 'setNewCardIndex',
+    payload: { newCardIndex },
   };
 }
 
 export function initializeCard() {
   return (dispatch) => {
     dispatch(setFlipped(false));
-    dispatch(setCardIndex(0));
+    dispatch(setCurrentCardIndex(1));
+    dispatch(setNewCardIndex(1));
   };
 }
 
@@ -41,9 +49,9 @@ export function nextCard(cardIndex) {
     const { cards } = getState();
 
     if (cardIndex < cards.length - 1) {
-      dispatch(setCardIndex(cardIndex + 1));
+      dispatch(setCurrentCardIndex(cardIndex + 1));
     } else {
-      dispatch(setCardIndex(cards.length - 1));
+      dispatch(setCurrentCardIndex(cards.length - 1));
     }
 
     dispatch(setFlipped(false));
@@ -86,20 +94,6 @@ export function makeCard({
     payload: {
       id, cardIndex, question, answer, cardChanged, cardAdded,
     },
-  };
-}
-
-export function setCurrentCardIndex(currentCardIndex) {
-  return {
-    type: 'setCurrentCardIndex',
-    payload: { currentCardIndex },
-  };
-}
-
-export function setNewCardIndex(newCardIndex) {
-  return {
-    type: 'setNewCardIndex',
-    payload: { newCardIndex },
   };
 }
 
@@ -286,6 +280,8 @@ export function initializeCardsetPage(id) {
 
 export function initializeLearnPage(id) {
   return async (dispatch) => {
+    dispatch(setCards([]));
+    dispatch(initializeCard());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCards(id));
   };

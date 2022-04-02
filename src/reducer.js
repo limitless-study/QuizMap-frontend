@@ -14,7 +14,6 @@ const initialState = {
   cardsetId: 0,
 
   // learn page
-  cardIndex: 0,
   flipped: false,
 };
 
@@ -23,13 +22,6 @@ const reducers = {
     return {
       ...state,
       flipped,
-    };
-  },
-
-  setCardIndex(state, { payload: { cardIndex } }) {
-    return {
-      ...state,
-      cardIndex,
     };
   },
 

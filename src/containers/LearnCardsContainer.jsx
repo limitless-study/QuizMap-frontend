@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
@@ -7,13 +5,12 @@ import styled from '@emotion/styled';
 import Card from '../components/Card';
 import CardButtons from '../components/CardButtons';
 
+import { get } from '../utils';
+
 import {
-  initializeCard,
   flipCard,
   nextCard,
 } from '../actions';
-
-import { get } from '../utils';
 
 const CardItemsContainer = styled.div({
   width: '100vw',
@@ -31,28 +28,32 @@ const CardItemsWrapper = styled.div({
 export default function LearnCardsContainer() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(initializeCard());
-  }, []);
-
   const cards = useSelector(get('cards'));
-  const cardIndex = useSelector(get('cardIndex'));
   const flipped = useSelector(get('flipped'));
-  const card = cards[cardIndex];
+  const currentCardIndex = useSelector(get('currentCardIndex'));
+
+  if (cards.length === 0) {
+    return (
+      <div>Loading...</div>
+    );
+  }
+
+  const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
+  const { question, answer } = currentCard[0];
 
   const handleFlip = () => {
     dispatch(flipCard());
   };
 
   const handleClick = () => {
-    dispatch(nextCard(cardIndex));
+    dispatch(nextCard(currentCardIndex));
   };
 
   return (
     <CardItemsContainer>
       <CardItemsWrapper>
         <Card
-          content={flipped ? card.answer : card.question}
+          content={flipped ? answer : question}
         />
         <CardButtons
           onFlip={handleFlip}

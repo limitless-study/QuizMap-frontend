@@ -20,8 +20,6 @@ export default function CreatePage({ params }) {
   }, [id]);
 
   return (
-    <div>
-      <CreateContainer id={id} />
-    </div>
+    <CreateContainer id={id} />
   );
 }
