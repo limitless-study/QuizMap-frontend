@@ -2,6 +2,7 @@ import {
   fetchCardsetInfo,
   fetchCardsetChildren,
   fetchCardsetCards,
+  fetchLearnCardsInSequence,
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
@@ -48,12 +49,9 @@ export function nextCard(cardIndex) {
   return (dispatch, getState) => {
     const { cards } = getState();
 
-    if (cardIndex < cards.length - 1) {
+    if (cardIndex + 1 <= cards.length) {
       dispatch(setCurrentCardIndex(cardIndex + 1));
-    } else {
-      dispatch(setCurrentCardIndex(cards.length - 1));
     }
-
     dispatch(setFlipped(false));
   };
 }
@@ -253,6 +251,19 @@ export function loadCards(id) {
   };
 }
 
+export function loadLearnCardsInSequence(cardsetId) {
+  return async (dispatch, getState) => {
+    const cards = await fetchLearnCardsInSequence(cardsetId);
+    const learnCards = cards.map((card) => {
+      const { newCardIndex } = getState();
+      Object.assign(card, { cardIndex: newCardIndex });
+      dispatch(setNewCardIndex(newCardIndex + 1));
+      return card;
+    });
+    dispatch(setCards(learnCards));
+  };
+}
+
 export function initializeCardsetStudio(id) {
   return async (dispatch, getState) => {
     dispatch(setTitleChanged(false));
@@ -283,6 +294,6 @@ export function initializeLearnPage(id) {
     dispatch(setCards([]));
     dispatch(initializeCard());
     await dispatch(loadCardsetInfo(id));
-    await dispatch(loadCards(id));
+    await dispatch(loadLearnCardsInSequence(id));
   };
 }

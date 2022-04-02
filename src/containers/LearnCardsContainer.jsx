@@ -32,6 +32,14 @@ export default function LearnCardsContainer() {
   const flipped = useSelector(get('flipped'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
 
+  const handleFlip = () => {
+    dispatch(flipCard());
+  };
+
+  const handleClick = () => {
+    dispatch(nextCard(currentCardIndex));
+  };
+
   if (cards.length === 0) {
     return (
       <div>Loading...</div>
@@ -40,14 +48,6 @@ export default function LearnCardsContainer() {
 
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
   const { question, answer } = currentCard[0];
-
-  const handleFlip = () => {
-    dispatch(flipCard());
-  };
-
-  const handleClick = () => {
-    dispatch(nextCard(currentCardIndex));
-  };
 
   return (
     <CardItemsContainer>

@@ -92,3 +92,10 @@ export async function deleteCard(cardId) {
     },
   });
 }
+
+export async function fetchLearnCardsInSequence(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/learn/sequence`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
