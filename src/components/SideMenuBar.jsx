@@ -82,7 +82,7 @@ export default function SideMenuBar({ menus }) {
                 key={menu.id}
               >
                 <FaFolder color="#5B40FF" />
-                <Link to={`/cardsets/${menu.id}`}>{menu.title}</Link>
+                <Link to={`/cardsets/${menu.id}`}>{menu.topic}</Link>
               </SelectedMenu>
             );
           }
@@ -91,7 +91,7 @@ export default function SideMenuBar({ menus }) {
               key={menu.id}
             >
               <FaFolder color="#5B40FF" />
-              <Link to={`/cardsets/${menu.id}`}>{menu.title}</Link>
+              <Link to={`/cardsets/${menu.id}`}>{menu.topic}</Link>
             </Menu>
           );
         })}

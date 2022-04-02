@@ -22,7 +22,7 @@ export default function CreateContainer({ id }) {
 
   const navigate = useNavigate();
 
-  const title = useSelector(get('cardsetTitle'));
+  const topic = useSelector(get('cardsetTitle'));
   const cards = useSelector(get('cards'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const cardsetId = useSelector(get('cardsetId'));
@@ -59,7 +59,7 @@ export default function CreateContainer({ id }) {
     <CreateForm
       cardsetId={id}
       currentCardIndex={currentCardIndex}
-      title={title}
+      topic={topic}
       cards={cards}
       onSave={handleSave}
       onInputChange={handleInputChange}

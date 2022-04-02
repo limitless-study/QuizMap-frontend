@@ -6,10 +6,10 @@ import Cardset from './Cardset';
 
 describe('Cardset', () => {
   const cardsets = [
-    { id: 1, title: 'Card Set #1' },
-    { id: 2, title: 'Card Set #2' },
-    { id: 3, title: 'Card Set #3' },
-    { id: 4, title: 'Card Set #4' },
+    { id: 1, topic: 'Card Set #1' },
+    { id: 2, topic: 'Card Set #2' },
+    { id: 3, topic: 'Card Set #3' },
+    { id: 4, topic: 'Card Set #4' },
   ];
 
   it('renders Cardset', () => {
@@ -20,7 +20,7 @@ describe('Cardset', () => {
     );
 
     cardsets.forEach((cardset) => {
-      expect(getByText(cardset.title)).not.toBeNull();
+      expect(getByText(cardset.topic)).not.toBeNull();
     });
   });
 });

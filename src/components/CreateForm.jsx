@@ -125,7 +125,7 @@ const SaveButton = styled.div({
 });
 
 export default function CreateForm({
-  cardsetId, currentCardIndex, title, cards,
+  cardsetId, currentCardIndex, topic, cards,
   onSave, onTitleChange, onInputChange, onCardClick, onAddCardClick, onAddCardsetClick,
 }) {
   const handleCardClick = (card) => {
@@ -165,16 +165,16 @@ export default function CreateForm({
       <SideBar>
         <CreateCardTitle>
           <Label
-            htmlFor="flashcard-title"
+            htmlFor="flashcard-topic"
           >
-            flashcard title
+            flashcard topic
           </Label>
           <input
             type="text"
-            id="flashcard-title"
-            name="title"
-            value={title}
-            placeholder="enter new title"
+            id="flashcard-topic"
+            name="topic"
+            value={topic}
+            placeholder="enter new topic"
             autoComplete="off"
             onChange={handleTitleChange}
           />

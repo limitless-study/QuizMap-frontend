@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Header from './Header';
 
 describe('Header', () => {
-  it('renders application title', () => {
+  it('renders application topic', () => {
     const { getByText } = render(
       <MemoryRouter>
         <Header />

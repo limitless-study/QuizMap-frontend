@@ -46,14 +46,23 @@ export function flipCard() {
   };
 }
 
+export function setIsLastPage(isLastPage) {
+  return {
+    type: 'setIsLastPage',
+    payload: { isLastPage },
+  };
+}
+
 export function nextCard(cardIndex) {
   return (dispatch, getState) => {
     const { cards } = getState();
 
     if (cardIndex + 1 <= cards.length) {
       dispatch(setCurrentCardIndex(cardIndex + 1));
+      dispatch(setFlipped(false));
+    } else {
+      dispatch(setIsLastPage(true));
     }
-    dispatch(setFlipped(false));
   };
 }
 
@@ -135,13 +144,11 @@ export function initializeCardset() {
 
 export function saveCardset(cardsetId) {
   return (dispatch, getState) => {
-    console.log('cardsetId', cardsetId);
-    // patch title
+    // patch topic
     const { isTitleChanged } = getState();
 
     if (isTitleChanged) {
       const { cardsetTitle } = getState();
-      console.log('cardsetTitle', cardsetTitle);
       patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
     }
 
@@ -257,20 +264,25 @@ export function loadCards(id) {
 export function loadLearnCardsInSequence(cardsetId) {
   return async (dispatch, getState) => {
     const cards = await fetchLearnCardsInSequence(cardsetId);
-    const learnCards = cards.map((card) => {
-      const { newCardIndex } = getState();
-      Object.assign(card, { cardIndex: newCardIndex });
-      dispatch(setNewCardIndex(newCardIndex + 1));
-      return card;
-    });
-    dispatch(setCards(learnCards));
+
+    // if no cards
+    if (cards.length === 0) {
+      dispatch(setIsLastPage(true));
+    } else {
+      const learnCards = cards.map((card) => {
+        const { newCardIndex } = getState();
+        Object.assign(card, { cardIndex: newCardIndex });
+        dispatch(setNewCardIndex(newCardIndex + 1));
+        return card;
+      });
+      dispatch(setCards(learnCards));
+    }
   };
 }
 
 export function saveCardScore(cardId, feedbackNumber) {
   return async () => {
-    const data = await postCardFeedbackNumber(cardId, feedbackNumber);
-    console.log('saveCardScore', data);
+    await postCardFeedbackNumber(cardId, feedbackNumber);
   };
 }
 
@@ -301,6 +313,7 @@ export function initializeCardsetPage(id) {
 
 export function initializeLearnPage(id) {
   return async (dispatch) => {
+    dispatch(setIsLastPage(false));
     dispatch(setCards([]));
     dispatch(initializeCard());
     await dispatch(loadCardsetInfo(id));
