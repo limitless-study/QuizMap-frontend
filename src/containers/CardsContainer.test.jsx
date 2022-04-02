@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import CardsContainer from './CardsContainer';
+import LearnCardsContainer from './LearnCardsContainer';
 
-describe('CardsContainer', () => {
+describe('LearnCardsContainer', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe('CardsContainer', () => {
 
     render(
       <MemoryRouter>
-        <CardsContainer />
+        <LearnCardsContainer />
       </MemoryRouter>,
     );
 
@@ -42,7 +42,7 @@ describe('CardsContainer', () => {
 
     const { getByRole } = render(
       <MemoryRouter>
-        <CardsContainer />
+        <LearnCardsContainer />
       </MemoryRouter>,
     );
 
@@ -60,7 +60,7 @@ describe('CardsContainer', () => {
 
       const { getByRole } = render(
         <MemoryRouter>
-          <CardsContainer />
+          <LearnCardsContainer />
         </MemoryRouter>,
       );
 
@@ -75,7 +75,7 @@ describe('CardsContainer', () => {
 
         const { getByRole } = render(
           <MemoryRouter>
-            <CardsContainer />
+            <LearnCardsContainer />
           </MemoryRouter>,
         );
 

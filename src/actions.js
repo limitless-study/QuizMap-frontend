@@ -1,12 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import {
   fetchCardsetInfo,
   fetchCardsetChildren,
   fetchCardsetCards,
+  fetchLearnCardsInSequence,
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
   postNewCardset,
+  postCardFeedbackNumber,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -16,17 +17,25 @@ export function setFlipped(flipped) {
   };
 }
 
-export function setCardIndex(cardIndex) {
+export function setCurrentCardIndex(currentCardIndex) {
   return {
-    type: 'setCardIndex',
-    payload: { cardIndex },
+    type: 'setCurrentCardIndex',
+    payload: { currentCardIndex },
+  };
+}
+
+export function setNewCardIndex(newCardIndex) {
+  return {
+    type: 'setNewCardIndex',
+    payload: { newCardIndex },
   };
 }
 
 export function initializeCard() {
   return (dispatch) => {
     dispatch(setFlipped(false));
-    dispatch(setCardIndex(0));
+    dispatch(setCurrentCardIndex(1));
+    dispatch(setNewCardIndex(1));
   };
 }
 
@@ -41,12 +50,9 @@ export function nextCard(cardIndex) {
   return (dispatch, getState) => {
     const { cards } = getState();
 
-    if (cardIndex < cards.length - 1) {
-      dispatch(setCardIndex(cardIndex + 1));
-    } else {
-      dispatch(setCardIndex(cards.length - 1));
+    if (cardIndex + 1 <= cards.length) {
+      dispatch(setCurrentCardIndex(cardIndex + 1));
     }
-
     dispatch(setFlipped(false));
   };
 }
@@ -90,20 +96,6 @@ export function makeCard({
   };
 }
 
-export function setCurrentCardIndex(currentCardIndex) {
-  return {
-    type: 'setCurrentCardIndex',
-    payload: { currentCardIndex },
-  };
-}
-
-export function setNewCardIndex(newCardIndex) {
-  return {
-    type: 'setNewCardIndex',
-    payload: { newCardIndex },
-  };
-}
-
 export function clickCard(cardIndex) {
   return (dispatch) => {
     dispatch(setCurrentCardIndex(cardIndex));
@@ -141,13 +133,15 @@ export function initializeCardset() {
   };
 }
 
-export function saveCardset({ cardsetId }) {
+export function saveCardset(cardsetId) {
   return (dispatch, getState) => {
+    console.log('cardsetId', cardsetId);
     // patch title
     const { isTitleChanged } = getState();
 
     if (isTitleChanged) {
       const { cardsetTitle } = getState();
+      console.log('cardsetTitle', cardsetTitle);
       patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
     }
 
@@ -260,6 +254,26 @@ export function loadCards(id) {
   };
 }
 
+export function loadLearnCardsInSequence(cardsetId) {
+  return async (dispatch, getState) => {
+    const cards = await fetchLearnCardsInSequence(cardsetId);
+    const learnCards = cards.map((card) => {
+      const { newCardIndex } = getState();
+      Object.assign(card, { cardIndex: newCardIndex });
+      dispatch(setNewCardIndex(newCardIndex + 1));
+      return card;
+    });
+    dispatch(setCards(learnCards));
+  };
+}
+
+export function saveCardScore(cardId, feedbackNumber) {
+  return async () => {
+    const data = await postCardFeedbackNumber(cardId, feedbackNumber);
+    console.log('saveCardScore', data);
+  };
+}
+
 export function initializeCardsetStudio(id) {
   return async (dispatch, getState) => {
     dispatch(setTitleChanged(false));
@@ -282,5 +296,14 @@ export function initializeCardsetPage(id) {
     await dispatch(loadRootCardsets());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCardsetChildren(id));
+  };
+}
+
+export function initializeLearnPage(id) {
+  return async (dispatch) => {
+    dispatch(setCards([]));
+    dispatch(initializeCard());
+    await dispatch(loadCardsetInfo(id));
+    await dispatch(loadLearnCardsInSequence(id));
   };
 }

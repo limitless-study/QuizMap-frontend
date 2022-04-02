@@ -6,6 +6,10 @@ const global = css`
     padding: 0;
 }
 
+html, body, main {
+    height : 100vh;
+}
+
 body {
     font-size: 16px;
     line-height: 1.5;

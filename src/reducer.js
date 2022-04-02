@@ -1,11 +1,11 @@
 const initialState = {
-  // cardset 보기 page state
+  // cardsets page
   cardsets: [],
   cardsetInfo: {},
   rootCardsets: [],
   cardsetChildren: [],
 
-  // studio cardsetState
+  // studio page
   cards: [],
   cardsetTitle: '',
   newCardIndex: 1,
@@ -13,8 +13,7 @@ const initialState = {
   isTitleChanged: false,
   cardsetId: 0,
 
-  // 학습 mode
-  cardIndex: 0,
+  // learn page
   flipped: false,
 };
 
@@ -23,13 +22,6 @@ const reducers = {
     return {
       ...state,
       flipped,
-    };
-  },
-
-  setCardIndex(state, { payload: { cardIndex } }) {
-    return {
-      ...state,
-      cardIndex,
     };
   },
 

@@ -72,3 +72,43 @@ export async function postNewCard({ cardsetId, question, answer }) {
   const data = await response.json();
   return data;
 }
+
+export async function deleteCardset(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}`;
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
+export async function deleteCard(cardId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}`;
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
+export async function fetchLearnCardsInSequence(cardsetId) {
+  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/learn/sequence`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export async function postCardFeedbackNumber(cardId, feedbackNumber) {
+  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}/feedback`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ feedbackNumber }),
+  });
+  const data = await response.json();
+  return data;
+}

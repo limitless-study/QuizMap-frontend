@@ -5,6 +5,7 @@ import { FaFolder } from 'react-icons/fa';
 import { useParams, Link } from 'react-router-dom';
 
 const Wrapper = styled.div({
+  height: '100vh',
   backgroundColor: '#EDEDED',
 });
 
