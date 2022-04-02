@@ -14,7 +14,6 @@ import SideMenuBar from '../components/SideMenuBar';
 
 import {
   addNewCardset,
-  setCardsetId,
 } from '../actions';
 
 const Wrapper = styled.div({

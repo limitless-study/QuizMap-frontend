@@ -12,6 +12,7 @@ import { get } from '../utils';
 import {
   flipCard,
   nextCard,
+  saveCardScore,
 } from '../actions';
 
 const Header = styled.div({
@@ -61,14 +62,6 @@ export default function LearnCardsContainer() {
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const { id, name } = useSelector(get('cardsetInfo'));
 
-  const handleFlip = () => {
-    dispatch(flipCard());
-  };
-
-  const handleClick = () => {
-    dispatch(nextCard(currentCardIndex));
-  };
-
   if (cards.length === 0) {
     return (
       <div>Loading...</div>
@@ -76,7 +69,16 @@ export default function LearnCardsContainer() {
   }
 
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
-  const { question, answer } = currentCard[0];
+  const { id: cardId, question, answer } = currentCard[0];
+
+  const handleFlip = () => {
+    dispatch(flipCard());
+  };
+
+  const handleClick = (feedbackNumber) => {
+    dispatch(saveCardScore(cardId, feedbackNumber));
+    dispatch(nextCard(currentCardIndex));
+  };
 
   return (
     <div>
