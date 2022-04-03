@@ -3,6 +3,7 @@ import {
   fetchCardsetChildren,
   fetchCardsetCards,
   fetchLearnCardsInSequence,
+  fetchMindMapCards,
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
@@ -91,6 +92,20 @@ export function changeCardsetTitle(cardsetTitle) {
   return (dispatch) => {
     dispatch(setCardsetTitle(cardsetTitle));
     dispatch(setTitleChanged(true));
+  };
+}
+
+export function setCards(cards) {
+  return {
+    type: 'setCards',
+    payload: { cards },
+  };
+}
+
+export function setMindMapCards(mindMapCards) {
+  return {
+    type: 'setMindMapCards',
+    payload: { mindMapCards },
   };
 }
 
@@ -190,6 +205,13 @@ export function loadCardsetInfo(cardsetId) {
   };
 }
 
+export function loadMindMapCards(cardsetId) {
+  return async (dispatch) => {
+    const mindMapCards = await fetchMindMapCards(cardsetId);
+    dispatch(setMindMapCards(mindMapCards));
+  };
+}
+
 export function setCardsetChildren(cardsetChildren) {
   return {
     type: 'setCardsetChildren',
@@ -216,13 +238,6 @@ export function loadRootCardsets() {
     const root = await fetchCardsetChildren(1);
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
-  };
-}
-
-export function setCards(cards) {
-  return {
-    type: 'setCards',
-    payload: { cards },
   };
 }
 

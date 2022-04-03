@@ -12,7 +12,8 @@
     "test": "npm run coverage && start-server-and-test start http://localhost:8080 test:e2e",
     "lint": "eslint --ext js,jsx .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "postinstall": "patch-package"
   },
   "keywords": [],
   "author": "",
@@ -56,6 +57,8 @@
     "dotenv": "^16.0.0",
     "env-cmd": "^10.1.0",
     "gh-pages": "^3.2.3",
+    "mind-elixir": "^0.19.3",
+    "patch-package": "^6.4.7",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-icons": "^4.3.1",
