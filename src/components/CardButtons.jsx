@@ -47,7 +47,7 @@ const CorrectButton = styled.button({
 });
 
 export default function CardButtons({ onFlip, onClick }) {
-  const wrongNumber = 0;
+  const wrongNumber = -1;
   const correntNumber = 1;
 
   const handleClick = (feedbackNumber) => {

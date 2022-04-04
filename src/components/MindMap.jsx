@@ -16,12 +16,10 @@ export default function MindMap({ mindMapCards }) {
     );
   }
 
-  // [fix] : nodeData 라는 속성을 추가해야 에러 안 생김
   const mindNode = {
     nodeData: mindMapCards,
   };
 
-  // [fix] : useEffect 안에서 실행해야 에러 안 생김
   useEffect(() => {
     const mindmap = new MindElixir({
       el: '#map',
