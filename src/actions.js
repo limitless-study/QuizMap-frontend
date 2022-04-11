@@ -335,3 +335,30 @@ export function initializeLearnPage(id) {
     await dispatch(loadLearnCardsInSequence(id));
   };
 }
+
+export function setViewMoreButton(isViewMoreHidden) {
+  return {
+    type: 'setViewMoreButton',
+    payload: { isViewMoreHidden },
+  };
+}
+
+export function setClickedCardsetId(clickedCardsetId) {
+  return {
+    type: 'setClickedCardsetId',
+    payload: { clickedCardsetId },
+  };
+}
+
+export function expandViewMoreButton(clickedCardsetId) {
+  return (dispatch) => {
+    dispatch(setClickedCardsetId(clickedCardsetId));
+    dispatch(setViewMoreButton(false));
+  };
+}
+
+export function contractViewMoreButton() {
+  return (dispatch) => {
+    dispatch(setViewMoreButton(true));
+  };
+}

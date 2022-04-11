@@ -4,6 +4,8 @@ const initialState = {
   cardsetInfo: {},
   rootCardsets: [],
   cardsetChildren: [],
+  isViewMoreHidden: true,
+  clickedCardsetId: null,
 
   // studio page
   cards: [],
@@ -63,6 +65,20 @@ const reducers = {
       cards: [...state.cards, {
         id, cardIndex, question, answer, cardChanged, cardAdded,
       }],
+    };
+  },
+
+  setViewMoreButton(state, { payload: { isViewMoreHidden } }) {
+    return {
+      ...state,
+      isViewMoreHidden,
+    };
+  },
+
+  setClickedCardsetId(state, { payload: { clickedCardsetId } }) {
+    return {
+      ...state,
+      clickedCardsetId,
     };
   },
 
