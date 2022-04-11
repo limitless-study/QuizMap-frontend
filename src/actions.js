@@ -234,11 +234,45 @@ export function setRootCardsets(rootCardsets) {
   };
 }
 
+export function setViewMoreButton(isViewMoreHidden) {
+  return {
+    type: 'setViewMoreButton',
+    payload: { isViewMoreHidden },
+  };
+}
+
+export function setClickedCardsetId(clickedCardsetId) {
+  return {
+    type: 'setClickedCardsetId',
+    payload: { clickedCardsetId },
+  };
+}
+
+export function expandViewMoreButton(clickedCardsetId) {
+  return (dispatch) => {
+    dispatch(setClickedCardsetId(clickedCardsetId));
+    dispatch(setViewMoreButton(false));
+  };
+}
+
+export function contractViewMoreButton() {
+  return (dispatch) => {
+    dispatch(setViewMoreButton(true));
+  };
+}
+
+export function deleteClickedCardset(cardsetId) {
+  return async () => {
+    await deleteCardset(cardsetId);
+  };
+}
+
 export function loadRootCardsets() {
   return async (dispatch) => {
     const root = await fetchCardsetChildren(1);
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
+    dispatch(setViewMoreButton(true));
   };
 }
 
@@ -334,38 +368,5 @@ export function initializeLearnPage(id) {
     dispatch(initializeCard());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
-  };
-}
-
-export function setViewMoreButton(isViewMoreHidden) {
-  return {
-    type: 'setViewMoreButton',
-    payload: { isViewMoreHidden },
-  };
-}
-
-export function setClickedCardsetId(clickedCardsetId) {
-  return {
-    type: 'setClickedCardsetId',
-    payload: { clickedCardsetId },
-  };
-}
-
-export function expandViewMoreButton(clickedCardsetId) {
-  return (dispatch) => {
-    dispatch(setClickedCardsetId(clickedCardsetId));
-    dispatch(setViewMoreButton(false));
-  };
-}
-
-export function contractViewMoreButton() {
-  return (dispatch) => {
-    dispatch(setViewMoreButton(true));
-  };
-}
-
-export function deleteClickedCardset(cardsetId) {
-  return async () => {
-    await deleteCardset(cardsetId);
   };
 }
