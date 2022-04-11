@@ -4,6 +4,7 @@ import {
   fetchCardsetCards,
   fetchLearnCardsInSequence,
   fetchMindMapCards,
+  deleteCardset,
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
@@ -333,5 +334,38 @@ export function initializeLearnPage(id) {
     dispatch(initializeCard());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
+  };
+}
+
+export function setViewMoreButton(isViewMoreHidden) {
+  return {
+    type: 'setViewMoreButton',
+    payload: { isViewMoreHidden },
+  };
+}
+
+export function setClickedCardsetId(clickedCardsetId) {
+  return {
+    type: 'setClickedCardsetId',
+    payload: { clickedCardsetId },
+  };
+}
+
+export function expandViewMoreButton(clickedCardsetId) {
+  return (dispatch) => {
+    dispatch(setClickedCardsetId(clickedCardsetId));
+    dispatch(setViewMoreButton(false));
+  };
+}
+
+export function contractViewMoreButton() {
+  return (dispatch) => {
+    dispatch(setViewMoreButton(true));
+  };
+}
+
+export function deleteClickedCardset(cardsetId) {
+  return async () => {
+    await deleteCardset(cardsetId);
   };
 }

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useLayoutEffect } from 'react';
 
@@ -11,9 +11,13 @@ import { BsPlusCircleDotted } from 'react-icons/bs';
 import { get } from '../utils';
 
 import SideMenuBar from '../components/SideMenuBar';
+import RootCard from '../components/RootCard';
 
 import {
   addNewCardset,
+  expandViewMoreButton,
+  contractViewMoreButton,
+  deleteClickedCardset,
 } from '../actions';
 
 const Wrapper = styled.div({
@@ -42,31 +46,6 @@ const CardsetsContainer = styled.div({
   gap: '15px',
 });
 
-const CardsetCard = styled.div({
-  display: 'table',
-  backgroundColor: '#F3F3F3',
-  width: '220px',
-  height: '160px',
-  padding: '20px',
-  textAlign: 'left',
-  borderRadius: '10px',
-  border: '1px solid #E7E7E7',
-  boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',
-  transition: 'border 0.5s',
-  '& a': {
-    height: '160px',
-    display: 'block',
-    color: '#303030',
-    fontSize: '20px',
-    fontWeight: 'bolder',
-    verticalAlign: 'middle',
-  },
-  ':hover': {
-    border: '2px solid #2F38FF',
-    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 3px 10px',
-  },
-});
-
 const AddCardsetButton = styled.button({
   backgroundColor: 'white',
   width: '260px',
@@ -91,6 +70,8 @@ export default function RootContainer() {
 
   const rootCardsets = useSelector(get('rootCardsets'));
   const cardsetId = useSelector(get('cardsetId'));
+  const isViewMoreHidden = useSelector(get('isViewMoreHidden'));
+  const clickedCardsetId = useSelector(get('clickedCardsetId'));
 
   useLayoutEffect(() => {
     navigate(`/studio/${cardsetId}`);
@@ -98,6 +79,18 @@ export default function RootContainer() {
 
   const handleAddNewCardset = () => {
     dispatch(addNewCardset(1));
+  };
+
+  const handleClickViewMoreButton = (id) => {
+    dispatch(expandViewMoreButton(id));
+  };
+
+  const handleClickOutside = () => {
+    dispatch(contractViewMoreButton());
+  };
+
+  const handleClickDeleteCardsetButton = (id) => {
+    dispatch(deleteClickedCardset(id));
   };
 
   return (
@@ -110,15 +103,29 @@ export default function RootContainer() {
           Cardsets
         </Title>
         <CardsetsContainer>
-          {rootCardsets.map((cardset) => (
-            <CardsetCard
-              key={cardset.id}
-            >
-              <Link to={`/cardsets/${cardset.id}`}>
-                {cardset.topic}
-              </Link>
-            </CardsetCard>
-          ))}
+          {rootCardsets.map((cardset) => {
+            if (cardset.id === clickedCardsetId) {
+              return (
+                <RootCard
+                  key={cardset.id}
+                  cardset={cardset}
+                  isViewMoreHidden={isViewMoreHidden}
+                  handleClickOutside={handleClickOutside}
+                  handleClickViewMoreButton={handleClickViewMoreButton}
+                  handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
+                />
+              );
+            }
+            return (
+              <RootCard
+                key={cardset.id}
+                cardset={cardset}
+                handleClickOutside={handleClickOutside}
+                handleClickViewMoreButton={handleClickViewMoreButton}
+                handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
+              />
+            );
+          })}
           <AddCardsetButton
             type="button"
             onClick={handleAddNewCardset}
