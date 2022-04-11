@@ -4,6 +4,7 @@ import {
   fetchCardsetCards,
   fetchLearnCardsInSequence,
   fetchMindMapCards,
+  deleteCardset,
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
@@ -360,5 +361,11 @@ export function expandViewMoreButton(clickedCardsetId) {
 export function contractViewMoreButton() {
   return (dispatch) => {
     dispatch(setViewMoreButton(true));
+  };
+}
+
+export function deleteClickedCardset(cardsetId) {
+  return async () => {
+    await deleteCardset(cardsetId);
   };
 }

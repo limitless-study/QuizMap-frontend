@@ -28,12 +28,11 @@ const Cardset = styled.div({
 });
 
 export default function RootCard({
-  cardset, isViewMoreHidden = true, handleClickViewMoreButton, handleClickOutside,
+  cardset, isViewMoreHidden = true,
+  handleClickOutside, handleClickViewMoreButton, handleClickDeleteCardsetButton,
 }) {
   return (
-    <Cardset
-      key={cardset.id}
-    >
+    <Cardset>
       <button
         type="button"
         key={cardset.id}
@@ -43,9 +42,9 @@ export default function RootCard({
         ...
       </button>
       <button
-        className="delete-cardset-button"
         type="button"
         hidden={isViewMoreHidden}
+        onMouseDown={() => handleClickDeleteCardsetButton(cardset.id)}
       >
         Delete
       </button>

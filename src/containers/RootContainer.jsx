@@ -17,6 +17,7 @@ import {
   addNewCardset,
   expandViewMoreButton,
   contractViewMoreButton,
+  deleteClickedCardset,
 } from '../actions';
 
 const Wrapper = styled.div({
@@ -88,6 +89,10 @@ export default function RootContainer() {
     dispatch(contractViewMoreButton());
   };
 
+  const handleClickDeleteCardsetButton = (id) => {
+    dispatch(deleteClickedCardset(id));
+  };
+
   return (
     <Wrapper>
       <SideMenuBar
@@ -102,18 +107,22 @@ export default function RootContainer() {
             if (cardset.id === clickedCardsetId) {
               return (
                 <RootCard
+                  key={cardset.id}
                   cardset={cardset}
                   isViewMoreHidden={isViewMoreHidden}
-                  handleClickViewMoreButton={handleClickViewMoreButton}
                   handleClickOutside={handleClickOutside}
+                  handleClickViewMoreButton={handleClickViewMoreButton}
+                  handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
                 />
               );
             }
             return (
               <RootCard
+                key={cardset.id}
                 cardset={cardset}
-                handleClickViewMoreButton={handleClickViewMoreButton}
                 handleClickOutside={handleClickOutside}
+                handleClickViewMoreButton={handleClickViewMoreButton}
+                handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
               />
             );
           })}
