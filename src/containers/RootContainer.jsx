@@ -2,12 +2,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { useLayoutEffect } from 'react';
 
-import styled from '@emotion/styled';
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import { get } from '../utils';
 
+import SubTitle from '../components/SubTitle';
 import SideMenuBar from '../components/SideMenuBar';
 import RootCard from '../components/RootCard';
 import ViewMoreButtons from '../components/ViewMoreButtons';
@@ -17,17 +16,8 @@ import {
   addNewCardset,
   expandViewMoreButton,
   contractViewMoreButton,
-  deleteClickedCardset,
+  deleteClickedCardsetOrCard,
 } from '../actions';
-
-const Title = styled.div({
-  width: '100%',
-  marginBottom: '15px',
-  borderBottom: '1px solid lightgray',
-  fontWeight: 'bolder',
-  fontSize: '28px',
-  color: '#686868',
-});
 
 export default function RootContainer() {
   const dispatch = useDispatch();
@@ -47,16 +37,16 @@ export default function RootContainer() {
     dispatch(addNewCardset(1));
   };
 
-  const handleClickViewMoreButton = (id) => {
-    dispatch(expandViewMoreButton(id));
+  const handleClickViewMoreButton = (type, id) => {
+    dispatch(expandViewMoreButton(type, id));
   };
 
   const handleClickOutside = () => {
     dispatch(contractViewMoreButton());
   };
 
-  const handleClickDeleteCardsetButton = (id) => {
-    dispatch(deleteClickedCardset(id));
+  const handleClickDeleteCardsetButton = (type, id) => {
+    dispatch(deleteClickedCardsetOrCard(type, id));
   };
 
   return (
@@ -65,9 +55,9 @@ export default function RootContainer() {
         menus={[]}
       />
       <div style={{ padding: '30px', width: '100%' }}>
-        <Title>
-          Cardsets
-        </Title>
+        <SubTitle
+          text="Cardsets"
+        />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
           {rootCardsets.map((cardset) => {
             if (cardset.id === clickedCardsetId) {

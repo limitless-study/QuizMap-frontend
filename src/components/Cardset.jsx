@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { FaPen, FaPlayCircle } from 'react-icons/fa';
 
 import CardsetChildren from './CardsetChildren';
+import SubTitle from './SubTitle';
 
 const Wrapper = styled.div({
   width: '100%',
@@ -20,13 +21,6 @@ const Title = styled.div({
 const Header = styled.div({
   alignItems: 'center',
   marginBottom: '10px',
-});
-
-const SubTitle = styled.h2({
-  width: '91%',
-  marginBottom: '10px',
-  color: '#686868',
-  borderBottom: '1px solid #C6C6C6',
 });
 
 const CardsetInfo = styled.div({
@@ -109,9 +103,7 @@ export default function Cardset({
           {`${cardSetCount} Cardsets, ${cardCount} Cards`}
         </CardsetInfo>
       </Header>
-      <SubTitle>
-        Cards
-      </SubTitle>
+      <SubTitle text="Cards" />
       <CardsetChildren
         cardsetChildren={cardsetChildren}
         isViewMoreHidden={isViewMoreHidden}
