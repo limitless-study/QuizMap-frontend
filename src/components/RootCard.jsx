@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 
 import { Link } from 'react-router-dom';
 
-import ViewMoreButtons from './ViewMoreButtons';
-
 const Cardset = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
@@ -26,22 +24,12 @@ const Cardset = styled.div({
   },
 });
 
-export default function RootCard({
-  cardset, isViewMoreHidden,
-  handleClickOutside, handleClickViewMoreButton, handleClickDeleteCardsetButton,
-}) {
+export default function RootCard({ cardset }) {
   return (
     <Cardset>
       <Link to={`/cardsets/${cardset.id}`}>
         {cardset.topic}
       </Link>
-      <ViewMoreButtons
-        id={cardset.id}
-        isViewMoreHidden={isViewMoreHidden}
-        handleClickOutside={handleClickOutside}
-        handleClickViewMoreButton={handleClickViewMoreButton}
-        handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
-      />
     </Cardset>
   );
 }
