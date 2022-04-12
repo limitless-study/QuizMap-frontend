@@ -10,6 +10,7 @@ import {
   patchCardsetCard,
   postNewCardset,
   postCardFeedbackNumber,
+  deleteCard,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -248,10 +249,21 @@ export function setClickedCardsetId(clickedCardsetId) {
   };
 }
 
-export function expandViewMoreButton(clickedCardsetId) {
+export function setClickedCardId(clickedCardId) {
+  return {
+    type: 'setClickedCardId',
+    payload: { clickedCardId },
+  };
+}
+
+export function expandViewMoreButton(type, clickedId) {
   return (dispatch) => {
-    dispatch(setClickedCardsetId(clickedCardsetId));
     dispatch(setViewMoreButton(false));
+    if (type === 'CARDSET') {
+      dispatch(setClickedCardsetId(clickedId));
+    } else {
+      dispatch(setClickedCardId(clickedId));
+    }
   };
 }
 
@@ -261,9 +273,13 @@ export function contractViewMoreButton() {
   };
 }
 
-export function deleteClickedCardset(cardsetId) {
+export function deleteClickedCardsetOrCard(type, clickedId) {
   return async () => {
-    await deleteCardset(cardsetId);
+    if (type === 'CARDSET') {
+      await deleteCardset(clickedId);
+    } else {
+      await deleteCard(clickedId);
+    }
   };
 }
 
@@ -355,6 +371,7 @@ export function initializeCardsetStudio(id) {
 
 export function initializeCardsetPage(id) {
   return async (dispatch) => {
+    dispatch(setViewMoreButton(true));
     await dispatch(loadRootCardsets());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCardsetChildren(id));
