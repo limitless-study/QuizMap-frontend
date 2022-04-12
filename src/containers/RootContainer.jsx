@@ -120,6 +120,7 @@ export default function RootContainer() {
               <RootCard
                 key={cardset.id}
                 cardset={cardset}
+                isViewMoreHidden
                 handleClickOutside={handleClickOutside}
                 handleClickViewMoreButton={handleClickViewMoreButton}
                 handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}

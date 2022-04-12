@@ -6,6 +6,7 @@ const initialState = {
   cardsetChildren: [],
   isViewMoreHidden: true,
   clickedCardsetId: null,
+  clickedCardId: null,
 
   // studio page
   cards: [],
@@ -79,6 +80,13 @@ const reducers = {
     return {
       ...state,
       clickedCardsetId,
+    };
+  },
+
+  setClickedCardId(state, { payload: { clickedCardId } }) {
+    return {
+      ...state,
+      clickedCardId,
     };
   },
 

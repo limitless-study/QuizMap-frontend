@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { Link } from 'react-router-dom';
 
-import { IoIosMore } from 'react-icons/io';
+import ViewMoreButtons from './ViewMoreButtons';
 
 const Cardset = styled.div({
   display: 'flex',
@@ -26,44 +26,8 @@ const Cardset = styled.div({
   },
 });
 
-const ViewMoreButton = styled.button({
-  display: 'inline-block',
-  position: 'relative',
-  marginTop: '5px',
-  width: '30px',
-  height: '22px',
-  lineHeight: '28px',
-  borderRadius: '2px',
-  backgroundColor: '#FAFAFA',
-  fontSize: '18px',
-  border: 'none',
-  ':hover': {
-    cursor: 'pointer',
-  },
-  ':focus': {
-    backgroundColor: '#5B40FF',
-    color: 'white',
-  },
-});
-
-const DeleteButton = styled.button({
-  position: 'absolute',
-  marginTop: '3px',
-  width: '60px',
-  height: '30px',
-  right: '0',
-  top: '100%',
-  borderRadius: '2px',
-  backgroundColor: 'white',
-  border: 'none',
-  boxShadow: 'rgba(0, 0, 0, 0.2) 0px 3px 10px',
-  ':hover': {
-    backgroundColor: '#EEEBFF',
-  },
-});
-
 export default function RootCard({
-  cardset, isViewMoreHidden = true,
+  cardset, isViewMoreHidden,
   handleClickOutside, handleClickViewMoreButton, handleClickDeleteCardsetButton,
 }) {
   return (
@@ -71,23 +35,13 @@ export default function RootCard({
       <Link to={`/cardsets/${cardset.id}`}>
         {cardset.topic}
       </Link>
-      <div>
-        <ViewMoreButton
-          type="button"
-          key={cardset.id}
-          onClick={() => handleClickViewMoreButton(cardset.id)}
-          onBlur={handleClickOutside}
-        >
-          <IoIosMore />
-          <DeleteButton
-            type="button"
-            hidden={isViewMoreHidden}
-            onMouseDown={() => handleClickDeleteCardsetButton(cardset.id)}
-          >
-            Delete
-          </DeleteButton>
-        </ViewMoreButton>
-      </div>
+      <ViewMoreButtons
+        id={cardset.id}
+        isViewMoreHidden={isViewMoreHidden}
+        handleClickOutside={handleClickOutside}
+        handleClickViewMoreButton={handleClickViewMoreButton}
+        handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
+      />
     </Cardset>
   );
 }

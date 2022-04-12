@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { BsCheckLg } from 'react-icons/bs';
 import { FaFolder, FaPen, FaPlayCircle } from 'react-icons/fa';
+import ViewMoreButtons from './ViewMoreButtons';
 
 const Wrapper = styled.ul({
   width: '95%',
@@ -40,6 +41,7 @@ const CardBoxField = styled.li({
   padding: '5px 0px 5px 5px',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
 });
 
 const CardsetBoxTitle = styled.div({
@@ -96,6 +98,10 @@ export default function CardsetChildren({ cardsetChildren }) {
                     <FaPlayCircle />
                   </Link>
                 </IconBox>
+                <ViewMoreButtons
+                  // TODO:
+                  TODO="TODO"
+                />
               </div>
             </CardsetBoxField>
           );
@@ -104,10 +110,17 @@ export default function CardsetChildren({ cardsetChildren }) {
           <CardBoxField
             key={child.id}
           >
-            <IconBox>
-              <BsCheckLg />
-            </IconBox>
-            {child.topic}
+            <div>
+              <IconBox>
+                <BsCheckLg />
+              </IconBox>
+              {child.topic}
+            </div>
+            <ViewMoreButtons
+              // TODO: 여기에 다시 props를 넘겨서 처리해줄 것인가???????
+              // 고민: 너무 막 넘겨주는게 아닌지...
+              TODO="TODO"
+            />
           </CardBoxField>
         );
       })}

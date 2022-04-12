@@ -70,7 +70,11 @@ const MindMapButton = styled.button({
   },
 });
 
-export default function Cardset({ cardsetInfo, cardsetChildren }) {
+export default function Cardset({
+  cardsetInfo, cardsetChildren, isViewMoreHidden,
+  clickedCardsetId, clickedCardId,
+  handleClickViewMoreButton, handleClickDeleteButton, handleClickOutside,
+}) {
   const {
     id, name, cardSetCount, cardCount,
   } = cardsetInfo;
@@ -110,6 +114,12 @@ export default function Cardset({ cardsetInfo, cardsetChildren }) {
       </SubTitle>
       <CardsetChildren
         cardsetChildren={cardsetChildren}
+        isViewMoreHidden={isViewMoreHidden}
+        clickedCardsetId={clickedCardsetId}
+        clickedCardId={clickedCardId}
+        handleClickViewMoreButton={handleClickViewMoreButton}
+        handleClickDeleteButton={handleClickDeleteButton}
+        handleClickOutside={handleClickOutside}
       />
     </Wrapper>
   );
