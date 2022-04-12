@@ -4,8 +4,9 @@ import { IoIosMore } from 'react-icons/io';
 
 const ThreeDotsButton = styled.button({
   display: 'inline-block',
-  position: 'relative',
-  marginTop: '5px',
+  position: 'absolute',
+  right: '0',
+  margin: '5%',
   width: '30px',
   height: '22px',
   lineHeight: '28px',
@@ -39,21 +40,23 @@ const DeleteButton = styled.span({
 });
 
 export default function ViewMoreButtons({
-  id, isViewMoreHidden,
-  handleClickOutside, handleClickViewMoreButton, handleClickDeleteCardsetButton,
+  cardset, isViewMoreHidden,
+  handleClickOutside, handleClickViewMoreButton, handleClickDeleteButton,
 }) {
+  const { id, type } = cardset;
+
   return (
     <ThreeDotsButton
       type="button"
       key={id}
-      onClick={() => handleClickViewMoreButton(id)}
+      onClick={() => handleClickViewMoreButton(type, id)}
       onBlur={handleClickOutside}
     >
       <IoIosMore />
       <DeleteButton
         type="button"
         hidden={isViewMoreHidden}
-        onMouseDown={() => handleClickDeleteCardsetButton(id)}
+        onMouseDown={() => handleClickDeleteButton(type, id)}
       >
         Delete
       </DeleteButton>
