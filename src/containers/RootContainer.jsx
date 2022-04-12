@@ -45,7 +45,7 @@ export default function RootContainer() {
     dispatch(contractViewMoreButton());
   };
 
-  const handleClickDeleteCardsetButton = (type, id) => {
+  const handleClickDeleteButton = (type, id) => {
     dispatch(deleteClickedCardsetOrCard(type, id));
   };
 
@@ -62,33 +62,37 @@ export default function RootContainer() {
           {rootCardsets.map((cardset) => {
             if (cardset.id === clickedCardsetId) {
               return (
-                <div style={{ display: 'flex' }}>
+                <div
+                  key={cardset.id}
+                  style={{ display: 'flex', position: 'relative' }}
+                >
                   <RootCard
-                    key={cardset.id}
                     cardset={cardset}
                   />
                   <ViewMoreButtons
-                    id={cardset.id}
+                    cardset={cardset}
                     isViewMoreHidden={isViewMoreHidden}
                     handleClickOutside={handleClickOutside}
                     handleClickViewMoreButton={handleClickViewMoreButton}
-                    handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
+                    handleClickDeleteButton={handleClickDeleteButton}
                   />
                 </div>
               );
             }
             return (
-              <div style={{ display: 'flex' }}>
+              <div
+                key={cardset.id}
+                style={{ display: 'flex', position: 'relative' }}
+              >
                 <RootCard
-                  key={cardset.id}
                   cardset={cardset}
                 />
                 <ViewMoreButtons
-                  id={cardset.id}
+                  cardset={cardset}
                   isViewMoreHidden
                   handleClickOutside={handleClickOutside}
                   handleClickViewMoreButton={handleClickViewMoreButton}
-                  handleClickDeleteCardsetButton={handleClickDeleteCardsetButton}
+                  handleClickDeleteButton={handleClickDeleteButton}
                 />
               </div>
             );
