@@ -20,8 +20,6 @@ export default function CardsetPage({ params }) {
   }, [id]);
 
   return (
-    <div>
-      <CardsetContainer id={id} />
-    </div>
+    <CardsetContainer id={id} />
   );
 }

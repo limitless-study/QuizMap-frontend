@@ -4,7 +4,6 @@ const initialState = {
   cardsetInfo: {},
   rootCardsets: [],
   cardsetChildren: [],
-  isViewMoreHidden: true,
   clickedCardsetId: null,
   clickedCardId: null,
 
@@ -66,13 +65,6 @@ const reducers = {
       cards: [...state.cards, {
         id, cardIndex, question, answer, cardChanged, cardAdded,
       }],
-    };
-  },
-
-  setViewMoreButton(state, { payload: { isViewMoreHidden } }) {
-    return {
-      ...state,
-      isViewMoreHidden,
     };
   },
 

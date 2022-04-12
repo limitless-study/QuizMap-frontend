@@ -235,13 +235,6 @@ export function setRootCardsets(rootCardsets) {
   };
 }
 
-export function setViewMoreButton(isViewMoreHidden) {
-  return {
-    type: 'setViewMoreButton',
-    payload: { isViewMoreHidden },
-  };
-}
-
 export function setClickedCardsetId(clickedCardsetId) {
   return {
     type: 'setClickedCardsetId',
@@ -258,7 +251,6 @@ export function setClickedCardId(clickedCardId) {
 
 export function expandViewMoreButton(type, clickedId) {
   return (dispatch) => {
-    dispatch(setViewMoreButton(false));
     if (type === 'CARDSET') {
       dispatch(setClickedCardsetId(clickedId));
     } else {
@@ -269,7 +261,8 @@ export function expandViewMoreButton(type, clickedId) {
 
 export function contractViewMoreButton() {
   return (dispatch) => {
-    dispatch(setViewMoreButton(true));
+    dispatch(setClickedCardsetId(null));
+    dispatch(setClickedCardId(null));
   };
 }
 
@@ -288,7 +281,6 @@ export function loadRootCardsets() {
     const root = await fetchCardsetChildren(1);
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
-    dispatch(setViewMoreButton(true));
   };
 }
 
@@ -371,7 +363,6 @@ export function initializeCardsetStudio(id) {
 
 export function initializeCardsetPage(id) {
   return async (dispatch) => {
-    dispatch(setViewMoreButton(true));
     await dispatch(loadRootCardsets());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCardsetChildren(id));

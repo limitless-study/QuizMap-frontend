@@ -26,7 +26,6 @@ export default function RootContainer() {
 
   const rootCardsets = useSelector(get('rootCardsets'));
   const cardsetId = useSelector(get('cardsetId'));
-  const isViewMoreHidden = useSelector(get('isViewMoreHidden'));
   const clickedCardsetId = useSelector(get('clickedCardsetId'));
 
   useLayoutEffect(() => {
@@ -59,44 +58,23 @@ export default function RootContainer() {
           text="Cardsets"
         />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
-          {rootCardsets.map((cardset) => {
-            if (cardset.id === clickedCardsetId) {
-              return (
-                <div
-                  key={cardset.id}
-                  style={{ display: 'flex', position: 'relative' }}
-                >
-                  <RootCard
-                    cardset={cardset}
-                  />
-                  <ViewMoreButtons
-                    cardset={cardset}
-                    isViewMoreHidden={isViewMoreHidden}
-                    handleClickOutside={handleClickOutside}
-                    handleClickViewMoreButton={handleClickViewMoreButton}
-                    handleClickDeleteButton={handleClickDeleteButton}
-                  />
-                </div>
-              );
-            }
-            return (
-              <div
-                key={cardset.id}
-                style={{ display: 'flex', position: 'relative' }}
-              >
-                <RootCard
-                  cardset={cardset}
-                />
-                <ViewMoreButtons
-                  cardset={cardset}
-                  isViewMoreHidden
-                  handleClickOutside={handleClickOutside}
-                  handleClickViewMoreButton={handleClickViewMoreButton}
-                  handleClickDeleteButton={handleClickDeleteButton}
-                />
-              </div>
-            );
-          })}
+          {rootCardsets.map((cardset) => (
+            <div
+              key={cardset.id}
+              style={{ display: 'flex', position: 'relative' }}
+            >
+              <RootCard
+                cardset={cardset}
+              />
+              <ViewMoreButtons
+                cardset={cardset}
+                isViewMoreHidden={!(cardset.id === clickedCardsetId)}
+                handleClickOutside={handleClickOutside}
+                handleClickViewMoreButton={handleClickViewMoreButton}
+                handleClickDeleteButton={handleClickDeleteButton}
+              />
+            </div>
+          ))}
           <AddCardsetButton
             handleClick={handleAddNewCardset}
           />
