@@ -5,21 +5,24 @@ import styled from '@emotion/styled';
 import { FaFolder, FaPen, FaPlayCircle } from 'react-icons/fa';
 
 const CardsetBoxField = styled.li({
-  width: '97%',
   fontWeight: 'bold',
-  marginBottom: '10px',
-  backgroundColor: '#F3F3F3',
-  padding: '5px 0px 5px 5px',
+  backgroundColor: 'transparent',
+  padding: '15px',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  '& a:hover': {
-    textDecoration: 'underline',
+  borderBottom: '1px solid #F1F1F1',
+  transition: 'background-color 0.3s',
+  ':hover': {
+    backgroundColor: '#f3f3f3',
   },
 });
 
 const CardsetBoxTitle = styled.div({
   display: 'flex',
+  '& a:hover': {
+    textDecoration: 'underline',
+  },
 });
 
 const IconBox = styled.button({

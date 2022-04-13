@@ -5,12 +5,13 @@ import styled from '@emotion/styled';
 const CardBoxField = styled.li({
   width: '97%',
   fontWeight: 'bold',
-  marginBottom: '10px',
-  backgroundColor: '#FAFAFA',
-  padding: '5px 0px 5px 5px',
+  backgroundColor: 'transparent',
+  padding: '15px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  borderBottom: '1px solid #F1F1F1',
+  transition: 'background-color 0.3s',
 });
 
 const IconBox = styled.button({

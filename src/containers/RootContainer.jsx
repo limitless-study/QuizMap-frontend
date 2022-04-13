@@ -57,7 +57,10 @@ export default function RootContainer() {
         <SubTitle
           text="Cardsets"
         />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', marginTop: '10px', gap: '15px',
+        }}
+        >
           {rootCardsets.map((cardset) => (
             <div
               key={cardset.id}

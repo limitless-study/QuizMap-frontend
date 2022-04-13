@@ -21,7 +21,7 @@ export default function CardsetBoxContainer() {
       <div style={{ width: '100%', padding: '20px' }}>
         <CardsetInfo cardsetInfo={cardsetInfo} />
         <SubTitle text="Cards" />
-        <div>
+        <div style={{ width: '92%' }}>
           {cardsetChildren.map((child) => {
             if (child.type === 'CARDSET') {
               return (
