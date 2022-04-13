@@ -3,32 +3,34 @@ import styled from '@emotion/styled';
 import { IoIosMore } from 'react-icons/io';
 
 const ThreeDotsButton = styled.button({
+  zIndex: '10',
   display: 'inline-block',
   position: 'absolute',
-  right: '0',
-  margin: '5%',
-  width: '30px',
-  height: '22px',
-  lineHeight: '28px',
-  borderRadius: '2px',
-  backgroundColor: '#FAFAFA',
+  right: '10px',
+  top: '10px',
+  backgroundColor: 'transparent',
+  width: '20px',
+  height: '20px',
+  lineHeight: '20px',
+  borderRadius: '20px',
+  alignItems: 'center',
   fontSize: '18px',
   border: 'none',
+  color: 'darkgray',
   ':hover': {
+    backgroundColor: 'white',
     cursor: 'pointer',
   },
   ':focus': {
-    backgroundColor: '#5B40FF',
-    color: 'white',
+    color: 'black',
   },
 });
 
 const DeleteButton = styled.span({
   position: 'absolute',
-  marginTop: '3px',
   padding: '5px 10px',
   right: '0',
-  top: '100%',
+  top: '80%',
   borderRadius: '2px',
   backgroundColor: 'white',
   border: 'none',
