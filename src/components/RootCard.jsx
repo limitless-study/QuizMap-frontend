@@ -3,24 +3,24 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 const Cardset = styled.div({
-  position: 'relative',
-  display: 'flex',
+  width: '100%',
+  height: '100%',
   backgroundColor: '#F3F3F3',
-  width: '220px',
-  height: '160px',
-  padding: '20px',
   borderRadius: '10px',
   border: '1px solid #E7E7E7',
   boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',
   transition: 'border 0.5s',
+  display: 'flex',
   '& a': {
-    width: '90%',
+    width: '100%',
+    padding: '30px 15px',
     display: 'block',
     color: '#303030',
     fontSize: '20px',
     fontWeight: 'bolder',
   },
   ':hover': {
+    cursor: 'pointer',
     border: '2px solid #2F38FF',
     boxShadow: 'rgba(0, 0, 0, 0.2) 0px 3px 10px',
   },

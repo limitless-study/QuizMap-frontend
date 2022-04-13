@@ -61,11 +61,9 @@ export default function RootContainer() {
           {rootCardsets.map((cardset) => (
             <div
               key={cardset.id}
-              style={{ display: 'flex', position: 'relative' }}
+              style={{ position: 'relative', width: '260px', height: '180px' }}
             >
-              <RootCard
-                cardset={cardset}
-              />
+              <RootCard cardset={cardset} />
               <ViewMoreButtons
                 cardset={cardset}
                 isViewMoreHidden={!(cardset.id === clickedCardsetId)}

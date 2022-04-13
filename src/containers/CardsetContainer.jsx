@@ -1,77 +1,53 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import styled from '@emotion/styled';
 
 import CardsetInfo from '../components/CardsetInfo';
 import SideMenuBar from '../components/SideMenuBar';
 import SubTitle from '../components/SubTitle';
 import CardsetBox from '../components/CardsetBox';
 import CardBox from '../components/CardBox';
-import ViewMoreButtons from '../components/ViewMoreButtons';
 
 import { get } from '../utils';
 
-import {
-  expandViewMoreButton,
-  contractViewMoreButton,
-  deleteClickedCardsetOrCard,
-} from '../actions';
+const BoxContainer = styled.div({
+  width: '95%',
+  height: '60%',
+  overflow: 'auto',
+  '::-webkit-scrollbar': {
+    width: '10px',
+  },
+  '::-webkit-scrollbar-thumb': {
+    backgroundColor: '#F1F1F1',
+    borderRadius: '10px',
+  },
+});
 
-export default function CardsetContainer() {
-  const dispatch = useDispatch();
-
+export default function CardsetBoxContainer() {
   const menus = useSelector(get('rootCardsets'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
-  const clickedCardsetId = useSelector(get('clickedCardsetId'));
-  const clickedCardId = useSelector(get('clickedCardId'));
-
-  const handleClickViewMoreButton = (type, id) => {
-    dispatch(expandViewMoreButton(type, id));
-  };
-
-  const handleClickDeleteButton = (type, id) => {
-    dispatch(deleteClickedCardsetOrCard(type, id));
-  };
-
-  const handleClickOutside = () => {
-    dispatch(contractViewMoreButton());
-  };
 
   return (
     <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
       <SideMenuBar
         menus={menus}
       />
-      <CardsetInfo cardsetInfo={cardsetInfo} />
-      <SubTitle text="Cards" />
-      <div>
-        {cardsetChildren.map((child) => {
-          if (child.type === 'CARDSET') {
-            return (
-              <div>
+      <div style={{ width: '100%', padding: '20px' }}>
+        <CardsetInfo cardsetInfo={cardsetInfo} />
+        <SubTitle text="Cards" />
+        <BoxContainer>
+          {cardsetChildren.map((child) => {
+            if (child.type === 'CARDSET') {
+              return (
                 <CardsetBox cardset={child} />
-                <ViewMoreButtons
-                  cardset={child}
-                  isViewMoreHidden={!(child.id === clickedCardsetId)}
-                  handleClickOutside={handleClickOutside}
-                  handleClickViewMoreButton={handleClickViewMoreButton}
-                  handleClickDeleteButton={handleClickDeleteButton}
-                />
-              </div>
-            );
-          }
-          return (
-            <div>
+              );
+            }
+            return (
               <CardBox card={child} />
-              <ViewMoreButtons
-                cardset={child}
-                isViewMoreHidden={!(child.id === clickedCardId)}
-                handleClickOutside={handleClickOutside}
-                handleClickViewMoreButton={handleClickViewMoreButton}
-                handleClickDeleteButton={handleClickDeleteButton}
-              />
-            </div>
-          );
-        })}
+            );
+          })}
+        </BoxContainer>
       </div>
     </div>
   );

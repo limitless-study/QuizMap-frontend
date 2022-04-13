@@ -44,11 +44,9 @@ export default function CardsetBox({ cardset }) {
   const { id, topic } = cardset;
 
   return (
-    <CardsetBoxField
-      key={id}
-    >
+    <CardsetBoxField>
       <CardsetBoxTitle>
-        <IconBox>
+        <IconBox type="button">
           <FaFolder />
         </IconBox>
         <Link to={`/cardsets/${id}`}>
@@ -56,16 +54,12 @@ export default function CardsetBox({ cardset }) {
         </Link>
       </CardsetBoxTitle>
       <div>
-        <IconBox
-          type="button"
-        >
+        <IconBox type="button">
           <Link to={`/studio/${id}`}>
             <FaPen />
           </Link>
         </IconBox>
-        <IconBox
-          type="button"
-        >
+        <IconBox type="button">
           <Link to={`/learn/${id}`}>
             <FaPlayCircle />
           </Link>

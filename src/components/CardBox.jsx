@@ -33,6 +33,7 @@ const IconBox = styled.button({
 
 export default function CardBox({ card }) {
   const { id, topic } = card;
+
   return (
     <CardBoxField
       key={id}

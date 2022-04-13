@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 const Button = styled.button({
   backgroundColor: 'white',
   width: '260px',
-  height: '200px',
+  height: '180px',
   textAlign: 'center',
   lineHeight: '180px',
   borderRadius: '10px',
