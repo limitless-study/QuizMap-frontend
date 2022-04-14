@@ -12,8 +12,8 @@ import { get } from '../utils';
 
 import {
   flipCard,
-  nextCard,
-  saveCardScore,
+  clickWrongCard,
+  clickCorrectCard,
 } from '../actions';
 
 const Header = styled.div({
@@ -61,11 +61,10 @@ export default function LearnCardsContainer() {
 
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
-  const currentCardIndex = useSelector(get('currentCardIndex'));
   const { id, name } = useSelector(get('cardsetInfo'));
   const isLastPage = useSelector(get('isLastPage'));
 
-  if (isLastPage) { // ! 지우기
+  if (isLastPage) {
     return (
       <LastLearningPage id={id} />
     );
@@ -77,16 +76,18 @@ export default function LearnCardsContainer() {
     );
   }
 
-  const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
-  const { id: cardId, question, answer } = currentCard[0];
+  const { id: cardId, question, answer } = cards[0];
 
   const handleFlip = () => {
     dispatch(flipCard());
   };
 
-  const handleClick = (feedbackNumber) => {
-    dispatch(saveCardScore(cardId, feedbackNumber));
-    dispatch(nextCard(currentCardIndex));
+  const handleClickWrong = () => {
+    dispatch(clickWrongCard(cardId));
+  };
+
+  const handleClickCorrect = () => {
+    dispatch(clickCorrectCard(cardId));
   };
 
   return (
@@ -108,7 +109,8 @@ export default function LearnCardsContainer() {
           />
           <CardButtons
             onFlip={handleFlip}
-            onClick={handleClick}
+            onClickWrong={handleClickWrong}
+            onClickCorrect={handleClickCorrect}
           />
         </CardItemsWrapper>
       </CardItemsContainer>

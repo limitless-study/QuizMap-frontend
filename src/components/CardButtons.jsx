@@ -46,19 +46,20 @@ const CorrectButton = styled.button({
   },
 });
 
-export default function CardButtons({ onFlip, onClick }) {
-  const wrongNumber = -1;
-  const correntNumber = 1;
+export default function CardButtons({ onFlip, onClickWrong, onClickCorrect }) {
+  const handleClickWrong = () => {
+    onClickWrong();
+  };
 
-  const handleClick = (feedbackNumber) => {
-    onClick(feedbackNumber);
+  const handleClickCorrect = () => {
+    onClickCorrect();
   };
 
   return (
     <CardButtonsWrapper>
       <WrongButton
         type="button"
-        onClick={() => handleClick(wrongNumber)}
+        onClick={handleClickWrong}
       >
         X
       </WrongButton>
@@ -70,7 +71,7 @@ export default function CardButtons({ onFlip, onClick }) {
       </FlipButton>
       <CorrectButton
         type="button"
-        onClick={() => handleClick(correntNumber)}
+        onClick={handleClickCorrect}
       >
         O
       </CorrectButton>
