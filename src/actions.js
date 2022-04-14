@@ -266,21 +266,22 @@ export function contractViewMoreButton() {
   };
 }
 
-export function deleteClickedCardsetOrCard(type, clickedId) {
-  return async () => {
-    if (type === 'CARDSET') {
-      await deleteCardset(clickedId);
-    } else {
-      await deleteCard(clickedId);
-    }
-  };
-}
-
 export function loadRootCardsets() {
   return async (dispatch) => {
     const root = await fetchCardsetChildren(1);
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
+  };
+}
+
+export function deleteClickedCardsetOrCard(type, clickedId) {
+  return async (dispatch) => {
+    if (type === 'CARDSET') {
+      await deleteCardset(clickedId);
+      dispatch(loadRootCardsets());
+    } else {
+      await deleteCard(clickedId);
+    }
   };
 }
 
