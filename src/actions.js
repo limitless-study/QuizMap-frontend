@@ -9,7 +9,7 @@ import {
   postNewCard,
   patchCardsetCard,
   postNewCardset,
-  postCardFeedbackNumber,
+  postCardTryCount,
   deleteCard,
 } from './services/api';
 
@@ -34,14 +34,6 @@ export function setNewCardIndex(newCardIndex) {
   };
 }
 
-export function initializeCard() {
-  return (dispatch) => {
-    dispatch(setFlipped(false));
-    dispatch(setCurrentCardIndex(1));
-    dispatch(setNewCardIndex(1));
-  };
-}
-
 export function flipCard() {
   return (dispatch, getState) => {
     const { flipped } = getState();
@@ -56,12 +48,11 @@ export function setIsLastPage(isLastPage) {
   };
 }
 
-export function nextCard(cardIndex) {
+export function nextCard() {
   return (dispatch, getState) => {
     const { cards } = getState();
 
-    if (cardIndex + 1 <= cards.length) {
-      dispatch(setCurrentCardIndex(cardIndex + 1));
+    if (cards.length > 0) {
       dispatch(setFlipped(false));
     } else {
       dispatch(setIsLastPage(true));
@@ -321,7 +312,7 @@ export function loadCards(id) {
 }
 
 export function loadLearnCardsInSequence(cardsetId) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const cards = await fetchLearnCardsInSequence(cardsetId);
 
     // if no cards
@@ -329,9 +320,7 @@ export function loadLearnCardsInSequence(cardsetId) {
       dispatch(setIsLastPage(true));
     } else {
       const learnCards = cards.map((card) => {
-        const { newCardIndex } = getState();
-        Object.assign(card, { cardIndex: newCardIndex });
-        dispatch(setNewCardIndex(newCardIndex + 1));
+        Object.assign(card, { tryCount: 1 });
         return card;
       });
       dispatch(setCards(learnCards));
@@ -339,9 +328,25 @@ export function loadLearnCardsInSequence(cardsetId) {
   };
 }
 
-export function saveCardScore(cardId, feedbackNumber) {
-  return async () => {
-    await postCardFeedbackNumber(cardId, feedbackNumber);
+export function clickWrongCard(cardId) {
+  return (dispatch, getState) => {
+    const { cards } = getState();
+    const index = cards.findIndex((card) => card.id === cardId);
+    cards[index].tryCount += 1;
+    const filteredCards = cards.filter((card) => card.id !== cardId);
+    const newCards = filteredCards.concat([cards[index]]);
+    dispatch(setCards(newCards));
+    dispatch(nextCard(cardId));
+  };
+}
+
+export function clickCorrectCard(cardId) {
+  return async (dispatch, getState) => {
+    const { cards } = getState();
+    const filteredCards = cards.filter((card) => card.id !== cardId);
+    await postCardTryCount(cardId, cards[0].tryCount);
+    dispatch(setCards(filteredCards));
+    dispatch(nextCard(cardId));
   };
 }
 
@@ -373,8 +378,8 @@ export function initializeCardsetPage(id) {
 export function initializeLearnPage(id) {
   return async (dispatch) => {
     dispatch(setIsLastPage(false));
+    dispatch(setFlipped(false));
     dispatch(setCards([]));
-    dispatch(initializeCard());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
   };
