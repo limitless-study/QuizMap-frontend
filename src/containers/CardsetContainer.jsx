@@ -8,7 +8,7 @@ import CardBox from '../components/CardBox';
 
 import { get } from '../utils';
 
-export default function CardsetBoxContainer() {
+export default function CardsetContainer() {
   const menus = useSelector(get('rootCardsets'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
@@ -25,11 +25,11 @@ export default function CardsetBoxContainer() {
           {cardsetChildren.map((child) => {
             if (child.type === 'CARDSET') {
               return (
-                <CardsetBox cardset={child} />
+                <CardsetBox key={child.id} cardset={child} />
               );
             }
             return (
-              <CardBox card={child} />
+              <CardBox key={child.id} card={child} />
             );
           })}
         </div>

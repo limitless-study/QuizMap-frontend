@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import LearnPage from './pages/LearnPage';
-import CreatePage from './pages/CreatePage';
+import StudioPage from './pages/StudioPage';
 import CardsetPage from './pages/CardsetPage';
 import RootPage from './pages/RootPage';
 import MindMapPage from './pages/MindMapPage';
@@ -18,7 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/studio/:id" element={<CreatePage />} />
+        <Route path="/studio/:id" element={<StudioPage />} />
         <Route path="/cardsets/:id" element={<CardsetPage />} />
         <Route path="/learn/:id" element={<LearnPage />} />
         <Route path="/root" element={<RootPage />} />
