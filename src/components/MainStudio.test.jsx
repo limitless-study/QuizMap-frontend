@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import CreateForm from './CreateForm';
+import MainStudio from './MainStudio';
 
-describe('CreateForm', () => {
+describe('MainStudio', () => {
   const dispatch = jest.fn();
 
   const handleInputChange = jest.fn();
@@ -27,7 +27,7 @@ describe('CreateForm', () => {
   function renderCreateForm() {
     return render(
       <MemoryRouter>
-        <CreateForm
+        <MainStudio
           currentCardId={1}
           currentCard={currentCard}
           topic="test-topic"
@@ -47,7 +47,7 @@ describe('CreateForm', () => {
     useDispatch.mockImplementation(() => dispatch);
   });
 
-  it('renders CreateForm', () => {
+  it('renders MainStudio', () => {
     const { getByLabelText } = renderCreateForm();
 
     expect(getByLabelText('flashcard topic')).not.toBeNull();
