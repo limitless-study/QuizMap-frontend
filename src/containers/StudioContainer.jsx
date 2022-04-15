@@ -17,8 +17,9 @@ import { get } from '../utils';
 
 import MainStudio from '../components/MainStudio';
 import InputField from '../components/InputField';
-import SidebarStudio from '../components/SidebarStudio';
+import StudioAddButton from '../components/StudioAddButton';
 import SaveButton from '../components/SaveButton';
+import SideBarCard from '../components/SideBarCard';
 
 export default function StudioContainer({ id }) {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ export default function StudioContainer({ id }) {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{
-        width: '15%',
+        width: '12.5em',
         height: '100vh',
         padding: '10px',
         overflow: 'scroll',
@@ -84,12 +85,22 @@ export default function StudioContainer({ id }) {
           placeholder="enter new topic"
           onChange={handleTitleChange}
         />
-        <SidebarStudio
-          cards={cards}
-          currentCardIndex={currentCardIndex}
-          onCardClick={handleCardClick}
-          onAddCardClick={handleAddCardButtonClick}
-          onAddCardsetClick={handleAddCardsetButtonClick}
+        {cards.map((card) => (
+          <SideBarCard
+            key={card.cardIndex}
+            selected={card.cardIndex === currentCardIndex}
+            card={card}
+            onClick={handleCardClick}
+            cardText={card.question}
+          />
+        ))}
+        <StudioAddButton
+          onClick={handleAddCardButtonClick}
+          buttonText="add new card"
+        />
+        <StudioAddButton
+          onClick={handleAddCardsetButtonClick}
+          buttonText="add new cardset"
         />
       </div>
       <MainStudio
