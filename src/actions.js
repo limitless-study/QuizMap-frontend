@@ -103,12 +103,12 @@ export function setMindMapCards(mindMapCards) {
 }
 
 export function makeCard({
-  id, cardIndex, question, answer, cardChanged, cardAdded,
+  id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
 }) {
   return {
     type: 'makeCard',
     payload: {
-      id, cardIndex, question, answer, cardChanged, cardAdded,
+      id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
     },
   };
 }
@@ -132,6 +132,7 @@ export function addNewCard() {
       answer: '',
       cardChanged: false,
       cardAdded: true,
+      cardDeleted: false,
     }));
   };
 }
@@ -233,19 +234,19 @@ export function setClickedCardsetId(clickedCardsetId) {
   };
 }
 
-export function setClickedCardId(clickedCardId) {
+export function setClickedCardIndex(clickedCardIndex) {
   return {
-    type: 'setClickedCardId',
-    payload: { clickedCardId },
+    type: 'setClickedCardIndex',
+    payload: { clickedCardIndex },
   };
 }
 
-export function expandViewMoreButton(type, clickedId) {
+export function expandViewMoreButton(target) {
   return (dispatch) => {
-    if (type === 'CARDSET') {
-      dispatch(setClickedCardsetId(clickedId));
+    if (target.type === 'CARDSET') {
+      dispatch(setClickedCardsetId(target.id));
     } else {
-      dispatch(setClickedCardId(clickedId));
+      dispatch(setClickedCardIndex(target.cardIndex));
     }
   };
 }
@@ -253,7 +254,7 @@ export function expandViewMoreButton(type, clickedId) {
 export function contractViewMoreButton() {
   return (dispatch) => {
     dispatch(setClickedCardsetId(null));
-    dispatch(setClickedCardId(null));
+    dispatch(setClickedCardIndex(null));
   };
 }
 
@@ -262,17 +263,6 @@ export function loadRootCardsets() {
     const root = await fetchCardsetChildren(1);
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
-  };
-}
-
-export function deleteClickedCardsetOrCard(type, clickedId) {
-  return async (dispatch) => {
-    if (type === 'CARDSET') {
-      await deleteCardset(clickedId);
-      dispatch(loadRootCardsets());
-    } else {
-      await deleteCard(clickedId);
-    }
   };
 }
 
@@ -285,7 +275,7 @@ export function initializeCards(cards) {
 export function loadCards(id) {
   return async (dispatch, getState) => {
     const cardsetCards = await fetchCardsetCards(id);
-
+    console.log('cardsetCards', cardsetCards);
     if (cardsetCards.length === 0) {
       const { newCardIndex } = getState();
       dispatch(makeCard({
@@ -303,6 +293,7 @@ export function loadCards(id) {
         Object.assign(card, { cardIndex: newCardIndex });
         Object.assign(card, { cardChanged: false });
         Object.assign(card, { cardAdded: false });
+        Object.assign(card, { cardDeleted: false });
         dispatch(setNewCardIndex(newCardIndex + 1));
         return card;
       });
@@ -382,5 +373,21 @@ export function initializeLearnPage(id) {
     dispatch(setCards([]));
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
+  };
+}
+
+export function deleteClickedCardsetOrCard(target) {
+  return async (dispatch, getState) => {
+    if (target.type === 'CARDSET') {
+      await deleteCardset(target.id);
+      dispatch(loadRootCardsets());
+    } else {
+      const { cardIndex } = target;
+      const { cards } = getState();
+      const filteredCards = [...cards];
+      const deleteCardIndex = filteredCards.findIndex((card) => card.cardIndex === cardIndex);
+      filteredCards[deleteCardIndex].cardDeleted = true;
+      dispatch(setCards(filteredCards));
+    }
   };
 }
