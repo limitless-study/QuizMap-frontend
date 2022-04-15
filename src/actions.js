@@ -381,18 +381,20 @@ export function initializeLearnPage(id) {
   };
 }
 
-export function deleteClickedCardsetOrCard(target) {
+export function deleteClickedCardset(cardsetId) {
+  return async (dispatch) => {
+    await deleteCardset(cardsetId);
+    dispatch(loadRootCardsets());
+  };
+}
+
+export function deleteClickedCard(target) {
   return async (dispatch, getState) => {
-    if (target.type === 'CARDSET') {
-      await deleteCardset(target.id);
-      dispatch(loadRootCardsets());
-    } else {
-      const { cardIndex } = target;
-      const { cards } = getState();
-      const filteredCards = [...cards];
-      const deleteCardIndex = filteredCards.findIndex((card) => card.cardIndex === cardIndex);
-      filteredCards[deleteCardIndex].cardDeleted = true;
-      dispatch(setCards(filteredCards));
-    }
+    const { cardIndex } = target;
+    const { cards } = getState();
+    const filteredCards = [...cards];
+    const deleteCardIndex = filteredCards.findIndex((card) => card.cardIndex === cardIndex);
+    filteredCards[deleteCardIndex].cardDeleted = true;
+    dispatch(setCards(filteredCards));
   };
 }
