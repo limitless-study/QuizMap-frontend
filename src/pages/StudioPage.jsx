@@ -4,13 +4,13 @@ import { useDispatch } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
 
-import CreateContainer from '../containers/CreateContainer';
+import StudioContainer from '../containers/StudioContainer';
 
 import {
   initializeCardsetStudio,
 } from '../actions';
 
-export default function CreatePage({ params }) {
+export default function StudioPage({ params }) {
   const dispatch = useDispatch();
 
   const { id } = params || useParams();
@@ -20,6 +20,6 @@ export default function CreatePage({ params }) {
   }, [id]);
 
   return (
-    <CreateContainer id={id} />
+    <StudioContainer id={id} />
   );
 }

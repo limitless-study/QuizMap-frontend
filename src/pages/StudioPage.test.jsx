@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import CreatePage from './CreatePage';
+import StudioPage from './StudioPage';
 
-describe('CreatePage', () => {
+describe('StudioPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -26,10 +26,10 @@ describe('CreatePage', () => {
     }));
   });
 
-  it('renders CreatePage', () => {
+  it('renders StudioPage', () => {
     render(
       <MemoryRouter>
-        <CreatePage />
+        <StudioPage />
       </MemoryRouter>,
     );
   });

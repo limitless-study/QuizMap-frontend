@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import CreateContainer from './CreateContainer';
+import StudioContainer from './StudioContainer';
 
 import {
   changeCardsetTitle,
   updateCard,
 } from '../actions';
 
-describe('CreateContainer', () => {
+describe('StudioContainer', () => {
   const dispatch = jest.fn();
 
   beforeEach(() => {
@@ -35,10 +35,10 @@ describe('CreateContainer', () => {
     }));
   });
 
-  it('renders CreateContainer', () => {
+  it('renders StudioContainer', () => {
     render(
       <MemoryRouter>
-        <CreateContainer />
+        <StudioContainer />
       </MemoryRouter>,
     );
   });
@@ -46,7 +46,7 @@ describe('CreateContainer', () => {
   it('listens input field change events', () => {
     const { getByLabelText } = render(
       <MemoryRouter>
-        <CreateContainer />
+        <StudioContainer />
       </MemoryRouter>,
     );
 
@@ -70,7 +70,7 @@ describe('CreateContainer', () => {
   it('listens add new card click events', () => {
     const { getByRole } = render(
       <MemoryRouter>
-        <CreateContainer />
+        <StudioContainer />
       </MemoryRouter>,
     );
 
@@ -82,7 +82,7 @@ describe('CreateContainer', () => {
   it('listens sidebar card button click event', () => {
     const { getAllByRole } = render(
       <MemoryRouter>
-        <CreateContainer />
+        <StudioContainer />
       </MemoryRouter>,
     );
 
