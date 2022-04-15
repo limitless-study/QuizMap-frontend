@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { Link } from 'react-router-dom';
 
-import { FaPen, FaPlayCircle } from 'react-icons/fa';
+import { FaPen, FaPlayCircle, FaTrashAlt } from 'react-icons/fa';
 
 const Wrapper = styled.div({
   display: 'flex',
@@ -36,6 +36,9 @@ const IconBox = styled.button({
     color: 'white',
     textAlign: 'center',
   },
+  ':hover': {
+    cursor: 'pointer',
+  },
 });
 
 const MindMapButton = styled.button({
@@ -55,10 +58,14 @@ const MindMapButton = styled.button({
   },
 });
 
-export default function CardsetInfo({ cardsetInfo }) {
+export default function CardsetInfo({ cardsetInfo, onDelete }) {
   const {
     id, name, cardSetCount, cardCount,
   } = cardsetInfo;
+
+  const handleClick = () => {
+    onDelete();
+  };
 
   return (
     <Wrapper>
@@ -73,6 +80,12 @@ export default function CardsetInfo({ cardsetInfo }) {
           <Link to={`/learn/${id}`}>
             <FaPlayCircle />
           </Link>
+        </IconBox>
+        <IconBox
+          type="button"
+          onClick={handleClick}
+        >
+          <FaTrashAlt />
         </IconBox>
         <MindMapButton type="button">
           <Link to={`/mindmap/${id}`}>Convert to Mindmap</Link>

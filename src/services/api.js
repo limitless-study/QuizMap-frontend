@@ -1,33 +1,33 @@
 export async function fetchCardsetInfo(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/info`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}/info`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
 export async function fetchCardsetChildren(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/children`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}/children`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
 export async function fetchCardsetCards(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/cards`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}/cards`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
 export async function fetchMindMapCards(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
 export async function patchCardsetTitle({ id, name }) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${id}`;
+  const url = `http://localhost:1205/api/cardsets/${id}`;
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
@@ -40,7 +40,7 @@ export async function patchCardsetTitle({ id, name }) {
 }
 
 export async function postNewCardset(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/cardset`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}/cardset`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -55,7 +55,7 @@ export async function postNewCardset(cardsetId) {
 export async function patchCardsetCard({
   cardId, question, answer,
 }) {
-  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}`;
+  const url = `http://localhost:1205/api/cards/${cardId}`;
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
@@ -68,7 +68,7 @@ export async function patchCardsetCard({
 }
 
 export async function postNewCard({ cardsetId, question, answer }) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/card`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}/card`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -81,7 +81,7 @@ export async function postNewCard({ cardsetId, question, answer }) {
 }
 
 export async function deleteCardset(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}`;
   await fetch(url, {
     method: 'DELETE',
     headers: {
@@ -91,7 +91,7 @@ export async function deleteCardset(cardsetId) {
 }
 
 export async function deleteCard(cardId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}`;
+  const url = `http://localhost:1205/api/cards/${cardId}`;
   await fetch(url, {
     method: 'DELETE',
     headers: {
@@ -101,14 +101,14 @@ export async function deleteCard(cardId) {
 }
 
 export async function fetchLearnCardsInSequence(cardsetId) {
-  const url = `http://lhjkes.ddns.net:1205/api/cardsets/${cardsetId}/learn/sequence`;
+  const url = `http://localhost:1205/api/cardsets/${cardsetId}/learn/sequence`;
   const response = await fetch(url);
   const data = await response.json();
   return data;
 }
 
 export async function postCardTryCount(cardId, tryCount) {
-  const url = `http://lhjkes.ddns.net:1205/api/cards/${cardId}/feedback`;
+  const url = `http://localhost:1205/api/cards/${cardId}/feedback`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {

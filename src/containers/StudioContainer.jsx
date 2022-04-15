@@ -13,7 +13,8 @@ import {
   saveCardset,
   expandViewMoreButton,
   contractViewMoreButton,
-  deleteClickedCardsetOrCard,
+  deleteClickedCardset,
+  deleteClickedCard,
 } from '../actions';
 
 import { get } from '../utils';
@@ -73,7 +74,11 @@ export default function StudioContainer({ id }) {
   };
 
   const handleClickDeleteButton = (target) => {
-    dispatch(deleteClickedCardsetOrCard(target));
+    if (target.type === 'CARDSET') {
+      dispatch(deleteClickedCardset(target.id));
+    } else {
+      dispatch(deleteClickedCard(target));
+    }
   };
 
   if (cards.length === 0) {
