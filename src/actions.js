@@ -164,7 +164,12 @@ export function saveCardset(cardsetId) {
     const { cards } = getState();
 
     cards.forEach((card) => {
-      if (card.cardAdded) {
+      if (card.cardDeleted) {
+        if (!card.cardAdded) {
+          // delete origin cards
+          deleteCard(card.id);
+        }
+      } else if (card.cardAdded) {
         // post added cards
         postNewCard({ cardsetId, question: card.question, answer: card.answer });
       } else if (card.cardChanged) {
