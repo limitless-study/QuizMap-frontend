@@ -11,6 +11,9 @@ import {
   updateCard,
   clickCard,
   saveCardset,
+  expandViewMoreButton,
+  contractViewMoreButton,
+  deleteClickedCardsetOrCard,
 } from '../actions';
 
 import { get } from '../utils';
@@ -20,6 +23,7 @@ import InputField from '../components/InputField';
 import StudioAddButton from '../components/StudioAddButton';
 import SaveButton from '../components/SaveButton';
 import SideBarCard from '../components/SideBarCard';
+import ViewMoreButtons from '../components/ViewMoreButtons';
 
 export default function StudioContainer({ id }) {
   const dispatch = useDispatch();
@@ -30,6 +34,7 @@ export default function StudioContainer({ id }) {
   const cards = useSelector(get('cards'));
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const cardsetId = useSelector(get('cardsetId'));
+  const clickedCardIndex = useSelector(get('clickedCardIndex'));
 
   useLayoutEffect(() => {
     navigate(`/studio/${cardsetId}`);
@@ -59,6 +64,18 @@ export default function StudioContainer({ id }) {
     dispatch(clickCard(cardIndex));
   };
 
+  const handleClickViewMoreButton = (target) => {
+    dispatch(expandViewMoreButton(target));
+  };
+
+  const handleClickOutside = () => {
+    dispatch(contractViewMoreButton());
+  };
+
+  const handleClickDeleteButton = (target) => {
+    dispatch(deleteClickedCardsetOrCard(target));
+  };
+
   if (cards.length === 0) {
     return (
       <div>Loading...</div>
@@ -85,15 +102,31 @@ export default function StudioContainer({ id }) {
           placeholder="enter new topic"
           onChange={handleTitleChange}
         />
-        {cards.map((card) => (
-          <SideBarCard
-            key={card.cardIndex}
-            selected={card.cardIndex === currentCardIndex}
-            card={card}
-            onClick={handleCardClick}
-            cardText={card.question}
-          />
-        ))}
+        {cards.map((card) => {
+          if (!card.cardDeleted) {
+            return (
+              <div
+                key={card.cardIndex}
+                style={{ position: 'relative' }}
+              >
+                <SideBarCard
+                  selected={card.cardIndex === currentCardIndex}
+                  card={card}
+                  onClick={handleCardClick}
+                  cardText={card.question}
+                />
+                <ViewMoreButtons
+                  target={card}
+                  isViewMoreHidden={!(card.cardIndex === clickedCardIndex)}
+                  handleClickOutside={handleClickOutside}
+                  handleClickViewMoreButton={handleClickViewMoreButton}
+                  handleClickDeleteButton={handleClickDeleteButton}
+                />
+              </div>
+            );
+          }
+          return null;
+        })}
         <StudioAddButton
           onClick={handleAddCardButtonClick}
           buttonText="add new card"

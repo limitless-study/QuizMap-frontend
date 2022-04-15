@@ -36,16 +36,16 @@ export default function RootContainer() {
     dispatch(addNewCardset(1));
   };
 
-  const handleClickViewMoreButton = (type, id) => {
-    dispatch(expandViewMoreButton(type, id));
+  const handleClickViewMoreButton = (target) => {
+    dispatch(expandViewMoreButton(target));
   };
 
   const handleClickOutside = () => {
     dispatch(contractViewMoreButton());
   };
 
-  const handleClickDeleteButton = (type, id) => {
-    dispatch(deleteClickedCardsetOrCard(type, id));
+  const handleClickDeleteButton = (target) => {
+    dispatch(deleteClickedCardsetOrCard(target));
   };
 
   return (
@@ -68,7 +68,7 @@ export default function RootContainer() {
             >
               <RootCard cardset={cardset} />
               <ViewMoreButtons
-                cardset={cardset}
+                target={cardset}
                 isViewMoreHidden={!(cardset.id === clickedCardsetId)}
                 handleClickOutside={handleClickOutside}
                 handleClickViewMoreButton={handleClickViewMoreButton}

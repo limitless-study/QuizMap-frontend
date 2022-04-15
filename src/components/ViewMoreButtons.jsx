@@ -42,23 +42,21 @@ const DeleteButton = styled.span({
 });
 
 export default function ViewMoreButtons({
-  cardset, isViewMoreHidden,
+  target, isViewMoreHidden,
   handleClickOutside, handleClickViewMoreButton, handleClickDeleteButton,
 }) {
-  const { id, type } = cardset;
-
   return (
     <ThreeDotsButton
       type="button"
-      key={id}
-      onClick={() => handleClickViewMoreButton(type, id)}
+      key={target.id}
+      onClick={() => handleClickViewMoreButton(target)}
       onBlur={handleClickOutside}
     >
       <IoIosMore />
       <DeleteButton
         type="button"
         hidden={isViewMoreHidden}
-        onMouseDown={() => handleClickDeleteButton(type, id)}
+        onMouseDown={() => handleClickDeleteButton(target)}
       >
         Delete
       </DeleteButton>

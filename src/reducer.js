@@ -5,7 +5,7 @@ const initialState = {
   rootCardsets: [],
   cardsetChildren: [],
   clickedCardsetId: null,
-  clickedCardId: null,
+  clickedCardIndex: null,
 
   // studio page
   cards: [],
@@ -57,13 +57,13 @@ const reducers = {
 
   makeCard(state, {
     payload: {
-      id, cardIndex, question, answer, cardChanged, cardAdded,
+      id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
     },
   }) {
     return {
       ...state,
       cards: [...state.cards, {
-        id, cardIndex, question, answer, cardChanged, cardAdded,
+        id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
       }],
     };
   },
@@ -75,10 +75,10 @@ const reducers = {
     };
   },
 
-  setClickedCardId(state, { payload: { clickedCardId } }) {
+  setClickedCardIndex(state, { payload: { clickedCardIndex } }) {
     return {
       ...state,
-      clickedCardId,
+      clickedCardIndex,
     };
   },
 
