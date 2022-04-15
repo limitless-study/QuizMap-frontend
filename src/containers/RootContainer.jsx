@@ -16,7 +16,8 @@ import {
   addNewCardset,
   expandViewMoreButton,
   contractViewMoreButton,
-  deleteClickedCardsetOrCard,
+  deleteClickedCardset,
+  deleteClickedCard,
 } from '../actions';
 
 export default function RootContainer() {
@@ -45,7 +46,11 @@ export default function RootContainer() {
   };
 
   const handleClickDeleteButton = (target) => {
-    dispatch(deleteClickedCardsetOrCard(target));
+    if (target.type === 'CARDSET') {
+      dispatch(deleteClickedCardset(target.id));
+    } else {
+      dispatch(deleteClickedCard(target));
+    }
   };
 
   return (
