@@ -280,7 +280,6 @@ export function initializeCards(cards) {
 export function loadCards(id) {
   return async (dispatch, getState) => {
     const cardsetCards = await fetchCardsetCards(id);
-    console.log('cardsetCards', cardsetCards);
     if (cardsetCards.length === 0) {
       const { newCardIndex } = getState();
       dispatch(makeCard({
@@ -352,6 +351,7 @@ export function initializeCardsetStudio(id) {
     dispatch(setCurrentCardIndex(1));
     dispatch(setNewCardIndex(1));
     dispatch(initializeCards([]));
+    dispatch(contractViewMoreButton());
 
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCards(id));
