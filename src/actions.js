@@ -298,6 +298,7 @@ export function loadCards(id) {
         Object.assign(card, { cardChanged: false });
         Object.assign(card, { cardAdded: false });
         Object.assign(card, { cardDeleted: false });
+        Object.assign(card, { tryCount: 1 });
         dispatch(setNewCardIndex(newCardIndex + 1));
         return card;
       });
@@ -314,11 +315,7 @@ export function loadLearnCardsInSequence(cardsetId) {
     if (cards.length === 0) {
       dispatch(setIsLastPage(true));
     } else {
-      const learnCards = cards.map((card) => {
-        Object.assign(card, { tryCount: 1 });
-        return card;
-      });
-      dispatch(setCards(learnCards));
+      dispatch(loadCards(cardsetId));
     }
   };
 }
