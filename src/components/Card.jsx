@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 const CardBox = styled.div({
+  whiteSpace: 'pre-line',
   display: 'table',
   width: '350px',
   height: '300px',
