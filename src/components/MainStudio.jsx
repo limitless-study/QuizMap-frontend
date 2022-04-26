@@ -9,8 +9,8 @@ const Wrapper = styled.div({
 const CreateCardField = styled.div({
   position: 'absolute',
   display: 'flex',
-  top: '50%',
-  left: '50%',
+  top: '55%',
+  left: '51%',
   transform: 'translate(-40%, -50%)',
 });
 

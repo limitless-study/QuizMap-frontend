@@ -96,74 +96,93 @@ export default function StudioContainer({ id }) {
     );
   }
 
-  console.log('cards', cards, currentCardIndex);
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div>
       <div style={{
-        width: '12.5em',
-        height: '100vh',
-        padding: '10px',
-        overflow: 'scroll',
-        backgroundColor: '#EDEDED',
+        width: '100%',
+        height: '100px',
+        position: 'fixed',
+        zIndex: '999',
+        backgroundColor: '#ffffff',
+        boxShadow: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
       }}
       >
-        <InputField
-          inputText={topic}
-          labelText="flashcard-topic"
-          id="flashcard-topic"
-          inputName="topic"
-          placeholder="enter new topic"
-          onChange={handleTitleChange}
-        />
-        <DateTimePicker
-          cardsetDueDate={cardsetDueDate}
-          onChange={handleDateChange}
-        />
-
-        {cards.map((card) => {
-          if (!card.cardDeleted) {
-            return (
-              <div
-                key={card.cardIndex}
-                style={{ position: 'relative' }}
-              >
-                <SideBarCard
-                  selected={card.cardIndex === currentCardIndex}
-                  card={card}
-                  onClick={handleCardClick}
-                  cardText={card.question}
-                />
-                <ViewMoreButtons
-                  target={card}
-                  isViewMoreHidden={!(card.cardIndex === clickedCardIndex)}
-                  handleClickOutside={handleClickOutside}
-                  handleClickViewMoreButton={handleClickViewMoreButton}
-                  handleClickDeleteButton={handleClickDeleteButton}
-                />
-              </div>
-            );
-          }
-          return null;
-        })}
-        <StudioAddButton
-          onClick={handleAddCardButtonClick}
-          buttonText="add new card"
-        />
-        <StudioAddButton
-          onClick={handleAddCardsetButtonClick}
-          buttonText="add new cardset"
+        <div style={{ display: 'flex', position: 'relative', padding: '10px' }}>
+          <div style={{ width: '70%' }}>
+            <InputField
+              inputText={topic}
+              labelText="flashcard-topic"
+              id="flashcard-topic"
+              inputName="topic"
+              placeholder="enter new topic"
+              onChange={handleTitleChange}
+            />
+          </div>
+          <div style={{ display: 'flex', position: 'absolute', right: '10px' }}>
+            <DateTimePicker
+              cardsetDueDate={cardsetDueDate}
+              onChange={handleDateChange}
+            />
+            <SaveButton
+              onSave={handleSave}
+              cardsetId={id}
+            />
+          </div>
+        </div>
+        <div>
+          milkdown
+        </div>
+      </div>
+      <div style={{ display: 'flex', height: '100vh' }}>
+        <div style={{
+          width: '12.5em',
+          padding: '10px',
+          overflowY: 'scroll',
+          marginTop: '100px',
+          backgroundColor: '#EDEDED',
+        }}
+        >
+          {cards.map((card) => {
+            if (!card.cardDeleted) {
+              return (
+                <div
+                  key={card.cardIndex}
+                  style={{ position: 'relative' }}
+                >
+                  <SideBarCard
+                    selected={card.cardIndex === currentCardIndex}
+                    card={card}
+                    onClick={handleCardClick}
+                    cardText={card.question}
+                  />
+                  <ViewMoreButtons
+                    target={card}
+                    isViewMoreHidden={!(card.cardIndex === clickedCardIndex)}
+                    handleClickOutside={handleClickOutside}
+                    handleClickViewMoreButton={handleClickViewMoreButton}
+                    handleClickDeleteButton={handleClickDeleteButton}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })}
+          <StudioAddButton
+            onClick={handleAddCardButtonClick}
+            buttonText="add new card"
+          />
+          <StudioAddButton
+            onClick={handleAddCardsetButtonClick}
+            buttonText="add new cardset"
+          />
+        </div>
+        <MainStudio
+          currentCard={currentCard[0]}
+          onChange={handleInputChange}
         />
       </div>
-      <MainStudio
-        currentCard={currentCard[0]}
-        onChange={handleInputChange}
-      />
-      <SaveButton
-        onSave={handleSave}
-        cardsetId={id}
-      />
     </div>
   );
 }
