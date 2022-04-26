@@ -309,6 +309,7 @@ export function loadRootCardsets() {
 export function initializeCards(cards) {
   return (dispatch, getState) => {
     const initializedCards = cards.map((card) => {
+      dispatch(setNewCardIndex(1));
       const { newCardIndex } = getState();
       Object.assign(card, { cardIndex: newCardIndex });
       Object.assign(card, { cardChanged: false });
