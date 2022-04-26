@@ -15,6 +15,7 @@ import {
   contractViewMoreButton,
   deleteClickedCardset,
   deleteClickedCard,
+  changeCardsetDueDate,
 } from '../actions';
 
 import { get } from '../utils';
@@ -25,6 +26,7 @@ import StudioAddButton from '../components/StudioAddButton';
 import SaveButton from '../components/SaveButton';
 import SideBarCard from '../components/SideBarCard';
 import ViewMoreButtons from '../components/ViewMoreButtons';
+import DateTimePicker from '../components/DateTimePicker';
 
 export default function StudioContainer({ id }) {
   const dispatch = useDispatch();
@@ -36,6 +38,9 @@ export default function StudioContainer({ id }) {
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const cardsetId = useSelector(get('cardsetId'));
   const clickedCardIndex = useSelector(get('clickedCardIndex'));
+  const cardsetDueDate = useSelector(get('dueDate'));
+
+  // TODO: cardsetDueDate를 Date 객체로 변환하기
 
   useLayoutEffect(() => {
     navigate(`/studio/${cardsetId}`);
@@ -81,12 +86,17 @@ export default function StudioContainer({ id }) {
     }
   };
 
+  const handleDateChange = (dueDate) => {
+    dispatch(changeCardsetDueDate(dueDate));
+  };
+
   if (cards.length === 0) {
     return (
       <div>Loading...</div>
     );
   }
 
+  console.log('cards', cards, currentCardIndex);
   const currentCard = cards.filter((card) => card.cardIndex === currentCardIndex);
 
   return (
@@ -107,6 +117,11 @@ export default function StudioContainer({ id }) {
           placeholder="enter new topic"
           onChange={handleTitleChange}
         />
+        <DateTimePicker
+          cardsetDueDate={cardsetDueDate}
+          onChange={handleDateChange}
+        />
+
         {cards.map((card) => {
           if (!card.cardDeleted) {
             return (

@@ -11,6 +11,7 @@ import {
   postNewCardset,
   postCardTryCount,
   deleteCard,
+  patchCardsetDueDate,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -67,10 +68,31 @@ export function setTitleChanged(isTitleChanged) {
   };
 }
 
+export function setDueDateChanged(isDueDateChanged) {
+  return {
+    type: 'setDueDateChanged',
+    payload: { isDueDateChanged },
+  };
+}
+
 export function setCardsetTitle(cardsetTitle) {
   return {
     type: 'setCardsetTitle',
     payload: { cardsetTitle },
+  };
+}
+
+export function setDueDate(dueDate) {
+  return {
+    type: 'setDueDate',
+    payload: { dueDate },
+  };
+}
+
+export function changeCardsetDueDate(dueDate) {
+  return (dispatch) => {
+    dispatch(setDueDate(dueDate));
+    dispatch(setDueDateChanged(true));
   };
 }
 
@@ -154,13 +176,26 @@ export function initializeCardset() {
 export function saveCardset(cardsetId) {
   return (dispatch, getState) => {
     // patch topic
-    const { isTitleChanged } = getState();
+    const { isTitleChanged, isDueDateChanged } = getState();
 
     if (isTitleChanged) {
       const { cardsetTitle } = getState();
       patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
     }
 
+    // patch due date
+    if (isDueDateChanged) {
+      const { dueDate } = getState();
+      const year = dueDate.getFullYear();
+      const month = (`00${dueDate.getMonth() + 1}`).slice(-2);
+      const day = (`00${dueDate.getDate()}`).slice(-2);
+      const hour = (`00${dueDate.getHours()}`).slice(-2);
+      const minute = (`00${dueDate.getMinutes()}`).slice(-2);
+      const date = `${year}${month}${day}${hour}${minute}`;
+      patchCardsetDueDate({ id: cardsetId, dueDate: date });
+    }
+
+    // patch cards
     const { cards } = getState();
 
     cards.forEach((card) => {
@@ -355,7 +390,9 @@ export function clickCorrectCard(cardId) {
 
 export function initializeCardsetStudio(id) {
   return async (dispatch, getState) => {
+    dispatch(setDueDate(''));
     dispatch(setTitleChanged(false));
+    dispatch(setDueDateChanged(false));
     dispatch(setCurrentCardIndex(1));
     dispatch(setNewCardIndex(1));
     dispatch(initializeCards([]));
@@ -364,10 +401,12 @@ export function initializeCardsetStudio(id) {
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCards(id));
 
-    const { cardsetInfo } = getState();
+    const { cardsetInfo, dueDate } = getState();
+    console.log('cardsetInfo', cardsetInfo);
     const { name } = cardsetInfo;
 
     dispatch(setCardsetTitle(name));
+    dispatch(setDueDate(dueDate));
   };
 }
 
