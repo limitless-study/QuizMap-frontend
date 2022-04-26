@@ -307,8 +307,18 @@ export function loadRootCardsets() {
 }
 
 export function initializeCards(cards) {
-  return (dispatch) => {
-    dispatch(setCards(cards));
+  return (dispatch, getState) => {
+    const initializedCards = cards.map((card) => {
+      const { newCardIndex } = getState();
+      Object.assign(card, { cardIndex: newCardIndex });
+      Object.assign(card, { cardChanged: false });
+      Object.assign(card, { cardAdded: false });
+      Object.assign(card, { cardDeleted: false });
+      Object.assign(card, { tryCount: 1 });
+      dispatch(setNewCardIndex(newCardIndex + 1));
+      return card;
+    });
+    dispatch(setCards(initializedCards));
   };
 }
 
@@ -328,40 +338,20 @@ export function loadCards(id) {
       }));
       dispatch(setNewCardIndex(newCardIndex + 1));
     } else {
-      const cards = cardsetCards.map((card) => {
-        const { newCardIndex } = getState();
-        Object.assign(card, { cardIndex: newCardIndex });
-        Object.assign(card, { cardChanged: false });
-        Object.assign(card, { cardAdded: false });
-        Object.assign(card, { cardDeleted: false });
-        Object.assign(card, { tryCount: 1 });
-        dispatch(setNewCardIndex(newCardIndex + 1));
-        return card;
-      });
-      dispatch(setCards(cards));
+      dispatch(initializeCards(cardsetCards));
     }
   };
 }
 
 export function loadLearnCardsInSequence(cardsetId) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     const cardsInSequence = await fetchLearnCardsInSequence(cardsetId);
 
     // if no cards
     if (cardsInSequence.length === 0) {
       dispatch(setIsLastPage(true));
     } else {
-      const cards = cardsInSequence.map((card) => {
-        const { newCardIndex } = getState();
-        Object.assign(card, { cardIndex: newCardIndex });
-        Object.assign(card, { cardChanged: false });
-        Object.assign(card, { cardAdded: false });
-        Object.assign(card, { cardDeleted: false });
-        Object.assign(card, { tryCount: 1 });
-        dispatch(setNewCardIndex(newCardIndex + 1));
-        return card;
-      });
-      dispatch(setCards(cards));
+      dispatch(initializeCards(cardsInSequence));
     }
   };
 }
@@ -402,7 +392,6 @@ export function initializeCardsetStudio(id) {
     await dispatch(loadCards(id));
 
     const { cardsetInfo, dueDate } = getState();
-    console.log('cardsetInfo', cardsetInfo);
     const { name } = cardsetInfo;
 
     dispatch(setCardsetTitle(name));
