@@ -5,6 +5,7 @@ const InputContainer = styled.div({
   '& input': {
     margin: '0 auto',
     width: '100%',
+    height: '100%',
     fontSize: '22px',
     border: 'none',
     borderBottom: '1px solid lightgray',

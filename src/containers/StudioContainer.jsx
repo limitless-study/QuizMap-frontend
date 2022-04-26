@@ -102,15 +102,22 @@ export default function StudioContainer({ id }) {
     <div>
       <div style={{
         width: '100%',
-        height: '100px',
+        height: '60px',
         position: 'fixed',
         zIndex: '999',
         backgroundColor: '#ffffff',
-        boxShadow: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
+        boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px',
       }}
       >
-        <div style={{ display: 'flex', position: 'relative', padding: '10px' }}>
-          <div style={{ width: '70%' }}>
+        <div style={{
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '0 10px',
+        }}
+        >
+          <div style={{ flex: '1' }}>
             <InputField
               inputText={topic}
               labelText="flashcard-topic"
@@ -120,7 +127,7 @@ export default function StudioContainer({ id }) {
               onChange={handleTitleChange}
             />
           </div>
-          <div style={{ display: 'flex', position: 'absolute', right: '10px' }}>
+          <div style={{ display: 'flex' }}>
             <DateTimePicker
               cardsetDueDate={cardsetDueDate}
               onChange={handleDateChange}
@@ -131,16 +138,13 @@ export default function StudioContainer({ id }) {
             />
           </div>
         </div>
-        <div>
-          milkdown
-        </div>
       </div>
       <div style={{ display: 'flex', height: '100vh' }}>
         <div style={{
           width: '12.5em',
           padding: '10px',
           overflowY: 'scroll',
-          marginTop: '100px',
+          marginTop: '60px',
           backgroundColor: '#EDEDED',
         }}
         >
