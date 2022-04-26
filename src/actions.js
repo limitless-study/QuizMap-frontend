@@ -289,6 +289,7 @@ export function loadCards(id) {
         answer: '',
         cardChanged: false,
         cardAdded: true,
+        cardDeleted: false,
       }));
       dispatch(setNewCardIndex(newCardIndex + 1));
     } else {
@@ -308,14 +309,24 @@ export function loadCards(id) {
 }
 
 export function loadLearnCardsInSequence(cardsetId) {
-  return async (dispatch) => {
-    const cards = await fetchLearnCardsInSequence(cardsetId);
+  return async (dispatch, getState) => {
+    const cardsInSequence = await fetchLearnCardsInSequence(cardsetId);
 
     // if no cards
-    if (cards.length === 0) {
+    if (cardsInSequence.length === 0) {
       dispatch(setIsLastPage(true));
     } else {
-      dispatch(loadCards(cardsetId));
+      const cards = cardsInSequence.map((card) => {
+        const { newCardIndex } = getState();
+        Object.assign(card, { cardIndex: newCardIndex });
+        Object.assign(card, { cardChanged: false });
+        Object.assign(card, { cardAdded: false });
+        Object.assign(card, { cardDeleted: false });
+        Object.assign(card, { tryCount: 1 });
+        dispatch(setNewCardIndex(newCardIndex + 1));
+        return card;
+      });
+      dispatch(setCards(cards));
     }
   };
 }
