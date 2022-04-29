@@ -52,6 +52,8 @@ export default function MilkDown({
   const editor = useEditor((root) => Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
+        setTimeout(console.log('output:', output));
+        // Promise.resolve().then(console.log('output:', output));
     })
     .use(nord)
     .use(commonmark)
