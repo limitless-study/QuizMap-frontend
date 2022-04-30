@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
 
-import { Editor, rootCtx } from '@milkdown/core';
+import { useEffect, useLayoutEffect } from 'react';
+
+import { Editor, rootCtx, defaultValueCtx } from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
 import { ReactEditor, useEditor } from '@milkdown/react';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { slash } from '@milkdown/plugin-slash';
 import { history } from '@milkdown/plugin-history';
+import { listener, listenerCtx } from '@milkdown/plugin-listener';
 
 const EditorField = styled.div({
   width: '19em',
@@ -46,19 +49,32 @@ const EditorField = styled.div({
   },
 });
 
-export default function MilkDown({
-  value, name, id, inputName, placeholder, onChange,
-}) {
+function getEditor(value, onChange) {
   const editor = useEditor((root) => Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
-        setTimeout(console.log('output:', output));
-        // Promise.resolve().then(console.log('output:', output));
+      ctx.set(defaultValueCtx, value);
+      ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
+        setTimeout(
+          onChange(markdown),
+        );
+      });
     })
     .use(nord)
     .use(commonmark)
     .use(slash)
-    .use(history));
+    .use(history)
+    .use(listener));
+
+  return editor;
+}
+
+export default function MilkDown({ value, onChange }) {
+  const editor = getEditor(value, onChange);
+
+  useLayoutEffect(() => {
+    // editor = getEditor(value, onChange);
+  }, [value]);
 
   return (
     <EditorField>

@@ -20,6 +20,7 @@ export default function MainStudio({ currentCard, onChange }) {
   const { question, answer } = currentCard;
 
   const handleChange = ({ name, value }) => {
+    console.log('name, value', name, value);
     onChange({ name, value });
   };
 
@@ -27,20 +28,14 @@ export default function MainStudio({ currentCard, onChange }) {
     <Wrapper>
       <CreateCardField>
         <MilkDown
+          currentCard={currentCard}
           value={question}
-          name="question"
-          id="flashcard-question"
-          inputName="question"
-          placeholder="enter your question here"
-          onChange={(event) => handleChange({ name: 'question', value: event.target.value })}
+          onChange={(value) => handleChange({ name: 'question', value })}
         />
         <MilkDown
+          currentCard={currentCard}
           value={answer}
-          name="question"
-          id="flashcard-question"
-          inputName="question"
-          placeholder="enter your question here"
-          onChange={(event) => handleChange({ name: 'question', value: event.target.value })}
+          onChange={(value) => handleChange({ name: 'answer', value })}
         />
       </CreateCardField>
     </Wrapper>
