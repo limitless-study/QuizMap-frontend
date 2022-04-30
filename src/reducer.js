@@ -10,9 +10,11 @@ const initialState = {
   // studio page
   cards: [],
   cardsetTitle: '',
+  dueDate: '',
   newCardIndex: 1,
   currentCardIndex: 1,
   isTitleChanged: false,
+  isDueDateChanged: false,
   cardsetId: 0,
 
   // learn page
@@ -42,6 +44,13 @@ const reducers = {
     return {
       ...state,
       cardsetTitle,
+    };
+  },
+
+  setDueDate(state, { payload: { dueDate } }) {
+    return {
+      ...state,
+      dueDate,
     };
   },
 
@@ -87,6 +96,13 @@ const reducers = {
     return {
       ...state,
       isTitleChanged,
+    };
+  },
+
+  setDueDateChanged(state, { payload: { isDueDateChanged } }) {
+    return {
+      ...state,
+      isDueDateChanged,
     };
   },
 

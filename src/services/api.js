@@ -39,6 +39,19 @@ export async function patchCardsetTitle({ id, name }) {
   return topic;
 }
 
+export async function patchCardsetDueDate({ id, dueDate }) {
+  const url = `http://localhost:1205/api/cardsets/${id}/duedate`;
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ dueDate }),
+  });
+  const { name: topic } = await response.json();
+  return topic;
+}
+
 export async function postNewCardset(cardsetId) {
   const url = `http://localhost:1205/api/cardsets/${cardsetId}/cardset`;
   const response = await fetch(url, {
@@ -104,6 +117,8 @@ export async function fetchLearnCardsInSequence(cardsetId) {
   const url = `http://localhost:1205/api/cardsets/${cardsetId}/learn/sequence`;
   const response = await fetch(url);
   const data = await response.json();
+
+  console.log('learnCards in Sequence:', data);
   return data;
 }
 

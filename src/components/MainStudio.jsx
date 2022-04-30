@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import MilkDown from './MilkDown';
+
 const Wrapper = styled.div({
   width: '100vw',
   height: '100vh',
@@ -9,50 +11,31 @@ const Wrapper = styled.div({
 const CreateCardField = styled.div({
   position: 'absolute',
   display: 'flex',
-  top: '50%',
-  left: '50%',
+  top: '55%',
+  left: '51%',
   transform: 'translate(-40%, -50%)',
-});
-
-const TextArea = styled.textarea({
-  width: '19em',
-  height: '16em',
-  margin: '10px',
-  padding: '10px',
-  border: '1px solid lightgray',
-  borderRadius: '10px',
-  boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',
-  resize: 'none',
-  fontSize: '20px',
-  backgroundColor: 'transparent',
-  fontFamily: 'sans-serif',
 });
 
 export default function MainStudio({ currentCard, onChange }) {
   const { question, answer } = currentCard;
 
   const handleChange = ({ name, value }) => {
+    console.log('name, value', name, value);
     onChange({ name, value });
   };
 
   return (
     <Wrapper>
       <CreateCardField>
-        <TextArea
+        <MilkDown
+          currentCard={currentCard}
           value={question}
-          name="question"
-          id="flashcard-question"
-          inputName="question"
-          placeholder="enter your question here"
-          onChange={(event) => handleChange({ name: 'question', value: event.target.value })}
+          onChange={(value) => handleChange({ name: 'question', value })}
         />
-        <TextArea
+        <MilkDown
+          currentCard={currentCard}
           value={answer}
-          name="answer"
-          id="flashcard-answer"
-          inputName="answer"
-          placeholder="enter your answer here"
-          onChange={(event) => handleChange({ name: 'answer', value: event.target.value })}
+          onChange={(value) => handleChange({ name: 'answer', value })}
         />
       </CreateCardField>
     </Wrapper>

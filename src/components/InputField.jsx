@@ -1,12 +1,16 @@
 import styled from '@emotion/styled';
 
 const InputContainer = styled.div({
+  textAlign: 'center',
   '& input': {
+    margin: '0 auto',
     width: '100%',
-    fontSize: '15px',
+    height: '100%',
+    fontSize: '22px',
     border: 'none',
     borderBottom: '1px solid lightgray',
     backgroundColor: 'transparent',
+    fontWeight: 'bolder',
   },
   '& input:focus': {
     outline: 'none',
