@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 
 import { Editor, rootCtx, defaultValueCtx } from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
@@ -53,7 +53,7 @@ function getEditor(value, onChange) {
   const editor = useEditor((root) => Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
-      ctx.set(defaultValueCtx, value);
+      ctx.set(defaultValueCtx, value); // TODO: 이 부분이 useEffect 안에서 바뀔 수 있도록
       ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
         setTimeout(
           onChange(markdown),
@@ -69,12 +69,14 @@ function getEditor(value, onChange) {
   return editor;
 }
 
-export default function MilkDown({ value, onChange }) {
+export default function MilkDown({ cardIndex, value, onChange }) {
   const editor = getEditor(value, onChange);
 
-  useLayoutEffect(() => {
+  // cardIndex가 바뀔 때마다 새롭게 실행되는 부분
+  useEffect(() => {
+    console.log('useEffect');
     // editor = getEditor(value, onChange);
-  }, [value]);
+  }, [cardIndex]);
 
   return (
     <EditorField>
