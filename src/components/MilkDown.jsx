@@ -72,6 +72,8 @@ function getEditor(value, onChange) {
 export default function MilkDown({ cardIndex, value, onChange }) {
   const editor = getEditor(value, onChange);
 
+  console.log('value', value);
+
   // cardIndex가 바뀔 때마다 새롭게 실행되는 부분
   useEffect(() => {
     console.log('useEffect');

@@ -26,17 +26,17 @@ export async function fetchMindMapCards(cardsetId) {
   return data;
 }
 
-export async function patchCardsetTitle({ id, name }) {
+export async function patchCardsetTitle({ id, topic }) {
   const url = `http://localhost:1205/api/cardsets/${id}`;
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id, name }),
+    body: JSON.stringify({ id, topic }),
   });
-  const { name: topic } = await response.json();
-  return topic;
+  const data = await response.json();
+  return data;
 }
 
 export async function patchCardsetDueDateTime({ id, dueDateTime }) {
@@ -48,8 +48,8 @@ export async function patchCardsetDueDateTime({ id, dueDateTime }) {
     },
     body: JSON.stringify({ dueDateTime }),
   });
-  const { name: topic } = await response.json();
-  return topic;
+  const data = await response.json();
+  return data;
 }
 
 export async function postNewCardset(cardsetId) {
@@ -59,14 +59,14 @@ export async function postNewCardset(cardsetId) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name: 'Untitled' }),
+    body: JSON.stringify({ topic: 'Untitled' }),
   });
   const { id } = await response.json();
   return id;
 }
 
 export async function patchCardsetCard({
-  cardId, question, answer,
+  cardId, topic, answer,
 }) {
   const url = `http://localhost:1205/api/cards/${cardId}`;
   const response = await fetch(url, {
@@ -74,20 +74,20 @@ export async function patchCardsetCard({
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ question, answer }),
+    body: JSON.stringify({ topic, answer }),
   });
   const data = await response.json();
   return data;
 }
 
-export async function postNewCard({ cardsetId, question, answer }) {
+export async function postNewCard({ cardsetId, topic, answer }) {
   const url = `http://localhost:1205/api/cardsets/${cardsetId}/card`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ question, answer }),
+    body: JSON.stringify({ topic, answer }),
   });
   const data = await response.json();
   return data;

@@ -125,12 +125,12 @@ export function setMindMapCards(mindMapCards) {
 }
 
 export function makeCard({
-  id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
+  id, cardIndex, topic, answer, cardChanged, cardAdded, cardDeleted,
 }) {
   return {
     type: 'makeCard',
     payload: {
-      id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
+      id, cardIndex, topic, answer, cardChanged, cardAdded, cardDeleted,
     },
   };
 }
@@ -150,7 +150,7 @@ export function addNewCard() {
     dispatch(makeCard({
       id: -1,
       cardIndex: newCardIndex,
-      question: '',
+      topic: '',
       answer: '',
       cardChanged: false,
       cardAdded: true,
@@ -180,7 +180,7 @@ export function saveCardset(cardsetId) {
 
     if (isTitleChanged) {
       const { cardsetTitle } = getState();
-      patchCardsetTitle({ id: cardsetId, name: cardsetTitle });
+      patchCardsetTitle({ id: cardsetId, topic: cardsetTitle });
     }
 
     // patch due date
@@ -206,11 +206,11 @@ export function saveCardset(cardsetId) {
         }
       } else if (card.cardAdded) {
         // post added cards
-        postNewCard({ cardsetId, question: card.question, answer: card.answer });
+        postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
       } else if (card.cardChanged) {
         // patch changed cards
         patchCardsetCard({
-          cardsetId, cardId: card.id, question: card.question, answer: card.answer,
+          cardsetId, cardId: card.id, topic: card.topic, answer: card.answer,
         });
       }
     });
@@ -331,7 +331,7 @@ export function loadCards(id) {
       dispatch(makeCard({
         id: -1,
         cardIndex: 1,
-        question: '',
+        topic: '',
         answer: '',
         cardChanged: false,
         cardAdded: true,
@@ -393,9 +393,9 @@ export function initializeCardsetStudio(id) {
     await dispatch(loadCards(id));
 
     const { cardsetInfo, dueDate } = getState();
-    const { name } = cardsetInfo;
+    const { topic } = cardsetInfo;
 
-    dispatch(setCardsetTitle(name));
+    dispatch(setCardsetTitle(topic));
     dispatch(setDueDateTime(dueDate));
   };
 }

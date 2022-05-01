@@ -159,7 +159,7 @@ export default function StudioContainer({ id }) {
                     selected={card.cardIndex === currentCardIndex}
                     card={card}
                     onClick={handleCardClick}
-                    cardText={card.question}
+                    cardText={card.topic}
                   />
                   <ViewMoreButtons
                     target={card}

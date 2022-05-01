@@ -54,25 +54,15 @@ const reducers = {
     };
   },
 
-  changeCreateFields(state, { payload: { name, value } }) {
-    return {
-      ...state,
-      createFields: {
-        ...state.createFields,
-        [name]: value,
-      },
-    };
-  },
-
   makeCard(state, {
     payload: {
-      id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
+      id, cardIndex, topic, answer, cardChanged, cardAdded, cardDeleted,
     },
   }) {
     return {
       ...state,
       cards: [...state.cards, {
-        id, cardIndex, question, answer, cardChanged, cardAdded, cardDeleted,
+        id, cardIndex, topic, answer, cardChanged, cardAdded, cardDeleted,
       }],
     };
   },
