@@ -39,14 +39,14 @@ export async function patchCardsetTitle({ id, name }) {
   return topic;
 }
 
-export async function patchCardsetDueDate({ id, dueDate }) {
-  const url = `http://localhost:1205/api/cardsets/${id}/duedate`;
+export async function patchCardsetDueDateTime({ id, dueDateTime }) {
+  const url = `http://localhost:1205/api/cardsets/${id}/due_date_time`;
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ dueDate }),
+    body: JSON.stringify({ dueDateTime }),
   });
   const { name: topic } = await response.json();
   return topic;

@@ -15,7 +15,7 @@ import {
   contractViewMoreButton,
   deleteClickedCardset,
   deleteClickedCard,
-  changeCardsetDueDate,
+  changeCardsetDueDateTime,
 } from '../actions';
 
 import { get } from '../utils';
@@ -38,7 +38,7 @@ export default function StudioContainer({ id }) {
   const currentCardIndex = useSelector(get('currentCardIndex'));
   const cardsetId = useSelector(get('cardsetId'));
   const clickedCardIndex = useSelector(get('clickedCardIndex'));
-  const cardsetDueDate = useSelector(get('dueDate'));
+  const cardsetDueDateTime = useSelector(get('dueDateTime'));
 
   // TODO: cardsetDueDate를 Date 객체로 변환하기
 
@@ -87,7 +87,7 @@ export default function StudioContainer({ id }) {
   };
 
   const handleDateChange = (dueDate) => {
-    dispatch(changeCardsetDueDate(dueDate));
+    dispatch(changeCardsetDueDateTime(dueDate));
   };
 
   if (cards.length === 0) {
@@ -129,7 +129,7 @@ export default function StudioContainer({ id }) {
           </div>
           <div style={{ display: 'flex' }}>
             <DateTimePicker
-              cardsetDueDate={cardsetDueDate}
+              cardsetDueDateTime={cardsetDueDateTime}
               onChange={handleDateChange}
             />
             <SaveButton
