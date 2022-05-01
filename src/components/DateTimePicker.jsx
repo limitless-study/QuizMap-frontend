@@ -2,8 +2,8 @@ import DatePicker from 'react-datepicker';
 
 import { useState } from 'react';
 
-export default function DateTimePicker({ cardsetDueDate, onChange }) {
-  const [startDate, setStartDate] = useState(cardsetDueDate);
+export default function DateTimePicker({ cardsetDueDateTime, onChange }) {
+  const [startDate, setStartDate] = useState(cardsetDueDateTime);
 
   const handleDateChange = (date) => {
     setStartDate(date);

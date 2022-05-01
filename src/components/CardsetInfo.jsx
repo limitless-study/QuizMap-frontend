@@ -60,7 +60,7 @@ const MindMapButton = styled.button({
 
 export default function CardsetInfo({ cardsetInfo, onDelete }) {
   const {
-    id, name, cardSetCount, cardCount,
+    id, topic: name, cardSetCount, cardCount,
   } = cardsetInfo;
 
   const handleClick = () => {

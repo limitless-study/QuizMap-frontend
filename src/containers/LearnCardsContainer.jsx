@@ -61,7 +61,7 @@ export default function LearnCardsContainer() {
 
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
-  const { id, name } = useSelector(get('cardsetInfo'));
+  const { id, topic: title } = useSelector(get('cardsetInfo'));
   const isLastPage = useSelector(get('isLastPage'));
 
   if (isLastPage) {
@@ -76,7 +76,7 @@ export default function LearnCardsContainer() {
     );
   }
 
-  const { id: cardId, question, answer } = cards[0];
+  const { id: cardId, topic, answer } = cards[0];
 
   const handleFlip = () => {
     dispatch(flipCard());
@@ -93,7 +93,7 @@ export default function LearnCardsContainer() {
   return (
     <div>
       <Header>
-        <div>{name}</div>
+        <div>{title}</div>
         <div>
           <FinishButton
             type="button"
@@ -105,7 +105,7 @@ export default function LearnCardsContainer() {
       <CardItemsContainer>
         <CardItemsWrapper>
           <Card
-            content={flipped ? answer : question}
+            content={flipped ? answer : topic}
           />
           <CardButtons
             onFlip={handleFlip}
