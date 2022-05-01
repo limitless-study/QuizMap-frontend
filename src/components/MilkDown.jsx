@@ -1,8 +1,15 @@
 import styled from '@emotion/styled';
 
-import { useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import { Slice } from '@milkdown/prose';
 
-import { Editor, rootCtx, defaultValueCtx } from '@milkdown/core';
+import {
+  Editor,
+  rootCtx,
+  defaultValueCtx,
+  editorViewCtx,
+  parserCtx,
+} from '@milkdown/core';
 import { nord } from '@milkdown/theme-nord';
 import { ReactEditor, useEditor } from '@milkdown/react';
 import { commonmark } from '@milkdown/preset-commonmark';
@@ -49,15 +56,13 @@ const EditorField = styled.div({
   },
 });
 
-function getEditor(value, onChange) {
+function getEditor(value, cardindex, onChange) {
   const editor = useEditor((root) => Editor.make()
     .config((ctx) => {
       ctx.set(rootCtx, root);
-      ctx.set(defaultValueCtx, value); // TODO: 이 부분이 useEffect 안에서 바뀔 수 있도록
+      ctx.set(defaultValueCtx, value);
       ctx.get(listenerCtx).markdownUpdated((ctx, markdown, prevMarkdown) => {
-        setTimeout(
-          onChange(markdown),
-        );
+        setTimeout(onChange(cardindex.current, markdown));
       });
     })
     .use(nord)
@@ -70,19 +75,38 @@ function getEditor(value, onChange) {
 }
 
 export default function MilkDown({ cardIndex, value, onChange }) {
-  const editor = getEditor(value, onChange);
+  const editorRef = useRef();
 
-  console.log('value', value);
+  const cardindex = useRef(cardIndex);
+  cardindex.current = cardIndex;
 
-  // cardIndex가 바뀔 때마다 새롭게 실행되는 부분
+  const editor = getEditor(value, cardindex, onChange);
+
   useEffect(() => {
-    console.log('useEffect');
-    // editor = getEditor(value, onChange);
+    if (editorRef.current) {
+      const ed = editorRef.current.get();
+      if (ed) {
+        ed.action((ctx) => {
+          const view = ctx.get(editorViewCtx);
+          const parser = ctx.get(parserCtx);
+          const doc = parser(value);
+          if (!doc) return;
+          const { state } = view;
+          view.dispatch(
+            state.tr.replace(
+              0,
+              state.doc.content.size,
+              new Slice(doc.content, 0, 0),
+            ),
+          );
+        });
+      }
+    }
   }, [cardIndex]);
 
   return (
     <EditorField>
-      <ReactEditor editor={editor} />
+      <ReactEditor ref={editorRef} editor={editor} />
     </EditorField>
   );
 }
