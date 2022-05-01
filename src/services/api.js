@@ -123,7 +123,7 @@ export async function fetchLearnCardsInSequence(cardsetId) {
 }
 
 export async function postCardTryCount(cardId, tryCount) {
-  const url = `http://localhost:1205/api/cards/${cardId}/feedback`;
+  const url = `http://localhost:1205/api/cards/${cardId}/learning_log`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
