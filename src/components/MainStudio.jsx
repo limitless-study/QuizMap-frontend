@@ -19,8 +19,8 @@ const CreateCardField = styled.div({
 export default function MainStudio({ currentCard, onChange }) {
   const { topic, answer, cardIndex } = currentCard;
 
-  const handleChange = ({ name, value }) => {
-    onChange({ name, value });
+  const handleChange = ({ name, value, cardindex }) => {
+    onChange({ name, value, cardindex });
   };
 
   return (
@@ -29,12 +29,12 @@ export default function MainStudio({ currentCard, onChange }) {
         <MilkDown
           cardIndex={cardIndex}
           value={topic}
-          onChange={(value) => handleChange({ name: 'topic', value })}
+          onChange={(cardindex, value) => handleChange({ name: 'topic', value, cardindex })}
         />
         <MilkDown
           cardIndex={cardIndex}
           value={answer}
-          onChange={(value) => handleChange({ name: 'answer', value })}
+          onChange={(cardindex, value) => handleChange({ name: 'answer', value, cardindex })}
         />
       </CreateCardField>
     </Wrapper>

@@ -62,8 +62,8 @@ export default function StudioContainer({ id }) {
     dispatch(changeCardsetTitle(cardsetTitle));
   };
 
-  const handleInputChange = ({ name, value }) => {
-    dispatch(updateCard({ currentCardIndex, name, value }));
+  const handleInputChange = ({ name, value, cardindex }) => {
+    dispatch(updateCard(cardindex, name, value));
   };
 
   const handleCardClick = (cardIndex) => {

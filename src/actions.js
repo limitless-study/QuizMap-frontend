@@ -159,7 +159,7 @@ export function addNewCard() {
   };
 }
 
-export function updateCard({ currentCardIndex, name, value }) {
+export function updateCard(currentCardIndex, name, value) {
   return {
     type: 'updateCard',
     payload: {
