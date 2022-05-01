@@ -8,7 +8,7 @@ export default function HistoryButtons() {
   return (
     <div style={{ display: 'flex', marginRight: '10px' }}>
       <BsArrowLeftCircle size={30} color="gray" style={{ paddingRight: '2px' }} onClick={() => navigate(-1)} />
-      <BsArrowRightCircle size={30} color="gray" onClick={() => navigate(-1)} />
+      <BsArrowRightCircle size={30} color="gray" onClick={() => navigate(1)} />
     </div>
   );
 }
