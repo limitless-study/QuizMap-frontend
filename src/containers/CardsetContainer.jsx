@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 
+import CardsetPath from '../components/CardsetPath';
 import CardsetInfo from '../components/CardsetInfo';
 import SideMenuBar from '../components/SideMenuBar';
 import SubTitle from '../components/SubTitle';
@@ -22,8 +23,7 @@ export default function CardsetContainer({ cardsetId }) {
   const menus = useSelector(get('rootCardsets'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
-
-  const { parentId } = cardsetInfo;
+  const { path, parentId } = cardsetInfo;
 
   const handleDeleteCardset = () => {
     dispatch(deleteClickedCardset(cardsetId));
@@ -41,6 +41,7 @@ export default function CardsetContainer({ cardsetId }) {
         menus={menus}
       />
       <div style={{ width: '100%', padding: '20px' }}>
+        <CardsetPath path={path} cardsetId={cardsetId} />
         <CardsetInfo
           cardsetInfo={cardsetInfo}
           onDelete={handleDeleteCardset}
