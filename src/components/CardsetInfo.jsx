@@ -60,7 +60,7 @@ const MindMapButton = styled.button({
 
 export default function CardsetInfo({ cardsetInfo, onDelete }) {
   const {
-    id, topic: name, cardSetCount, cardCount,
+    id, topic, cardSetCount, cardCount,
   } = cardsetInfo;
 
   const handleClick = () => {
@@ -70,7 +70,7 @@ export default function CardsetInfo({ cardsetInfo, onDelete }) {
   return (
     <Wrapper>
       <TopField>
-        <h1>{name}</h1>
+        <h1>{topic}</h1>
         <IconBox type="button">
           <Link to={`/studio/${id}`}>
             <FaPen />
