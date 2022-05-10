@@ -20,6 +20,6 @@ export default function LearnPage({ params }) {
   }, [id]);
 
   return (
-    <LearnCardsContainer />
+    <LearnCardsContainer id={id} />
   );
 }
