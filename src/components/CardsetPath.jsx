@@ -33,8 +33,6 @@ export default function CardsetPath({ cardsetId, path }) {
     return <>loading...</>;
   }
 
-  console.log(path, cardsetId);
-
   return (
     <CardsetPathContainer>
       {path.map((item) => {
@@ -48,7 +46,6 @@ export default function CardsetPath({ cardsetId, path }) {
           );
         }
         if (item.id === Number(cardsetId)) {
-          console.log('here!');
           return (
             <CurrentPathItem key={item.id}>
               <Link to={`/cardsets/${item.id}`}>

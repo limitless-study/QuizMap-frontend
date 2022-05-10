@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import Card from '../components/Card';
 import CardButtons from '../components/CardButtons';
 import LastLearningPage from '../components/LastLearningPage';
+import CardsetPath from '../components/learn/CardsetPath';
 
 import { get } from '../utils';
 
@@ -56,12 +57,11 @@ const CardItemsWrapper = styled.div({
   transform: 'translate(-50%, -50%)',
 });
 
-export default function LearnCardsContainer() {
+export default function LearnCardsContainer({ id }) {
   const dispatch = useDispatch();
 
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
-  const { id, topic: title } = useSelector(get('cardsetInfo'));
   const isLastPage = useSelector(get('isLastPage'));
 
   if (isLastPage) {
@@ -76,7 +76,9 @@ export default function LearnCardsContainer() {
     );
   }
 
-  const { id: cardId, topic, answer } = cards[0];
+  const {
+    id: cardId, topic, answer, path,
+  } = cards[0];
 
   const handleFlip = () => {
     dispatch(flipCard());
@@ -93,7 +95,7 @@ export default function LearnCardsContainer() {
   return (
     <div>
       <Header>
-        <div>{title}</div>
+        <CardsetPath path={path} />
         <div>
           <FinishButton
             type="button"
