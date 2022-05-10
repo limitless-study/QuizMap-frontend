@@ -17,7 +17,7 @@ export default function StudioPage({ params }) {
 
   useEffect(() => {
     dispatch(initializeCardsetStudio(id));
-  }, []);
+  });
 
   return (
     <StudioContainer id={id} />

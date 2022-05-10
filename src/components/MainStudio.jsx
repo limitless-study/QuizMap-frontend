@@ -17,6 +17,12 @@ const CreateCardField = styled.div({
 });
 
 export default function MainStudio({ currentCard, onChange }) {
+  if (!currentCard) {
+    return (
+      <div>Loading...</div>
+    );
+  }
+
   const { topic, answer, cardIndex } = currentCard;
 
   const handleChange = ({ name, value, cardindex }) => {
