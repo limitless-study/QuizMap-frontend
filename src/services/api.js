@@ -129,7 +129,7 @@ export async function postCardTryCount(cardId, tryCount) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ tryCount }),
+    body: JSON.stringify({ tryCount, learningDateTime: '202205031830', learningSecond: '100' }), // TODO: learningSecond's'
   });
   const data = await response.json();
   return data;
