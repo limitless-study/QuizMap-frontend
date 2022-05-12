@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
 
-import Card from '../components/Card';
-import CardButtons from '../components/CardButtons';
-import LastLearningPage from '../components/LastLearningPage';
+import Card from '../components/learn/Card';
+import CardButtons from '../components/learn/CardButtons';
+import NoMoreCards from '../components/learn/NoMoreCards';
 import CardsetPath from '../components/learn/CardsetPath';
 
 import { get } from '../utils';
@@ -66,7 +66,7 @@ export default function LearnCardsContainer({ id }) {
 
   if (isLastPage) {
     return (
-      <LastLearningPage id={id} />
+      <NoMoreCards id={id} />
     );
   }
 

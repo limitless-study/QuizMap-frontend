@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useNavigate } from 'react-router-dom';
 
-import CardsetPath from '../components/CardsetPath';
-import HistoryButtons from '../components/HistoryButtons';
-import CardsetInfo from '../components/CardsetInfo';
-import SideMenuBar from '../components/SideMenuBar';
-import SubTitle from '../components/SubTitle';
-import CardsetBox from '../components/CardsetBox';
-import CardBox from '../components/CardBox';
+import CardsetPath from '../components/main/CardsetPath';
+import HistoryButtons from '../components/main/HistoryButtons';
+import CardsetInfo from '../components/main/CardsetInfo';
+import SideMenuBar from '../components/main/SideMenuBar';
+import SubTitle from '../components/main/SubTitle';
+import CardsetBox from '../components/main/CardsetBox';
+import CardBox from '../components/main/CardBox';
 
 import { get } from '../utils';
 

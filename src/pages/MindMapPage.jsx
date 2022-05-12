@@ -8,8 +8,8 @@ import { CgArrowLeftO } from 'react-icons/cg';
 
 import styled from '@emotion/styled';
 
-import SideMenuBar from '../components/SideMenuBar';
-import MindMap from '../components/MindMap';
+import SideMenuBar from '../components/main/SideMenuBar';
+import MindMap from '../components/mindmap/MindMap';
 
 import {
   loadMindMapCards,

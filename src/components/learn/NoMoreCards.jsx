@@ -38,7 +38,7 @@ const BackButton = styled.button({
   },
 });
 
-export default function LastLearningPage({ id }) {
+export default function NoMoreCards({ id }) {
   return (
     <Container>
       <FcIdea size="50" />

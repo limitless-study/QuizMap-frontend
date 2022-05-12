@@ -16,7 +16,7 @@ const CreateCardField = styled.div({
   transform: 'translate(-40%, -50%)',
 });
 
-export default function MainStudio({ currentCard, onChange }) {
+export default function CardEditor({ currentCard, onChange }) {
   if (!currentCard) {
     return (
       <div>Loading...</div>
