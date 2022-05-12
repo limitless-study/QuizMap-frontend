@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { Link } from 'react-router-dom';
 
-import Header from '../components/Header';
+import Header from '../components/home/Header';
 
 import img from '../img/done.svg';
 

@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { get } from '../utils';
 
-import SubTitle from '../components/SubTitle';
-import SideMenuBar from '../components/SideMenuBar';
-import RootCard from '../components/RootCard';
-import ViewMoreButtons from '../components/ViewMoreButtons';
-import AddCardsetButton from '../components/AddCardsetButton';
+import SubTitle from '../components/main/SubTitle';
+import SideMenuBar from '../components/main/SideMenuBar';
+import RootCard from '../components/main/RootCard';
+import AddCardsetButton from '../components/studio/AddCardsetButton';
+import ViewMoreButtons from '../components/common/ViewMoreButtons';
 
 import {
   addNewCardset,

@@ -20,13 +20,13 @@ import {
 
 import { get } from '../utils';
 
-import MainStudio from '../components/MainStudio';
-import InputField from '../components/InputField';
-import StudioAddButton from '../components/StudioAddButton';
-import SaveButton from '../components/SaveButton';
-import SideBarCard from '../components/SideBarCard';
-import ViewMoreButtons from '../components/ViewMoreButtons';
-import DateTimePicker from '../components/DateTimePicker';
+import CardEditor from '../components/studio/CardEditor';
+import InputField from '../components/studio/InputField';
+import StudioAddButton from '../components/studio/StudioAddButton';
+import SaveButton from '../components/studio/SaveButton';
+import SideBarCard from '../components/studio/SideBarCard';
+import DateTimePicker from '../components/studio/DateTimePicker';
+import ViewMoreButtons from '../components/common/ViewMoreButtons';
 
 export default function StudioContainer({ id }) {
   const dispatch = useDispatch();
@@ -182,7 +182,7 @@ export default function StudioContainer({ id }) {
             buttonText="add new cardset"
           />
         </div>
-        <MainStudio
+        <CardEditor
           currentCard={currentCard[0]}
           onChange={handleInputChange}
         />
