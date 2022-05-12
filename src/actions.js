@@ -174,7 +174,7 @@ export function initializeCardset() {
 }
 
 export function saveCardset(cardsetId) {
-  return async (getState) => {
+  return (dispatch, getState) => {
     // patch topic
     const { isTitleChanged, isDueDateChanged } = getState();
 
