@@ -40,7 +40,7 @@ export async function patchCardsetTitle({ id, topic }) {
 }
 
 export async function patchCardsetDueDateTime({ id, dueDateTime }) {
-  const url = `http://localhost:1205/api/cardsets/${id}/due_date_time`;
+  const url = `http://localhost:1205/api/cardsets/${id}/due-date-time`;
   const response = await fetch(url, {
     method: 'PATCH',
     headers: {

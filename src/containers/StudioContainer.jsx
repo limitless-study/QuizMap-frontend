@@ -86,8 +86,8 @@ export default function StudioContainer({ id }) {
     }
   };
 
-  const handleDateChange = (dueDate) => {
-    dispatch(changeCardsetDueDateTime(dueDate));
+  const handleDateChange = (dueDateTime) => {
+    dispatch(changeCardsetDueDateTime(dueDateTime));
   };
 
   if (cards.length === 0) {
@@ -112,8 +112,8 @@ export default function StudioContainer({ id }) {
         <div style={{
           height: '100%',
           display: 'flex',
-          justifyContent: 'center',
           alignItems: 'center',
+          textAlign: 'center',
           padding: '0 10px',
         }}
         >

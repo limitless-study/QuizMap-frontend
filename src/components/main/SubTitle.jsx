@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 const Title = styled.div({
-  width: '92%',
+  width: '100%',
   borderBottom: '1px solid lightgray',
   fontWeight: 'bolder',
   fontSize: '28px',
