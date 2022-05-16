@@ -24,7 +24,8 @@ export default function CardsetContainer({ cardsetId }) {
   const menus = useSelector(get('rootCardsets'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
-  const { path, parentId } = cardsetInfo;
+  const { path, parentId, dueDate } = cardsetInfo;
+  const date = dueDate ? new Date(dueDate) : null;
 
   const handleDeleteCardset = () => {
     dispatch(deleteClickedCardset(cardsetId));
@@ -42,16 +43,17 @@ export default function CardsetContainer({ cardsetId }) {
         menus={menus}
       />
       <div style={{ width: '100%', padding: '20px' }}>
-        <div style={{ display: 'flex' }}>
+        <div style={{ width: '100%', display: 'flex' }}>
           <HistoryButtons />
           <CardsetPath path={path} cardsetId={cardsetId} />
         </div>
         <CardsetInfo
           cardsetInfo={cardsetInfo}
           onDelete={handleDeleteCardset}
+          date={date}
         />
         <SubTitle text="Cards" />
-        <div style={{ width: '92%' }}>
+        <div style={{ width: '100%' }}>
           {cardsetChildren.map((child) => {
             if (child.type === 'CARDSET') {
               return (

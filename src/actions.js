@@ -176,7 +176,7 @@ export function initializeCardset() {
 export function saveCardset(cardsetId) {
   return (dispatch, getState) => {
     // patch topic
-    const { isTitleChanged, isDueDateChanged } = getState();
+    const { isTitleChanged, isDueDateTimeChanged } = getState();
 
     if (isTitleChanged) {
       const { cardsetTitle } = getState();
@@ -184,15 +184,15 @@ export function saveCardset(cardsetId) {
     }
 
     // patch due date
-    if (isDueDateChanged) {
-      const { dueDate } = getState();
-      const year = dueDate.getFullYear();
-      const month = (`00${dueDate.getMonth() + 1}`).slice(-2);
-      const day = (`00${dueDate.getDate()}`).slice(-2);
-      const hour = (`00${dueDate.getHours()}`).slice(-2);
-      const minute = (`00${dueDate.getMinutes()}`).slice(-2);
+    if (isDueDateTimeChanged) {
+      const { dueDateTime } = getState();
+      const year = dueDateTime.getFullYear();
+      const month = (`00${dueDateTime.getMonth() + 1}`).slice(-2);
+      const day = (`00${dueDateTime.getDate()}`).slice(-2);
+      const hour = (`00${dueDateTime.getHours()}`).slice(-2);
+      const minute = (`00${dueDateTime.getMinutes()}`).slice(-2);
       const date = `${year}${month}${day}${hour}${minute}`;
-      patchCardsetDueDateTime({ id: cardsetId, dueDate: date });
+      patchCardsetDueDateTime({ id: cardsetId, dueDateTime: date });
     }
 
     // patch cards
@@ -369,13 +369,18 @@ export function clickWrongCard(cardId) {
   };
 }
 
-export function clickCorrectCard(cardId) {
+export function clickCorrectCard(id) {
   return async (dispatch, getState) => {
     const { cards } = getState();
-    const filteredCards = cards.filter((card) => card.id !== cardId);
-    await postCardTryCount(cardId, cards[0].tryCount);
+    const filteredCards = cards.filter((card) => card.id !== id);
+    const learningDateTime = '202205031830'; // TODO : fix
+    const { tryCount } = cards[0];
+    const learningSecond = 100; // TODO : fix
+    await postCardTryCount({
+      id, tryCount, learningDateTime, learningSecond,
+    });
     dispatch(setCards(filteredCards));
-    dispatch(nextCard(cardId));
+    dispatch(nextCard(id));
   };
 }
 

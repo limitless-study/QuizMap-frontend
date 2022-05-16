@@ -3,37 +3,59 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 import { FaPen, FaPlayCircle, FaTrashAlt } from 'react-icons/fa';
+import { BsFillDiagram3Fill } from 'react-icons/bs';
+import { BiTimeFive } from 'react-icons/bi';
 
 const Wrapper = styled.div({
   display: 'flex',
   flexDirection: 'column',
+  paddingRight: '20px',
 });
 
 const TopField = styled.div({
   display: 'flex',
+  justifyContent: 'space-between',
   alignItems: 'center',
 });
 
+const DueDateBox = styled.div(
+  {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '2px 5px',
+    borderRadius: '5px',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '13px',
+  },
+  (props) => ({
+    display: props.display,
+    backgroundColor: props.color,
+  }),
+);
+
 const BottomField = styled.div({
+  display: 'flex',
   fontWeight: 'bolder',
   fontSize: '22px',
   color: '#D7D7D7',
 });
 
 const IconBox = styled.button({
-  width: '28px',
-  height: '28px',
+  width: '32px',
+  height: '32px',
   fontSize: '15px',
-  backgroundColor: '#D4D4D4',
-  borderRadius: '2px',
-  border: 'none',
-  color: 'white',
-  marginRight: '5px',
+  backgroundColor: 'white',
+  borderRadius: '10em',
+  border: '1px solid #D7D7D7',
+  color: '#212121',
+  marginLeft: '5px',
   '& a': {
     display: 'block',
     fontWeight: 'bold',
     border: 'none',
-    color: 'white',
+    color: '#212121',
     textAlign: 'center',
   },
   ':hover': {
@@ -41,27 +63,53 @@ const IconBox = styled.button({
   },
 });
 
-const MindMapButton = styled.button({
-  padding: '0 7px',
-  height: '28px',
-  fontSize: '15px',
-  backgroundColor: '#F9F9F9',
-  borderRadius: '2px',
-  border: 'none',
-  transition: 'box-shadow 0.3s',
-  boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px',
-  '& a': {
-    display: 'block',
-  },
-  ':hover': {
-    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 3px 3px 0px',
-  },
-});
+function getDueDateTime(date) {
+  const year = date.getFullYear();
+  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
+  const day = (`00${date.getDate()}`).slice(-2);
+  const hour = (`00${date.getHours()}`).slice(-2);
+  const minute = (`00${date.getMinutes()}`).slice(-2);
+  const dueDateTime = `${month} ${day}, ${year} at ${hour}:${minute}`;
+  return dueDateTime;
+}
 
-export default function CardsetInfo({ cardsetInfo, onDelete }) {
+function getDueDateTimeColor(dueDate) {
+  const dayLeft = {
+    one: 1440,
+    two: 2880,
+    three: 4320,
+  };
+
+  const today = new Date();
+  const diffMillis = dueDate - today;
+  const diffMinutes = Math.floor(diffMillis / 60000);
+
+  if (diffMinutes <= dayLeft.one) {
+    return '#EB3F4C';
+  }
+  if (diffMinutes <= dayLeft.two) {
+    return '#F18C41';
+  }
+  if (diffMinutes <= dayLeft.three) {
+    return '#FFD300';
+  }
+  return '#71E700';
+}
+
+export default function CardsetInfo({ cardsetInfo, onDelete, date }) {
   const {
     id, topic, cardSetCount, cardCount,
   } = cardsetInfo;
+
+  // -- display dueDateTime if exists
+  let display = 'none';
+  let dueDateTimeColor = 'transparent';
+  let dueDateTime = '';
+  if (date) {
+    display = 'flex';
+    dueDateTime = getDueDateTime(date);
+    dueDateTimeColor = getDueDateTimeColor(date);
+  }
 
   const handleClick = () => {
     onDelete();
@@ -70,26 +118,34 @@ export default function CardsetInfo({ cardsetInfo, onDelete }) {
   return (
     <Wrapper>
       <TopField>
-        <h1>{topic}</h1>
-        <IconBox type="button">
-          <Link to={`/studio/${id}`}>
-            <FaPen />
-          </Link>
-        </IconBox>
-        <IconBox type="button">
-          <Link to={`/learn/${id}`}>
-            <FaPlayCircle />
-          </Link>
-        </IconBox>
-        <IconBox
-          type="button"
-          onClick={handleClick}
-        >
-          <FaTrashAlt />
-        </IconBox>
-        <MindMapButton type="button">
-          <Link to={`/mindmap/${id}`}>Convert to Mindmap</Link>
-        </MindMapButton>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <h1>{topic}</h1>
+          <DueDateBox color={dueDateTimeColor} display={display}>
+            <BiTimeFive />
+            {dueDateTime}
+          </DueDateBox>
+        </div>
+        <div>
+          <IconBox>
+            <Link to={`/mindmap/${id}`}><BsFillDiagram3Fill /></Link>
+          </IconBox>
+          <IconBox
+            type="button"
+            onClick={handleClick}
+          >
+            <FaTrashAlt />
+          </IconBox>
+          <IconBox type="button">
+            <Link to={`/studio/${id}`}>
+              <FaPen />
+            </Link>
+          </IconBox>
+          <IconBox type="button">
+            <Link to={`/learn/${id}`}>
+              <FaPlayCircle />
+            </Link>
+          </IconBox>
+        </div>
       </TopField>
       <BottomField>
         {`${cardSetCount} Cardsets, ${cardCount} Cards`}
