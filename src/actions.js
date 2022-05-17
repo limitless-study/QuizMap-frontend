@@ -382,14 +382,20 @@ export function clickCorrectCard(id) {
   return async (dispatch, getState) => {
     const { cards } = getState();
     const filteredCards = cards.filter((card) => card.id !== id);
-    const learningDateTime = '202205031830'; // TODO : fix
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = (today.getDate()).toString().padStart(2, '0');
+    const hour = (today.getHours()).toString().padStart(2, '0');
+    const minute = (today.getMinutes()).toString().padStart(2, '0');
+    const learningDateTime = `${year}${month}${day}${hour}${minute}`;
+
     const { tryCount } = cards[0];
 
     // patch starCount if changed
     const { starCount, starCountChanged } = cards[0];
-    console.log('STARCOUNT:', starCount, starCountChanged, 'Card Id', id);
     if (starCountChanged) {
-      console.log('PATCH');
       await patchStarCount({ id, starCount });
     }
 
