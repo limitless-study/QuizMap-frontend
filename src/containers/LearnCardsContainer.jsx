@@ -15,6 +15,7 @@ import {
   flipCard,
   clickWrongCard,
   clickCorrectCard,
+  changeStarCount,
 } from '../actions';
 
 const Header = styled.div({
@@ -77,7 +78,7 @@ export default function LearnCardsContainer({ id }) {
   }
 
   const {
-    id: cardId, topic, answer, path,
+    id: cardId, topic, answer, path, starCount,
   } = cards[0];
 
   const handleFlip = () => {
@@ -90,6 +91,10 @@ export default function LearnCardsContainer({ id }) {
 
   const handleClickCorrect = () => {
     dispatch(clickCorrectCard(cardId));
+  };
+
+  const handleChangeStarCount = (changedStarCount) => {
+    dispatch(changeStarCount({ id: cardId, starCount: changedStarCount }));
   };
 
   return (
@@ -108,6 +113,8 @@ export default function LearnCardsContainer({ id }) {
         <CardItemsWrapper>
           <Card
             content={flipped ? answer : topic}
+            starCount={starCount}
+            onChangeStarCount={handleChangeStarCount}
           />
           <CardButtons
             onFlip={handleFlip}

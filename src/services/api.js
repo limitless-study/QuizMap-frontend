@@ -117,19 +117,35 @@ export async function fetchLearnCardsInSequence(cardsetId) {
   const url = `http://localhost:1205/api/cardsets/${cardsetId}/learn/sequence`;
   const response = await fetch(url);
   const data = await response.json();
-
-  console.log('learnCards in Sequence:', data);
   return data;
 }
 
-export async function postCardTryCount(cardId, tryCount) {
-  const url = `http://localhost:1205/api/cards/${cardId}/learning_log`;
+export async function postCardTryCount({
+  id, tryCount, learningDateTime, learningSeconds,
+}) {
+  const url = `http://localhost:1205/api/cards/${id}/learning-log`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ tryCount, learningDateTime: '202205031830', learningSecond: '100' }), // TODO: learningSecond's'
+    body: JSON.stringify({
+      tryCount, learningDateTime, learningSeconds,
+    }), // TODO: learningSecond's'
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function patchStarCount({ id, starCount }) {
+  const url = `http://localhost:1205/api/cards/${id}/star`;
+  const response = await fetch(url, {
+    // method: 'PATCH',
+    method: 'POST', // TODO : 나중에 백엔드에서 PATCH로 바꿔주면 수정하기
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ starCount }),
   });
   const data = await response.json();
   return data;

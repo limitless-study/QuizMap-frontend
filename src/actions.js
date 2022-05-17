@@ -8,6 +8,7 @@ import {
   patchCardsetTitle,
   postNewCard,
   patchCardsetCard,
+  patchStarCount,
   postNewCardset,
   postCardTryCount,
   deleteCard,
@@ -315,6 +316,7 @@ export function initializeCards(cards) {
       Object.assign(card, { cardChanged: false });
       Object.assign(card, { cardAdded: false });
       Object.assign(card, { cardDeleted: false });
+      Object.assign(card, { starCountChanged: false });
       Object.assign(card, { tryCount: 1 });
       dispatch(setNewCardIndex(newCardIndex + 1));
       return card;
@@ -357,15 +359,22 @@ export function loadLearnCardsInSequence(cardsetId) {
   };
 }
 
-export function clickWrongCard(cardId) {
-  return (dispatch, getState) => {
+export function clickWrongCard(id) {
+  return async (dispatch, getState) => {
     const { cards } = getState();
-    const index = cards.findIndex((card) => card.id === cardId);
+    const index = cards.findIndex((card) => card.id === id);
     cards[index].tryCount += 1;
-    const filteredCards = cards.filter((card) => card.id !== cardId);
+
+    // patch starCount if changed
+    const { starCount, starCountChanged } = cards[index];
+    if (starCountChanged) {
+      await patchStarCount({ id, starCount });
+    }
+
+    const filteredCards = cards.filter((card) => card.id !== id);
     const newCards = filteredCards.concat([cards[index]]);
     dispatch(setCards(newCards));
-    dispatch(nextCard(cardId));
+    dispatch(nextCard(id));
   };
 }
 
@@ -375,9 +384,18 @@ export function clickCorrectCard(id) {
     const filteredCards = cards.filter((card) => card.id !== id);
     const learningDateTime = '202205031830'; // TODO : fix
     const { tryCount } = cards[0];
-    const learningSecond = 100; // TODO : fix
+
+    // patch starCount if changed
+    const { starCount, starCountChanged } = cards[0];
+    console.log('STARCOUNT:', starCount, starCountChanged, 'Card Id', id);
+    if (starCountChanged) {
+      console.log('PATCH');
+      await patchStarCount({ id, starCount });
+    }
+
+    const learningSeconds = 100; // TODO : fix
     await postCardTryCount({
-      id, tryCount, learningDateTime, learningSecond,
+      id, tryCount, learningDateTime, learningSeconds,
     });
     dispatch(setCards(filteredCards));
     dispatch(nextCard(id));
@@ -438,5 +456,16 @@ export function deleteClickedCard(target) {
     const deleteCardIndex = filteredCards.findIndex((card) => card.cardIndex === cardIndex);
     filteredCards[deleteCardIndex].cardDeleted = true;
     dispatch(setCards(filteredCards));
+  };
+}
+
+export function changeStarCount({ id, starCount }) {
+  return (dispatch, getState) => {
+    const { cards } = getState();
+    const changedCards = [...cards];
+    const starChangedCardIndex = changedCards.findIndex((card) => card.id === id);
+    changedCards[starChangedCardIndex].starCount = starCount;
+    changedCards[starChangedCardIndex].starCountChanged = true;
+    dispatch(setCards(changedCards));
   };
 }
