@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 
 const CardsetPathContainer = styled.ul({
   display: 'flex',
+  marginTop: '5px',
 });
 
 const PathItem = styled.li(
   {
     display: 'table-cell',
     verticalAlign: 'middle',
-    padding: '2px',
+    padding: '0 3px',
     borderRadius: '4px',
     '& a': {
       fontSize: '11px',
