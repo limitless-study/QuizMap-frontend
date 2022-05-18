@@ -1,7 +1,5 @@
 import styled from '@emotion/styled';
 
-import { useRef } from 'react';
-
 import Rating from 'react-rating';
 
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';

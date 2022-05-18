@@ -6,27 +6,32 @@ const CardsetPathContainer = styled.ul({
   display: 'flex',
 });
 
-const PathItem = styled.li({
-  marginRight: '10px',
-  padding: '2px 6px',
-  borderRadius: '4px',
-  border: '1px solid lightgray',
-  '& a': {
-    fontWeight: 'bolder',
+const PathItem = styled.li(
+  {
+    display: 'table-cell',
+    verticalAlign: 'middle',
+    padding: '2px',
+    borderRadius: '4px',
+    '& a': {
+      fontSize: '11px',
+    },
+    ':hover': {
+      backgroundColor: '#F1F1EF',
+    },
   },
-});
+);
 
-const CurrentPathItem = styled.li({
-  marginRight: '10px',
-  padding: '2px 6px',
-  borderRadius: '4px',
-  border: '1px solid gray',
-  backgroundColor: 'gray',
-  '& a': {
-    fontWeight: 'bolder',
-    color: 'white',
+const Slash = styled.span(
+  {
+    padding: '0 3px',
+    color: '#c2c2c2',
+    display: 'table-cell',
+    verticalAlign: 'middle',
   },
-});
+  (props) => ({
+    display: props.isLastPath ? 'none' : '',
+  }),
+);
 
 export default function CardsetPath({ cardsetId, path }) {
   if (!path) {
@@ -38,28 +43,25 @@ export default function CardsetPath({ cardsetId, path }) {
       {path.map((item) => {
         if (item.id === 1) {
           return (
-            <PathItem key={item.id}>
-              <Link to="/root">
-                {item.topic}
-              </Link>
-            </PathItem>
-          );
-        }
-        if (item.id === Number(cardsetId)) {
-          return (
-            <CurrentPathItem key={item.id}>
-              <Link to={`/cardsets/${item.id}`}>
-                {item.topic}
-              </Link>
-            </CurrentPathItem>
+            <div key={item.id} style={{ display: 'table' }}>
+              <PathItem>
+                <Link to="/root">
+                  {item.topic}
+                </Link>
+              </PathItem>
+              <Slash>/</Slash>
+            </div>
           );
         }
         return (
-          <PathItem key={item.id}>
-            <Link to={`/cardsets/${item.id}`}>
-              {item.topic}
-            </Link>
-          </PathItem>
+          <div key={item.id} style={{ display: 'table' }}>
+            <PathItem>
+              <Link to={`/cardsets/${item.id}`}>
+                {item.topic}
+              </Link>
+            </PathItem>
+            <Slash isLastPath={item.id === Number(cardsetId)}>/</Slash>
+          </div>
         );
       })}
     </CardsetPathContainer>
