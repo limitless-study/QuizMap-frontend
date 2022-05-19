@@ -1,4 +1,4 @@
-import { HiOutlineChevronRight } from 'react-icons/hi';
+import { RiArrowRightSLine } from 'react-icons/ri';
 
 export default function CardsetPath({ path }) {
   if (!path) {
@@ -9,9 +9,17 @@ export default function CardsetPath({ path }) {
     <div>
       <ul>
         {path.map(({ id, topic }, index) => (
-          <li key={id} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+          <li
+            key={id}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#1b1c1d',
+            }}
+          >
             {topic}
-            {index !== path.length - 1 ? <HiOutlineChevronRight /> : null}
+            {index !== path.length - 1 ? <RiArrowRightSLine /> : null}
           </li>
         ))}
       </ul>
