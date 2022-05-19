@@ -431,8 +431,24 @@ export function initializeCardsetPage(id) {
   };
 }
 
+export function setNotesHidden(isNotesHidden) {
+  return {
+    type: 'setNotesHidden',
+    payload: { isNotesHidden },
+  };
+}
+
+export function setNotes(notes) {
+  return {
+    type: 'setNotes',
+    payload: { notes },
+  };
+}
+
 export function initializeLearnPage(id) {
   return async (dispatch) => {
+    dispatch(setNotesHidden(true));
+    dispatch(setNotes(''));
     dispatch(setIsLastPage(false));
     dispatch(setFlipped(false));
     dispatch(setCards([]));
