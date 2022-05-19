@@ -20,6 +20,8 @@ const initialState = {
   // learn page
   isLastPage: false,
   flipped: false,
+  isNotesHidden: true,
+  notes: '',
 
   // mind map page
   mindMapCards: [],
@@ -170,6 +172,21 @@ const reducers = {
       mindMapCards,
     };
   },
+
+  setNotesHidden(state, { payload: { isNotesHidden } }) {
+    return {
+      ...state,
+      isNotesHidden,
+    };
+  },
+
+  setNotes(state, { payload: { notes } }) {
+    return {
+      ...state,
+      notes,
+    };
+  },
+
 };
 
 function defaultReducer(state) {
