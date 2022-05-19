@@ -137,15 +137,14 @@ export async function postCardTryCount({
   return data;
 }
 
-export async function patchStarCount({ id, starCount }) {
-  const url = `http://localhost:1205/api/cards/${id}/star`;
+export async function uploadImage(imageFile) {
+  const url = 'http://localhost:1205/api/images/upload';
+  const formData = new FormData();
+  formData.append('image', imageFile);
+
   const response = await fetch(url, {
-    // method: 'PATCH',
-    method: 'POST', // TODO : 나중에 백엔드에서 PATCH로 바꿔주면 수정하기
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ starCount }),
+    method: 'POST',
+    body: formData,
   });
   const data = await response.json();
   return data;
