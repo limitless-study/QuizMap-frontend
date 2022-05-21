@@ -3,36 +3,36 @@ import styled from '@emotion/styled';
 import Rating from 'react-rating';
 
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import Milkdown from './Milkdown';
 
 const CardBox = styled.div({
   whiteSpace: 'pre-line',
   position: 'relative',
-  display: 'table',
-  width: '350px',
-  height: '300px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  minWidth: '350px',
+  minHeight: '300px',
   border: '1px solid lightgray',
   borderRadius: '10px',
   boxShadow: '0 2px 8px rgb(0 0 0 / 8%)',
   textAlign: 'center',
   padding: '5px',
-  '& span': {
-    fontSize: '22px',
-    display: 'table-cell',
-    verticalAlign: 'middle',
-  },
 });
 
 const RatingField = styled.div({
   right: '0',
+  top: '0',
+  fontSize: '25px',
   position: 'absolute',
-  paddingRight: '15px',
-  '& span': {
-    fontSize: '28px',
-  },
+  padding: '15px',
   color: '#FFCD01',
+  zIndex: 999,
 });
 
-export default function Card({ content, starCount, onChangeStarCount }) {
+export default function Card({
+  id, flipped, content, starCount, onChangeStarCount,
+}) {
   const handleChange = (changedStarCount) => {
     onChangeStarCount(changedStarCount);
   };
@@ -48,7 +48,11 @@ export default function Card({ content, starCount, onChangeStarCount }) {
           onChange={handleChange}
         />
       </RatingField>
-      <span>{content}</span>
+      <Milkdown
+        id={id}
+        flipped={flipped}
+        content={content}
+      />
     </CardBox>
   );
 }

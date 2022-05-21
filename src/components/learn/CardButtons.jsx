@@ -15,6 +15,7 @@ const WrongButton = styled.button({
   borderRadius: '30px',
   color: 'white',
   transition: 'box-shadow 0.3s',
+  zIndex: 999,
   ':hover': {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',
@@ -27,6 +28,7 @@ const FlipButton = styled.button({
   border: 'none',
   borderRadius: '30px',
   transition: 'box-shadow 0.3s',
+  zIndex: 999,
   ':hover': {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',
@@ -40,6 +42,7 @@ const CorrectButton = styled.button({
   borderRadius: '30px',
   color: 'white',
   transition: 'box-shadow 0.3s',
+  zIndex: 999,
   ':hover': {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',

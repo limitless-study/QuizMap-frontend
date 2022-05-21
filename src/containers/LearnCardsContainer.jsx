@@ -132,6 +132,8 @@ export default function LearnCardsContainer({ id }) {
         <CardItemsContainer>
           <CardItemsWrapper>
             <Card
+              id={id}
+              flipped={flipped}
               content={flipped ? answer : topic}
               starCount={starCount}
               onChangeStarCount={handleChangeStarCount}
