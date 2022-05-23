@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack serve --mode=development",
+    "start": "NODE_ENV=development webpack serve --port 80 --mode=development",
     "build": "webpack build --mode=production",
     "test:unit": "jest",
     "coverage": "npm run test:unit -- --coverage",
