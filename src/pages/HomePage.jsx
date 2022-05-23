@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Header from '../components/home/Header';
 
-import img from '../img/done.svg';
+import img from '../img/Saly-16.svg';
 
 const Container = styled.div({
   width: '100vw',
