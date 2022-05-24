@@ -18,9 +18,12 @@ const Button = styled.button({
   },
 });
 
-export default function SignUpButton() {
+export default function SignUpButton({ onClick }) {
   return (
-    <Button type="button">
+    <Button
+      type="button"
+      onClick={onClick}
+    >
       Sign Up
     </Button>
   );

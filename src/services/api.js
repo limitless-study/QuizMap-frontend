@@ -150,3 +150,29 @@ export async function patchStarCount({ id, starCount }) {
   const data = await response.json();
   return data;
 }
+
+export async function postSignUp({ email, name, password }) {
+  const url = 'http://www.quizmap.co.kr:1205/api/users';
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, name, password }),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function postLogin({ email, password }) {
+  const url = 'http://www.quizmap.co.kr:1205/api/session';
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await response.json();
+  return data;
+}

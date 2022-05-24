@@ -25,6 +25,12 @@ const initialState = {
 
   // mind map page
   mindMapCards: [],
+
+  // sign-up page
+  TOKEN: null,
+  email: '',
+  name: '',
+  password: '',
 };
 
 const reducers = {
@@ -187,6 +193,34 @@ const reducers = {
     };
   },
 
+  // sign-up
+  setEmail(state, { payload: { email } }) {
+    return {
+      ...state,
+      email,
+    };
+  },
+
+  setName(state, { payload: { name } }) {
+    return {
+      ...state,
+      name,
+    };
+  },
+
+  setPassword(state, { payload: { password } }) {
+    return {
+      ...state,
+      password,
+    };
+  },
+
+  setToken(state, { payload: { TOKEN } }) {
+    return {
+      ...state,
+      TOKEN,
+    };
+  },
 };
 
 function defaultReducer(state) {

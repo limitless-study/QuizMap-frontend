@@ -13,6 +13,8 @@ import {
   postCardTryCount,
   deleteCard,
   patchCardsetDueDateTime,
+  postSignUp,
+  postLogin,
 } from './services/api';
 
 export function setFlipped(flipped) {
@@ -484,4 +486,45 @@ export function changeStarCount({ id, starCount }) {
     changedCards[starChangedCardIndex].starCountChanged = true;
     dispatch(setCards(changedCards));
   };
+}
+
+// sign-up
+export function setEmail(email) {
+  return {
+    type: 'setEmail',
+    payload: { email },
+  };
+}
+
+export function setName(name) {
+  return {
+    type: 'setName',
+    payload: { name },
+  };
+}
+
+export function setPassword(password) {
+  return {
+    type: 'setPassword',
+    payload: { password },
+  };
+}
+
+export function setToken(TOKEN) {
+  return {
+    type: 'setToken',
+    payload: { TOKEN },
+  };
+}
+
+export function login({ email, password }) {
+  return async (dispatch) => {
+    const TOKEN = await postLogin({ email, password });
+    console.log('TOKEN:', TOKEN);
+    dispatch(setToken(TOKEN));
+  };
+}
+
+export function signUp({ email, name, password }) {
+  postSignUp({ email, name, password });
 }
