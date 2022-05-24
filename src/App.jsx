@@ -7,10 +7,10 @@ import CardsetPage from './pages/CardsetPage';
 import RootPage from './pages/RootPage';
 import MindMapPage from './pages/MindMapPage';
 import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
 
 // TODO: delete these and make each pages
 function AboutPage() { return (<div>about</div>); }
-function LoginPage() { return (<div>log in</div>); }
 
 export default function App() {
   return (
