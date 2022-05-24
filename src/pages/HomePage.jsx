@@ -7,11 +7,10 @@ import Header from '../components/home/Header';
 import img from '../img/Saly-16.svg';
 
 const Container = styled.div({
-  width: '100vw',
-  height: '100vh',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  height: '90vh',
 });
 
 const Description = styled.div({
@@ -45,7 +44,10 @@ const Image = styled.img({
 
 export default function HomePage() {
   return (
-    <div>
+    <div style={{
+      display: 'flex', flexDirection: 'column', maxWidth: '100vw', maxHeight: '100vh',
+    }}
+    >
       <header>
         <Header />
       </header>
