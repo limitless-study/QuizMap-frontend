@@ -1,7 +1,15 @@
 import styled from '@emotion/styled';
+
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import img from '../img/Saly-38.svg';
 
 import LoginContainer from '../containers/LoginContainer';
+
+import {
+  initializeLoginFields,
+} from '../actions';
 
 const Image = styled.img({
   display: 'absolute',
@@ -12,6 +20,12 @@ const Image = styled.img({
 });
 
 export default function LoginPage() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeLoginFields());
+  });
+
   return (
     <div style={{ display: 'flex', maxWidth: '100vw', minHeight: '100vh' }}>
       <div style={{

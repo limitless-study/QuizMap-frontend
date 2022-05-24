@@ -18,7 +18,6 @@ import {
 export default function SignUpContainer() {
   const dispatch = useDispatch();
 
-  const TOKEN = useSelector(get('TOKEN'));
   const email = useSelector(get('email'));
   const name = useSelector(get('name'));
   const password = useSelector(get('password'));
@@ -37,10 +36,6 @@ export default function SignUpContainer() {
     dispatch(signUp({ email, name, password }));
   };
 
-  if (TOKEN) {
-    console.log('TOKEN >>>>>', TOKEN);
-  }
-
   return (
     <div style={{
       display: 'flex',
@@ -56,7 +51,6 @@ export default function SignUpContainer() {
       <SocialLogins />
       <Divider />
       <SignUpForm
-        type="password"
         email={email}
         name={name}
         password={password}

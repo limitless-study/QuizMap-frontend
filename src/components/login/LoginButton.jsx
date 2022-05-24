@@ -18,9 +18,12 @@ const Button = styled.button({
   },
 });
 
-export default function SignUpButton() {
+export default function LoginButton({ onClick }) {
   return (
-    <Button type="button">
+    <Button
+      type="button"
+      onClick={onClick}
+    >
       Sign In
     </Button>
   );
