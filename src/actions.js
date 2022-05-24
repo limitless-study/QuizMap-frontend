@@ -519,6 +519,7 @@ export function setToken(TOKEN) {
 
 export function login({ email, password }) {
   return async (dispatch) => {
+    console.log('LOGIN', email, password);
     const TOKEN = await postLogin({ email, password });
     console.log('TOKEN:', TOKEN);
     dispatch(setToken(TOKEN));
@@ -526,5 +527,23 @@ export function login({ email, password }) {
 }
 
 export function signUp({ email, name, password }) {
-  postSignUp({ email, name, password });
+  return async () => {
+    const response = await postSignUp({ email, name, password });
+    console.log('response', response);
+  };
+}
+
+export function initializeLoginFields() {
+  return (dispatch) => {
+    dispatch(setEmail(''));
+    dispatch(setPassword(''));
+  };
+}
+
+export function initializeSignUpFields() {
+  return (dispatch) => {
+    dispatch(setEmail(''));
+    dispatch(setName(''));
+    dispatch(setPassword(''));
+  };
 }

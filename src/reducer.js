@@ -26,7 +26,7 @@ const initialState = {
   // mind map page
   mindMapCards: [],
 
-  // sign-up page
+  // sign-up & login page
   TOKEN: null,
   email: '',
   name: '',

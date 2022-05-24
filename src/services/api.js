@@ -165,6 +165,8 @@ export async function postSignUp({ email, name, password }) {
 }
 
 export async function postLogin({ email, password }) {
+  console.log('postLogin', email, password);
+
   const url = 'http://www.quizmap.co.kr:1205/api/session';
   const response = await fetch(url, {
     method: 'POST',
