@@ -5,7 +5,7 @@ import SignUpContainer from '../containers/SignUpContainer';
 
 const Image = styled.img({
   display: 'absolute',
-  width: '45vw',
+  width: '40vw',
   height: '100vh',
   backgroundSize: 'contain',
   backgroundRepeat: 'no-repeat',
@@ -13,11 +13,10 @@ const Image = styled.img({
 
 export default function SignUpPage() {
   return (
-    <div style={{ display: 'flex', width: '100vw', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', maxWidth: '100vw', minHeight: '100vh' }}>
       <div style={{
         display: 'flex',
         flexGrow: '1',
-        margin: '5em 0',
         width: '60vh',
         backgroundColor: 'white',
         transition: '300ms',

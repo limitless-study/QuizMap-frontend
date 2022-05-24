@@ -13,6 +13,7 @@ export default function SignUpContainer() {
       justifyContent: 'center',
       textAlign: 'center',
       alignItems: 'center',
+      padding: '5em 0',
     }}
     >
       <Header />
