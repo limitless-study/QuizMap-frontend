@@ -17,7 +17,7 @@ export default function SignUpPage() {
       <div style={{
         display: 'flex',
         flexGrow: '1',
-        width: '60vh',
+        width: '60vw',
         backgroundColor: 'white',
         transition: '300ms',
       }}
@@ -26,6 +26,7 @@ export default function SignUpPage() {
       </div>
       <div style={{
         position: 'fixed',
+        width: '40vw',
         top: '0',
         right: '0',
         overflowX: 'hidden',
