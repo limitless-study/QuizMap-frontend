@@ -16,7 +16,7 @@ import {
 export default function LoginContainer() {
   const dispatch = useDispatch();
 
-  const TOKEN = useSelector(get('TOKEN'));
+  const TOKEN = useSelector(get('TOKEN')) || localStorage.getItem('TOKEN');
   const logIn = useSelector(get('login'));
   const { email, password } = logIn;
 

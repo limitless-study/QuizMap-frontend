@@ -514,9 +514,12 @@ export function setToken(TOKEN) {
 export function login({ email, password }) {
   return async (dispatch) => {
     console.log('LOGIN', email, password);
-    const TOKEN = await postLogin({ email, password });
-    console.log('TOKEN:', TOKEN);
-    dispatch(setToken(TOKEN));
+    const response = await postLogin({ email, password });
+
+    if (response.accessToken) {
+      dispatch(setToken(response.accessToken));
+      localStorage.setItem('TOKEN', response.accessToken);
+    }
   };
 }
 
