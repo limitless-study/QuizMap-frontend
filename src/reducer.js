@@ -26,11 +26,19 @@ const initialState = {
   // mind map page
   mindMapCards: [],
 
-  // sign-up & login page
+  // sign-up page
+  signup: {
+    email: '',
+    name: '',
+    password: '',
+  },
+
+  // login page
   TOKEN: null,
-  email: '',
-  name: '',
-  password: '',
+  login: {
+    email: '',
+    password: '',
+  },
 };
 
 const reducers = {
@@ -194,24 +202,23 @@ const reducers = {
   },
 
   // sign-up
-  setEmail(state, { payload: { email } }) {
+  setSignUpField(state, { payload: { key, value } }) {
     return {
       ...state,
-      email,
+      signup: {
+        ...state.signup,
+        [key]: value,
+      },
     };
   },
 
-  setName(state, { payload: { name } }) {
+  setLoginField(state, { payload: { key, value } }) {
     return {
       ...state,
-      name,
-    };
-  },
-
-  setPassword(state, { payload: { password } }) {
-    return {
-      ...state,
-      password,
+      login: {
+        ...state.login,
+        [key]: value,
+      },
     };
   },
 

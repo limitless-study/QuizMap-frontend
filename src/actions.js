@@ -489,24 +489,18 @@ export function changeStarCount({ id, starCount }) {
 }
 
 // sign-up
-export function setEmail(email) {
+export function setSignUpField({ key, value }) {
   return {
-    type: 'setEmail',
-    payload: { email },
+    type: 'setSignUpField',
+    payload: { key, value },
   };
 }
 
-export function setName(name) {
+// login
+export function setLoginField({ key, value }) {
   return {
-    type: 'setName',
-    payload: { name },
-  };
-}
-
-export function setPassword(password) {
-  return {
-    type: 'setPassword',
-    payload: { password },
+    type: 'setLoginField',
+    payload: { key, value },
   };
 }
 
@@ -535,15 +529,15 @@ export function signUp({ email, name, password }) {
 
 export function initializeLoginFields() {
   return (dispatch) => {
-    dispatch(setEmail(''));
-    dispatch(setPassword(''));
+    dispatch(setLoginField({ key: 'email', value: '' }));
+    dispatch(setLoginField({ key: 'password', value: '' }));
   };
 }
 
 export function initializeSignUpFields() {
   return (dispatch) => {
-    dispatch(setEmail(''));
-    dispatch(setName(''));
-    dispatch(setPassword(''));
+    dispatch(setSignUpField({ key: 'email', value: '' }));
+    dispatch(setSignUpField({ key: 'name', value: '' }));
+    dispatch(setSignUpField({ key: 'password', value: '' }));
   };
 }
