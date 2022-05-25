@@ -23,14 +23,14 @@ export default function SignUpContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const TOKEN = useSelector(get('TOKEN')) || loadItem('TOKEN');
+  const accessToken = useSelector(get('accessToken')) || loadItem('accessToken');
   const signup = useSelector(get('signup'));
   const { email, name, password } = signup;
 
   // 토큰이 있으면 /root page로 redirect
   useEffect(() => {
-    if (TOKEN) navigate('/root');
-  }, [TOKEN]);
+    if (accessToken) navigate('/root');
+  }, [accessToken]);
 
   const handleChange = ({ name: key, value }) => {
     dispatch(setSignUpField({ key, value }));

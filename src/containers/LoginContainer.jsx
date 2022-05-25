@@ -22,14 +22,14 @@ export default function LoginContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const TOKEN = useSelector(get('TOKEN')) || loadItem('TOKEN');
+  const accessToken = useSelector(get('accessToken')) || loadItem('accessToken');
   const logIn = useSelector(get('login'));
   const { email, password } = logIn;
 
   // 토큰이 있으면 /root page로 redirect
   useEffect(() => {
-    if (TOKEN) navigate('/root');
-  }, [TOKEN]);
+    if (accessToken) navigate('/root');
+  }, [accessToken]);
 
   const handleChange = ({ name: key, value }) => {
     dispatch(setLoginField({ key, value }));

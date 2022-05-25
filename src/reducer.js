@@ -34,7 +34,7 @@ const initialState = {
   },
 
   // login page
-  TOKEN: null,
+  accessToken: null,
   login: {
     email: '',
     password: '',
@@ -222,10 +222,10 @@ const reducers = {
     };
   },
 
-  setToken(state, { payload: { TOKEN } }) {
+  setToken(state, { payload: { accessToken } }) {
     return {
       ...state,
-      TOKEN,
+      accessToken,
     };
   },
 };

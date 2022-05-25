@@ -506,10 +506,10 @@ export function setLoginField({ key, value }) {
   };
 }
 
-export function setToken(TOKEN) {
+export function setToken(accessToken) {
   return {
     type: 'setToken',
-    payload: { TOKEN },
+    payload: { accessToken },
   };
 }
 
@@ -519,7 +519,7 @@ export function login({ email, password }) {
 
     if (response.accessToken) {
       dispatch(setToken(response.accessToken));
-      saveItem('TOKEN', response.accessToken);
+      saveItem('accessToken', response.accessToken);
     }
   };
 }
