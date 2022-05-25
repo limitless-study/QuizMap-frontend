@@ -12,6 +12,8 @@ import SignUpButton from '../components/signup/SignUpButton';
 
 import { get } from '../utils';
 
+import { loadItem } from '../services/storage';
+
 import {
   setSignUpField,
   signUp,
@@ -21,7 +23,7 @@ export default function SignUpContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const TOKEN = useSelector(get('TOKEN')) || localStorage.getItem('TOKEN');
+  const TOKEN = useSelector(get('TOKEN')) || loadItem('TOKEN');
   const signup = useSelector(get('signup'));
   const { email, name, password } = signup;
 

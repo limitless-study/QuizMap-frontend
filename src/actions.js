@@ -17,6 +17,8 @@ import {
   postLogin,
 } from './services/api';
 
+import { saveItem } from './services/storage';
+
 export function setFlipped(flipped) {
   return {
     type: 'setFlipped',
@@ -513,12 +515,11 @@ export function setToken(TOKEN) {
 
 export function login({ email, password }) {
   return async (dispatch) => {
-    console.log('LOGIN', email, password);
     const response = await postLogin({ email, password });
 
     if (response.accessToken) {
       dispatch(setToken(response.accessToken));
-      localStorage.setItem('TOKEN', response.accessToken);
+      saveItem('TOKEN', response.accessToken);
     }
   };
 }

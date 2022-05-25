@@ -11,6 +11,8 @@ import LoginButton from '../components/login/LoginButton';
 
 import { get } from '../utils';
 
+import { loadItem } from '../services/storage';
+
 import {
   setLoginField,
   login,
@@ -20,7 +22,7 @@ export default function LoginContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const TOKEN = useSelector(get('TOKEN')) || localStorage.getItem('TOKEN');
+  const TOKEN = useSelector(get('TOKEN')) || loadItem('TOKEN');
   const logIn = useSelector(get('login'));
   const { email, password } = logIn;
 
