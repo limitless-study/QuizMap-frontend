@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/login/Header';
 import SocialLogins from '../components/login/SocialLogins';
 import LoginForm from '../components/login/LoginForm';
@@ -15,10 +18,16 @@ import {
 
 export default function LoginContainer() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const TOKEN = useSelector(get('TOKEN')) || localStorage.getItem('TOKEN');
   const logIn = useSelector(get('login'));
   const { email, password } = logIn;
+
+  // 토큰이 있으면 /root page로 redirect
+  useEffect(() => {
+    if (TOKEN) navigate('/root');
+  }, [TOKEN]);
 
   const handleChange = ({ name: key, value }) => {
     dispatch(setLoginField({ key, value }));
