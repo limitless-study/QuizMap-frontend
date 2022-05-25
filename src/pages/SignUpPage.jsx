@@ -1,7 +1,15 @@
+import { useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+
 import styled from '@emotion/styled';
 import img from '../img/Saly-10.svg';
 
 import SignUpContainer from '../containers/SignUpContainer';
+
+import {
+  initializeSignUpFields,
+} from '../actions';
 
 const Image = styled.img({
   display: 'absolute',
@@ -12,6 +20,12 @@ const Image = styled.img({
 });
 
 export default function SignUpPage() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeSignUpFields());
+  });
+
   return (
     <div style={{ display: 'flex', maxWidth: '100vw', minHeight: '100vh' }}>
       <div style={{
