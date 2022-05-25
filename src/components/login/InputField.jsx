@@ -46,6 +46,7 @@ export default function InputField({
           name={targetName}
           value={inputValue}
           onChange={handleChange}
+          autoComplete="on"
         />
       </form>
     </InputContainer>

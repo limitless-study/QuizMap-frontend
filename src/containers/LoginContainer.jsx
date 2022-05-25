@@ -9,23 +9,19 @@ import LoginButton from '../components/login/LoginButton';
 import { get } from '../utils';
 
 import {
-  setEmail,
-  setPassword,
+  setLoginField,
   login,
 } from '../actions';
 
 export default function LoginContainer() {
   const dispatch = useDispatch();
 
-  const email = useSelector(get('email'));
-  const password = useSelector(get('password'));
   const TOKEN = useSelector(get('TOKEN'));
+  const logIn = useSelector(get('login'));
+  const { email, password } = logIn;
 
-  const handleChange = ({ name: target, value }) => {
-    if (target === 'email') {
-      return dispatch(setEmail(value));
-    }
-    return dispatch(setPassword(value));
+  const handleChange = ({ name: key, value }) => {
+    dispatch(setLoginField({ key, value }));
   };
 
   const handleLogin = () => {

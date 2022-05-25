@@ -9,27 +9,18 @@ import SignUpButton from '../components/signup/SignUpButton';
 import { get } from '../utils';
 
 import {
-  setEmail,
-  setName,
-  setPassword,
+  setSignUpField,
   signUp,
 } from '../actions';
 
 export default function SignUpContainer() {
   const dispatch = useDispatch();
 
-  const email = useSelector(get('email'));
-  const name = useSelector(get('name'));
-  const password = useSelector(get('password'));
+  const signup = useSelector(get('signup'));
+  const { email, name, password } = signup;
 
-  const handleChange = ({ name: target, value }) => {
-    if (target === 'email') {
-      return dispatch(setEmail(value));
-    }
-    if (target === 'name') {
-      return dispatch(setName(value));
-    }
-    return dispatch(setPassword(value));
+  const handleChange = ({ name: key, value }) => {
+    dispatch(setSignUpField({ key, value }));
   };
 
   const handleSignUp = () => {
