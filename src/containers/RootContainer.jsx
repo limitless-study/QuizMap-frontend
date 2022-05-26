@@ -1,10 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useEffect, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-
-import { loadItem } from '../services/storage';
 
 import { get } from '../utils';
 
