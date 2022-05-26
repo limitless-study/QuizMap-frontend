@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 
 import { useEffect } from 'react';
+
 import { useDispatch } from 'react-redux';
+
+import { useNavigate } from 'react-router-dom';
 
 import img from '../img/Saly-38.svg';
 
@@ -10,6 +13,8 @@ import LoginContainer from '../containers/LoginContainer';
 import {
   initializeLoginFields,
 } from '../actions';
+
+import { loadItem } from '../services/storage';
 
 const Image = styled.img({
   display: 'absolute',
@@ -22,8 +27,13 @@ const Image = styled.img({
 export default function LoginPage() {
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
+  const accessToken = loadItem('accessToken');
+
   useEffect(() => {
-    dispatch(initializeLoginFields());
+    if (accessToken) navigate('/root');
+    else dispatch(initializeLoginFields());
   });
 
   return (
