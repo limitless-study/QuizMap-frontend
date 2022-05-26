@@ -202,13 +202,11 @@ export async function patchStarCount({ id, starCount }) {
 }
 
 export async function postSignUp({ email, name, password }) {
-  const accessToken = loadItem('accessToken');
   const url = 'https://www.quizmap.co.kr/api/users';
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({ email, name, password }),
   });
@@ -220,13 +218,11 @@ export async function postSignUp({ email, name, password }) {
 }
 
 export async function postLogin({ email, password }) {
-  const accessToken = loadItem('accessToken');
   const url = 'https://www.quizmap.co.kr/api/session';
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({ email, password }),
   });
