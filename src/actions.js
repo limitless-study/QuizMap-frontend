@@ -544,6 +544,9 @@ export function signUp({ email, name, password }) {
   return async (dispatch) => {
     const response = await postSignUp({ email, name, password });
 
+    if (response.email) {
+      dispatch(login({ email, password }));
+    }
   };
 }
 
