@@ -304,8 +304,11 @@ export function contractViewMoreButton() {
 }
 
 export function loadRootCardsets() {
-  return async (dispatch) => {
-    const root = await fetchCardsetChildren(1);
+  return async (dispatch, getState) => {
+    const { rootCardSetId } = getState('rootCardSetId');
+
+    const root = await fetchCardsetChildren(rootCardSetId);
+
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));
   };
@@ -513,21 +516,34 @@ export function setToken(accessToken) {
   };
 }
 
+export function setRootCardSetId(rootCardSetId) {
+  return {
+    type: 'setRootCardSetId',
+    payload: { rootCardSetId },
+  };
+}
+
 export function login({ email, password }) {
   return async (dispatch) => {
     const response = await postLogin({ email, password });
 
-    if (response.accessToken) {
-      dispatch(setToken(response.accessToken));
-      saveItem('accessToken', response.accessToken);
+    const { accessToken, rootCardSetId } = response;
+
+    if (accessToken) {
+      dispatch(setToken(accessToken));
+      saveItem('accessToken', accessToken);
+    }
+
+    if (rootCardSetId) {
+      dispatch(setRootCardSetId(rootCardSetId));
     }
   };
 }
 
 export function signUp({ email, name, password }) {
-  return async () => {
+  return async (dispatch) => {
     const response = await postSignUp({ email, name, password });
-    console.log('response', response);
+
   };
 }
 

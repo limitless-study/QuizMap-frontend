@@ -1,5 +1,6 @@
 const initialState = {
   // cardsets page
+  rootCardSetId: null,
   cardsets: [],
   cardsetInfo: {},
   rootCardsets: [],
@@ -226,6 +227,13 @@ const reducers = {
     return {
       ...state,
       accessToken,
+    };
+  },
+
+  setRootCardSetId(state, { payload: { rootCardSetId } }) {
+    return {
+      ...state,
+      rootCardSetId,
     };
   },
 };

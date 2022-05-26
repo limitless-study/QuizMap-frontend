@@ -25,6 +25,7 @@ export default function RootContainer() {
 
   const navigate = useNavigate();
 
+  const rootCardSetId = useSelector(get('rootCardSetId'));
   const rootCardsets = useSelector(get('rootCardsets'));
   const cardsetId = useSelector(get('cardsetId'));
   const clickedCardsetId = useSelector(get('clickedCardsetId'));
@@ -34,7 +35,7 @@ export default function RootContainer() {
   }, [cardsetId]);
 
   const handleAddNewCardset = () => {
-    dispatch(addNewCardset(1));
+    dispatch(addNewCardset(rootCardSetId));
   };
 
   const handleClickViewMoreButton = (target) => {
