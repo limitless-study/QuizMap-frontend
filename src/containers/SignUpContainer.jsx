@@ -1,4 +1,8 @@
+import { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../components/signup/Header';
 import SocialLogins from '../components/signup/SocialLogins';
@@ -8,6 +12,8 @@ import SignUpButton from '../components/signup/SignUpButton';
 
 import { get } from '../utils';
 
+import { loadItem } from '../services/storage';
+
 import {
   setSignUpField,
   signUp,
@@ -15,9 +21,16 @@ import {
 
 export default function SignUpContainer() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const accessToken = useSelector(get('accessToken')) || loadItem('accessToken');
   const signup = useSelector(get('signup'));
   const { email, name, password } = signup;
+
+  // 토큰이 있으면 /root page로 redirect
+  useEffect(() => {
+    if (accessToken) navigate('/root');
+  }, [accessToken]);
 
   const handleChange = ({ name: key, value }) => {
     dispatch(setSignUpField({ key, value }));
