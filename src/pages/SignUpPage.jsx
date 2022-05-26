@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
+=======
+import { useDispatch } from 'react-redux';
+>>>>>>> 7ea4c0a43cf1cde374cccbbd6d5bb94fb4c4d631
 
 import styled from '@emotion/styled';
 
@@ -8,7 +12,13 @@ import img from '../img/Saly-10.svg';
 
 import SignUpContainer from '../containers/SignUpContainer';
 
+<<<<<<< HEAD
 import { loadItem } from '../services/storage';
+=======
+import {
+  initializeSignUpFields,
+} from '../actions';
+>>>>>>> 7ea4c0a43cf1cde374cccbbd6d5bb94fb4c4d631
 
 const Image = styled.img({
   display: 'absolute',
@@ -19,12 +29,19 @@ const Image = styled.img({
 });
 
 export default function SignUpPage() {
+<<<<<<< HEAD
   const navigate = useNavigate();
 
   const accessToken = loadItem('accessToken');
 
   useEffect(() => {
     if (accessToken) navigate('/root');
+=======
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeSignUpFields());
+>>>>>>> 7ea4c0a43cf1cde374cccbbd6d5bb94fb4c4d631
   });
 
   return (
