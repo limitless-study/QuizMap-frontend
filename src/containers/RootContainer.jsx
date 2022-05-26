@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+
+import { loadItem } from '../services/storage';
 
 import { get } from '../utils';
 
@@ -24,6 +26,12 @@ export default function RootContainer() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const accessToken = loadItem('accessToken');
+
+  useEffect(() => {
+    if (!accessToken) navigate('/login');
+  }, []);
 
   const rootCardSetId = useSelector(get('rootCardSetId'));
   const rootCardsets = useSelector(get('rootCardsets'));
