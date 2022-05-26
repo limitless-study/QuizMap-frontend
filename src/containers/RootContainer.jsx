@@ -27,12 +27,6 @@ export default function RootContainer() {
 
   const navigate = useNavigate();
 
-  const accessToken = loadItem('accessToken');
-
-  useEffect(() => {
-    if (!accessToken) navigate('/login');
-  }, []);
-
   const rootCardSetId = useSelector(get('rootCardSetId'));
   const rootCardsets = useSelector(get('rootCardsets'));
   const cardsetId = useSelector(get('cardsetId'));
