@@ -1,4 +1,7 @@
 const initialState = {
+  // homepage
+  toggleDropDown: false,
+
   // cardsets page
   rootCardSetId: null,
   cardsets: [],
@@ -234,6 +237,13 @@ const reducers = {
     return {
       ...state,
       rootCardSetId,
+    };
+  },
+
+  setToggleDropDown(state, { payload: { toggleDropDown } }) {
+    return {
+      ...state,
+      toggleDropDown,
     };
   },
 };

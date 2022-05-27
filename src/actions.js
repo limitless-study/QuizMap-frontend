@@ -564,3 +564,10 @@ export function initializeSignUpFields() {
     dispatch(setSignUpField({ key: 'password', value: '' }));
   };
 }
+
+export function setToggleDropDown(toggleDropDown) {
+  return {
+    type: 'setToggleDropDown',
+    payload: { toggleDropDown },
+  };
+}

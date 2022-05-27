@@ -4,6 +4,8 @@ import {
 
 import styled from '@emotion/styled';
 
+import { HiLogout } from 'react-icons/hi';
+
 import { loadItem } from '../../services/storage';
 
 const MenuBar = styled.header({
@@ -74,7 +76,30 @@ const SignUpButton = styled.li({
   },
 });
 
-export default function Header() {
+const ToggleDropDown = styled.div(
+  {
+    position: 'absolute',
+    width: '150px',
+    padding: '7px',
+    zIndex: '10',
+    marginTop: '5px',
+    backgroundColor: 'white',
+    transition: 'opacity .2s ease',
+    borderRadius: '7px',
+    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+    opacity: '0.9',
+    ':hover': {
+      backgroundColor: '#e7e5ff',
+      opacity: '0.85',
+      cursor: 'pointer',
+    },
+  },
+  (props) => ({
+    display: props.toggleDropDown ? 'block' : 'none',
+  }),
+);
+
+export default function Header({ toggleDropDown, onClickToggle, onClickLogout }) {
   const accessToken = loadItem('accessToken');
   const email = 'kim.eunseo@kakao.com'; // TODO: CHANGE!!
 
@@ -86,10 +111,21 @@ export default function Header() {
       <MenuItems>
         {accessToken
           ? (
-            <li>
-              <UserButton type="button" onClick={() => {}}>
+            <li style={{ position: 'relative' }}>
+              <UserButton
+                type="button"
+                onClick={() => onClickToggle(true)}
+                onBlur={() => onClickToggle(false)}
+              >
                 {email}
               </UserButton>
+              <ToggleDropDown
+                toggleDropDown={toggleDropDown}
+                onClick={onClickLogout}
+              >
+                <HiLogout style={{ marginRight: '10px' }} />
+                Log out
+              </ToggleDropDown>
             </li>
           )
           : (
