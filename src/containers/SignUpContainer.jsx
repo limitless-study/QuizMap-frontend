@@ -17,6 +17,8 @@ import { loadItem } from '../services/storage';
 import {
   setSignUpField,
   signUp,
+  loginWithGoogle,
+  loginWithKakao,
 } from '../actions';
 
 export default function SignUpContainer() {
@@ -40,6 +42,14 @@ export default function SignUpContainer() {
     dispatch(signUp({ email, name, password }));
   };
 
+  const handleGoogleLogin = () => {
+    dispatch(loginWithGoogle());
+  };
+
+  const handleKakaoLogin = () => {
+    dispatch(loginWithKakao());
+  };
+
   return (
     <div style={{
       display: 'flex',
@@ -52,8 +62,13 @@ export default function SignUpContainer() {
     }}
     >
       <Header />
-      <SocialLogins />
-      <Divider />
+      <SocialLogins
+        onClickGoogleLogin={handleGoogleLogin}
+        onClickKakaoLogin={handleKakaoLogin}
+      />
+      {
+        /*
+        <Divider />
       <SignUpForm
         email={email}
         name={name}
@@ -63,6 +78,8 @@ export default function SignUpContainer() {
       <SignUpButton
         onClick={handleSignUp}
       />
+      */
+      }
     </div>
   );
 }

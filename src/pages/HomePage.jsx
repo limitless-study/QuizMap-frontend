@@ -1,8 +1,18 @@
 import styled from '@emotion/styled';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 
 import Header from '../components/home/Header';
+
+import { loadItem } from '../services/storage';
+
+import { get } from '../utils';
+
+import {
+  setToggleDropDown,
+} from '../actions';
 
 import img from '../img/Saly-1.svg';
 
@@ -50,11 +60,26 @@ const Image = styled.img({
 });
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+
+  const accessToken = loadItem('accessToken');
+
+  const toggleDropDown = useSelector(get('toggleDropDown'));
+
+  const handleToggleDropDown = (toggleDropdown) => {
+    dispatch(setToggleDropDown(toggleDropdown));
+  };
+
+  const handleLogout = () => {
+    console.log('log out');
+  };
+
   return (
     <div style={{
       display: 'flex',
       flexDirection: 'column',
       maxWidth: '100vw',
+      width: '100vw',
       maxHeight: '100vh',
       height: '100vh',
       background: 'linear-gradient(to top right, #bdb2ff, #4d63e6)',
@@ -62,7 +87,11 @@ export default function HomePage() {
     }}
     >
       <header>
-        <Header />
+        <Header
+          toggleDropDown={toggleDropDown}
+          onClickToggle={handleToggleDropDown}
+          onClickLogout={handleLogout}
+        />
       </header>
       <Container>
         <Description>
@@ -72,7 +101,7 @@ export default function HomePage() {
           <Button
             type="button"
           >
-            <Link to="/login">Start Now</Link>
+            <Link to="/login">{accessToken ? 'My Cardsets' : 'Start Now'}</Link>
           </Button>
         </Description>
         <Image src={img} alt="" />

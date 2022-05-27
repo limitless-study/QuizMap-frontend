@@ -10,7 +10,7 @@ const SocialLoginBox = styled.button({
   border: '2px solid #eceffe',
   margin: '7px',
   lineHeight: '45px',
-  borderRadius: '10px',
+  borderRadius: '10em',
   cursor: 'pointer',
   fontSize: '16px',
   ':hover': {
@@ -23,21 +23,28 @@ const SocialLoginBox = styled.button({
   },
 });
 
-export default function SocialLogins() {
+export default function SocialLogins({ onClickGoogleLogin, onClickKakaoLogin }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <SocialLoginBox>
+      <SocialLoginBox
+        onClick={onClickGoogleLogin}
+      >
         <FcGoogle />
         Login with Google
       </SocialLoginBox>
-      <SocialLoginBox>
+      <SocialLoginBox
+        onClick={onClickKakaoLogin}
+      >
         <SiKakao />
         Login with kakao
       </SocialLoginBox>
-      <SocialLoginBox>
+      {
+      /* <SocialLoginBox>
         <SiFacebook color="#3b5998" />
         Login with Facebook
       </SocialLoginBox>
+      */
+      }
     </div>
   );
 }
