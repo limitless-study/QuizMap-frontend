@@ -307,7 +307,7 @@ export function loadRootCardsets() {
   return async (dispatch, getState) => {
     const { rootCardSetId } = getState('rootCardSetId');
 
-    const root = await fetchCardsetChildren(rootCardSetId);
+    const root = await fetchCardsetChildren(rootCardSetId); // TODO: change no rootCardSetId
 
     const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
     dispatch(setRootCardsets(rootCardsets));

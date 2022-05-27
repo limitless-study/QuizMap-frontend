@@ -4,8 +4,14 @@ import {
 
 import styled from '@emotion/styled';
 
+import { CgSmile } from 'react-icons/cg';
+
+import { loadItem } from '../../services/storage';
+
 const MenuBar = styled.header({
-  height: '40px',
+  background: 'white',
+  padding: '0 80px',
+  height: '3rem',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -14,7 +20,15 @@ const MenuBar = styled.header({
 
 const Title = styled.div({
   paddingLeft: '16px',
-  fontSize: '20px',
+  fontSize: '24px',
+  fontWeight: '400',
+  transition: 'opacity 0.4s',
+  '& a': {
+    color: '#624de6',
+  },
+  ':hover': {
+    opacity: '0.8',
+  },
 });
 
 const MenuItems = styled.ul({
@@ -27,29 +41,85 @@ const MenuItems = styled.ul({
 });
 
 const MyCardsetButton = styled.li({
-  backgroundColor: '#5B40FF',
-  padding: '3px 15px',
+  border: 'none',
   borderRadius: '7px',
+  padding: '4px 10px',
+  transition: 'opacity 0.4s',
+  background: '#6479fa',
   '& a': {
-    display: 'block',
     color: 'white',
+    display: 'block',
+  },
+  ':hover': {
+    opacity: '0.7',
+  },
+});
+
+const UserButton = styled.button({
+  verticalAlign: 'middle',
+  padding: '4px 10px',
+  border: 'none',
+  borderRadius: '10em',
+  height: '100%',
+  transition: 'opacity 0.4s',
+  ':hover': {
+    cursor: 'pointer',
+    opacity: '0.8',
+  },
+});
+
+const LoginButton = styled.li({
+  transition: 'opacity 0.4s',
+  padding: '4px',
+  ':hover': {
+    opacity: '0.7',
+  },
+});
+
+const SignUpButton = styled.li({
+  border: 'none',
+  borderRadius: '5px',
+  padding: '4px 10px',
+  transition: 'opacity 0.4s',
+  background: '#6479fa',
+  '& a': {
+    color: 'white',
+    display: 'block',
+  },
+  ':hover': {
+    opacity: '0.7',
   },
 });
 
 export default function Header() {
+  const accessToken = loadItem('accessToken');
+  const email = 'kim.eunseo@kakao.com'; // TODO: CHANGE!!
+
   return (
     <MenuBar>
-      <Title>
-        <Link to="/">Limitless</Link>
+      <Title className="logo">
+        <Link to="/">QuizMap</Link>
       </Title>
       <MenuItems>
-        <li><Link to="/">home</Link></li>
-        <li><Link to="/about">about</Link></li>
-        <li><Link to="/login">log in</Link></li>
-        <li><Link to="/signup">sign up</Link></li>
-        <MyCardsetButton>
-          <Link to="/root">My Cardsets</Link>
-        </MyCardsetButton>
+        {accessToken
+          ? (
+            <>
+              <MyCardsetButton>
+                <Link to="/root">My Cardsets</Link>
+              </MyCardsetButton>
+              <li>
+                <UserButton type="button" onClick={() => {}}>
+                  {email}
+                </UserButton>
+              </li>
+            </>
+          )
+          : (
+            <>
+              <LoginButton><Link to="/login">log in</Link></LoginButton>
+              <SignUpButton><Link to="/signup">sign up</Link></SignUpButton>
+            </>
+          )}
       </MenuItems>
     </MenuBar>
   );

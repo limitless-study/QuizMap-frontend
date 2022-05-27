@@ -30,7 +30,7 @@ export default function CardsetContainer({ cardsetId }) {
   const handleDeleteCardset = () => {
     dispatch(deleteClickedCardset(cardsetId));
 
-    if (parentId === 1) {
+    if (path.length() === 1) {
       navigate('/root');
     } else {
       navigate(`/cardsets/${parentId}`);
