@@ -14,7 +14,7 @@ function AboutPage() { return (<div>about</div>); }
 
 export default function App() {
   return (
-    <div>
+    <div style={{ fontFamily: 'arial' }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
