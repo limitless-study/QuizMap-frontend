@@ -4,8 +4,6 @@ import {
 
 import styled from '@emotion/styled';
 
-import { CgSmile } from 'react-icons/cg';
-
 import { loadItem } from '../../services/storage';
 
 const MenuBar = styled.header({
@@ -37,21 +35,6 @@ const MenuItems = styled.ul({
   '& li': {
     marginRight: '16px',
     display: 'list-item',
-  },
-});
-
-const MyCardsetButton = styled.li({
-  border: 'none',
-  borderRadius: '7px',
-  padding: '4px 10px',
-  transition: 'opacity 0.4s',
-  background: '#6479fa',
-  '& a': {
-    color: 'white',
-    display: 'block',
-  },
-  ':hover': {
-    opacity: '0.7',
   },
 });
 
@@ -103,16 +86,11 @@ export default function Header() {
       <MenuItems>
         {accessToken
           ? (
-            <>
-              <MyCardsetButton>
-                <Link to="/root">My Cardsets</Link>
-              </MyCardsetButton>
-              <li>
-                <UserButton type="button" onClick={() => {}}>
-                  {email}
-                </UserButton>
-              </li>
-            </>
+            <li>
+              <UserButton type="button" onClick={() => {}}>
+                {email}
+              </UserButton>
+            </li>
           )
           : (
             <>

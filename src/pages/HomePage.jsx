@@ -6,6 +6,8 @@ import Header from '../components/home/Header';
 
 import img from '../img/Saly-1.svg';
 
+import { loadItem } from '../services/storage';
+
 const Container = styled.div({
   display: 'flex',
   justifyContent: 'center',
@@ -50,6 +52,8 @@ const Image = styled.img({
 });
 
 export default function HomePage() {
+  const accessToken = loadItem('accessToken');
+
   return (
     <div style={{
       display: 'flex',
@@ -72,7 +76,7 @@ export default function HomePage() {
           <Button
             type="button"
           >
-            <Link to="/login">Start Now</Link>
+            <Link to="/login">{accessToken ? 'My Cardsets' : 'Start Now'}</Link>
           </Button>
         </Description>
         <Image src={img} alt="" />

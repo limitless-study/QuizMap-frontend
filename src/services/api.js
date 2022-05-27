@@ -211,9 +211,6 @@ export async function postSignUp({ email, name, password }) {
     body: JSON.stringify({ email, name, password }),
   });
   const data = await response.json();
-
-  console.log('postSignUp', data);
-
   return data;
 }
 
@@ -225,6 +222,20 @@ export async function postLogin({ email, password }) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function postLogout() {
+  const accessToken = loadItem('accessToken');
+  const url = 'https://www.quizmap.co.kr/api/users/logout';
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
   const data = await response.json();
   return data;
