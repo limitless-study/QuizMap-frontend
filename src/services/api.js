@@ -240,3 +240,17 @@ export async function postLogout() {
   const data = await response.json();
   return data;
 }
+
+export async function googleLogin() {
+  const url = 'https://www.quizmap.co.kr/api/session/google';
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+
+export async function kakaoLogin() {
+  const url = 'https://www.quizmap.co.kr/api/session/kakao';
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}

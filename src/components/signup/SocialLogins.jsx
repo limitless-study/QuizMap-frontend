@@ -23,14 +23,18 @@ const SocialLoginBox = styled.button({
   },
 });
 
-export default function SocialLogins() {
+export default function SocialLogins({ onClickGoogleLogin, onClickKakaoLogin }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <SocialLoginBox>
+      <SocialLoginBox
+        onClick={onClickGoogleLogin}
+      >
         <FcGoogle />
         Continue with Google
       </SocialLoginBox>
-      <SocialLoginBox>
+      <SocialLoginBox
+        onClick={onClickKakaoLogin}
+      >
         <SiKakao />
         Continue with kakao
       </SocialLoginBox>

@@ -16,6 +16,8 @@ import { loadItem } from '../services/storage';
 import {
   setLoginField,
   login,
+  loginWithGoogle,
+  loginWithKakao,
 } from '../actions';
 
 export default function LoginContainer() {
@@ -39,6 +41,14 @@ export default function LoginContainer() {
     dispatch(login({ email, password }));
   };
 
+  const handleGoogleLogin = () => {
+    dispatch(loginWithGoogle());
+  };
+
+  const handleKakaoLogin = () => {
+    dispatch(loginWithKakao());
+  };
+
   return (
     <div style={{
       display: 'flex',
@@ -51,7 +61,10 @@ export default function LoginContainer() {
     }}
     >
       <Header />
-      <SocialLogins />
+      <SocialLogins
+        onClickGoogleLogin={handleGoogleLogin}
+        onClickKakaoLogin={handleKakaoLogin}
+      />
       {
       /*
       <Divider />

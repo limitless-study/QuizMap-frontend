@@ -15,6 +15,8 @@ import {
   patchCardsetDueDateTime,
   postSignUp,
   postLogin,
+  googleLogin,
+  kakaoLogin,
 } from './services/api';
 
 import { saveItem } from './services/storage';
@@ -520,6 +522,32 @@ export function setRootCardSetId(rootCardSetId) {
   return {
     type: 'setRootCardSetId',
     payload: { rootCardSetId },
+  };
+}
+
+export function loginWithGoogle() {
+  return async (dispatch) => {
+    const response = await googleLogin();
+
+    const { accessToken } = response;
+
+    if (accessToken) {
+      dispatch(setToken(accessToken));
+      saveItem('accessToken', accessToken);
+    }
+  };
+}
+
+export function loginWithKakao() {
+  return async (dispatch) => {
+    const response = await kakaoLogin();
+
+    const { accessToken } = response;
+
+    if (accessToken) {
+      dispatch(setToken(accessToken));
+      saveItem('accessToken', accessToken);
+    }
   };
 }
 
