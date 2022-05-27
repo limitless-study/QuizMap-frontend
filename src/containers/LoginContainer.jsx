@@ -52,6 +52,8 @@ export default function LoginContainer() {
     >
       <Header />
       <SocialLogins />
+      {
+      /*
       <Divider />
       <LoginForm
         email={email}
@@ -60,7 +62,8 @@ export default function LoginContainer() {
       />
       <LoginButton
         onClick={handleLogin}
-      />
+      /> */
+      }
     </div>
   );
 }

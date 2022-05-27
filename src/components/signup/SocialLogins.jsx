@@ -10,7 +10,7 @@ const SocialLoginBox = styled.button({
   border: '2px solid #eceffe',
   margin: '7px',
   lineHeight: '45px',
-  borderRadius: '10px',
+  borderRadius: '10em',
   cursor: 'pointer',
   fontSize: '16px',
   ':hover': {
@@ -34,10 +34,14 @@ export default function SocialLogins() {
         <SiKakao />
         Continue with kakao
       </SocialLoginBox>
-      <SocialLoginBox>
+      {
+        /*
+        <SocialLoginBox>
         <SiFacebook color="#3b5998" />
         Continue with Facebook
       </SocialLoginBox>
+        */
+      }
     </div>
   );
 }

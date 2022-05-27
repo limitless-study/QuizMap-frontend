@@ -53,7 +53,9 @@ export default function SignUpContainer() {
     >
       <Header />
       <SocialLogins />
-      <Divider />
+      {
+        /*
+        <Divider />
       <SignUpForm
         email={email}
         name={name}
@@ -63,6 +65,8 @@ export default function SignUpContainer() {
       <SignUpButton
         onClick={handleSignUp}
       />
+      */
+      }
     </div>
   );
 }
