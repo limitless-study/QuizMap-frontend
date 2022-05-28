@@ -6,12 +6,10 @@ import { Link } from 'react-router-dom';
 
 import Header from '../components/home/Header';
 
-import { loadItem } from '../services/storage';
-
 import { get } from '../utils';
 
 import {
-  setToggleDropDown,
+  setToggleDropDown, setToken,
 } from '../actions';
 
 import img from '../img/Saly-1.svg';
@@ -62,8 +60,7 @@ const Image = styled.img({
 export default function HomePage() {
   const dispatch = useDispatch();
 
-  const accessToken = loadItem('accessToken');
-
+  const accessToken = useSelector(get('accessToken'));
   const toggleDropDown = useSelector(get('toggleDropDown'));
 
   const handleToggleDropDown = (toggleDropdown) => {
@@ -71,7 +68,8 @@ export default function HomePage() {
   };
 
   const handleLogout = () => {
-    console.log('log out');
+    localStorage.removeItem('accessToken');
+    dispatch(setToken(null));
   };
 
   return (
