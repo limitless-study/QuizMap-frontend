@@ -1,4 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
 
 import HomePage from './pages/HomePage';
 import LearnPage from './pages/LearnPage';
@@ -10,23 +12,23 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler';
 
-// TODO: delete these and make each pages
-function AboutPage() { return (<div>about</div>); }
+import { get } from './utils';
 
 export default function App() {
+  const accessToken = useSelector(get('accessToken'));
+
   return (
     <div style={{ fontFamily: 'arial' }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/studio/:id" element={<StudioPage />} />
-        <Route path="/cardsets/:id" element={<CardsetPage />} />
-        <Route path="/learn/:id" element={<LearnPage />} />
-        <Route path="/root" element={<RootPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/mindmap/:id" element={<MindMapPage />} />
-        <Route path="/kakao/callback" element={<OAuth2RedirectHandler />} />
+        <Route path="/studio/:id" element={accessToken ? <StudioPage /> : <Navigate replace to="/login" />} />
+        <Route path="/cardsets/:id" element={accessToken ? <CardsetPage /> : <Navigate replace to="/login" />} />
+        <Route path="/learn/:id" element={accessToken ? <LearnPage /> : <Navigate replace to="/login" />} />
+        <Route path="/root" element={accessToken ? <RootPage /> : <Navigate replace to="/login" />} />
+        <Route path="/login" element={accessToken ? <RootPage /> : <LoginPage />} />
+        <Route path="/signup" element={accessToken ? <RootPage /> : <SignUpPage />} />
+        <Route path="/mindmap/:id" element={accessToken ? <MindMapPage /> : <Navigate replace to="/login" />} />
+        <Route path="/kakao/callback" element={accessToken ? <OAuth2RedirectHandler /> : <Navigate replace to="/login" />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </div>

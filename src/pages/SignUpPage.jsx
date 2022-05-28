@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 
 import styled from '@emotion/styled';
@@ -9,8 +7,6 @@ import styled from '@emotion/styled';
 import img from '../img/Saly-10.svg';
 
 import SignUpContainer from '../containers/SignUpContainer';
-
-import { loadItem } from '../services/storage';
 
 import {
   initializeSignUpFields,
@@ -25,15 +21,10 @@ const Image = styled.img({
 });
 
 export default function SignUpPage() {
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
-  const accessToken = loadItem('accessToken');
-
   useEffect(() => {
-    if (accessToken) navigate('/root');
-    else dispatch(initializeSignUpFields());
+    dispatch(initializeSignUpFields());
   });
 
   return (

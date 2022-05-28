@@ -121,7 +121,7 @@ export default function Header({ toggleDropDown, onClickToggle, onClickLogout })
               </UserButton>
               <ToggleDropDown
                 toggleDropDown={toggleDropDown}
-                onClick={onClickLogout}
+                onMouseDown={onClickLogout}
               >
                 <HiLogout style={{ marginRight: '10px' }} />
                 Log out
