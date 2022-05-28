@@ -1,6 +1,6 @@
 import { loadItem } from './storage';
 
-import KAKAO_AUTH_URL from './OAuth';
+import KAKAO_AUTH_URL from './KakaoOAuth';
 
 export async function fetchCardsetInfo(cardsetId) {
   const accessToken = loadItem('accessToken');
@@ -243,8 +243,17 @@ export async function postLogout() {
   return data;
 }
 
-export async function googleLogin() {
+export async function googleLogin(code) {
   const url = 'https://www.quizmap.co.kr/api/session/google';
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ code }),
+  });
+  const data = await response.json();
+  return data;
 }
 
 export async function kakaoLogin(code) {
