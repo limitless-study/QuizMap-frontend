@@ -538,15 +538,14 @@ export function loginWithGoogle() {
   };
 }
 
-export function loginWithKakao() {
+export function loginWithKakao(code, navigate) {
   return async (dispatch) => {
-    const response = await kakaoLogin();
-
-    const { accessToken } = response;
+    const { accessToken } = await kakaoLogin(code);
 
     if (accessToken) {
       dispatch(setToken(accessToken));
       saveItem('accessToken', accessToken);
+      navigate('/');
     }
   };
 }

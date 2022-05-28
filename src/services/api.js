@@ -1,5 +1,7 @@
 import { loadItem } from './storage';
 
+import KAKAO_AUTH_URL from './OAuth';
+
 export async function fetchCardsetInfo(cardsetId) {
   const accessToken = loadItem('accessToken');
   const url = `https://www.quizmap.co.kr/api/cardsets/${cardsetId}/info`;
@@ -243,14 +245,17 @@ export async function postLogout() {
 
 export async function googleLogin() {
   const url = 'https://www.quizmap.co.kr/api/session/google';
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
 }
 
-export async function kakaoLogin() {
+export async function kakaoLogin(code) {
   const url = 'https://www.quizmap.co.kr/api/session/kakao';
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ code }),
+  });
   const data = await response.json();
   return data;
 }

@@ -41,14 +41,6 @@ export default function LoginContainer() {
     dispatch(login({ email, password }));
   };
 
-  const handleGoogleLogin = () => {
-    dispatch(loginWithGoogle());
-  };
-
-  const handleKakaoLogin = () => {
-    dispatch(loginWithKakao());
-  };
-
   return (
     <div style={{
       display: 'flex',
@@ -61,10 +53,7 @@ export default function LoginContainer() {
     }}
     >
       <Header />
-      <SocialLogins
-        onClickGoogleLogin={handleGoogleLogin}
-        onClickKakaoLogin={handleKakaoLogin}
-      />
+      <SocialLogins />
       {
       /*
       <Divider />

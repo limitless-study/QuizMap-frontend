@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { FcGoogle } from 'react-icons/fc';
 import { SiKakao, SiFacebook } from 'react-icons/si';
 
+import KAKAO_AUTH_URL from '../../services/OAuth';
+
 const SocialLoginBox = styled.button({
   width: '400px',
   height: '59px',
@@ -23,20 +25,20 @@ const SocialLoginBox = styled.button({
   },
 });
 
-export default function SocialLogins({ onClickGoogleLogin, onClickKakaoLogin }) {
+export default function SocialLogins() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <SocialLoginBox
-        onClick={onClickGoogleLogin}
-      >
-        <FcGoogle />
-        Continue with Google
+      <SocialLoginBox>
+        <a href={KAKAO_AUTH_URL}>
+          <FcGoogle />
+          Continue with Google
+        </a>
       </SocialLoginBox>
-      <SocialLoginBox
-        onClick={onClickKakaoLogin}
-      >
-        <SiKakao />
-        Continue with kakao
+      <SocialLoginBox>
+        <a href={KAKAO_AUTH_URL}>
+          <SiKakao />
+          Continue with kakao
+        </a>
       </SocialLoginBox>
       {
         /*
