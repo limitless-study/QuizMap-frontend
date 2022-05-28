@@ -8,6 +8,8 @@ import {
   loginWithKakao,
 } from '../actions';
 
+import Loading from '../components/common/Loading';
+
 function OAuth2RedirectHandler() {
   const dispatch = useDispatch();
 
@@ -21,7 +23,17 @@ function OAuth2RedirectHandler() {
   }, []);
 
   return (
-    <div>카카오 로그인 중</div>
+    <div style={{
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    }}
+    >
+      <Loading
+        size={80}
+      />
+    </div>
   );
 }
 
