@@ -545,7 +545,7 @@ export function loginWithKakao(code, navigate) {
     if (accessToken) {
       dispatch(setToken(accessToken));
       saveItem('accessToken', accessToken);
-      navigate('/');
+      navigate('/root');
     }
   };
 }
