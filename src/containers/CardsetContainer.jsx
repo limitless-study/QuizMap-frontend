@@ -22,15 +22,15 @@ export default function CardsetContainer({ cardsetId }) {
   const navigate = useNavigate();
 
   const menus = useSelector(get('rootCardsets'));
+  const userInfo = useSelector(get('userInfo'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
   const { path, parentId, dueDate } = cardsetInfo;
   const date = dueDate ? new Date(dueDate) : null;
 
-  const handleDeleteCardset = () => {
-    dispatch(deleteClickedCardset(cardsetId));
-
-    if (path.length() === 1) {
+  const handleDeleteCardset = async () => {
+    await dispatch(deleteClickedCardset(cardsetId));
+    if (parentId === Number(userInfo.rootCardSetId)) {
       navigate('/root');
     } else {
       navigate(`/cardsets/${parentId}`);
@@ -45,7 +45,7 @@ export default function CardsetContainer({ cardsetId }) {
       <div style={{ width: '100%', padding: '20px' }}>
         <div style={{ width: '100%' }}>
           <HistoryButtons />
-          <CardsetPath path={path} cardsetId={cardsetId} />
+          <CardsetPath rootCardSetId={userInfo.rootCardSetId} path={path} cardsetId={cardsetId} />
         </div>
         <CardsetInfo
           cardsetInfo={cardsetInfo}

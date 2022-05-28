@@ -16,7 +16,6 @@ export default function CardsetPage({ params }) {
   const { id } = params || useParams();
 
   useEffect(() => {
-    console.log('initializeCardsetPage');
     dispatch(initializeCardsetPage(id));
   }, [id]);
 

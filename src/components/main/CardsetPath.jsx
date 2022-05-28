@@ -34,7 +34,7 @@ const Slash = styled.span(
   }),
 );
 
-export default function CardsetPath({ cardsetId, path }) {
+export default function CardsetPath({ rootCardSetId, cardsetId, path }) {
   if (!path) {
     return <>loading...</>;
   }
@@ -42,7 +42,7 @@ export default function CardsetPath({ cardsetId, path }) {
   return (
     <CardsetPathContainer>
       {path.map((item) => {
-        if (item.id === 1) {
+        if (item.id === Number(rootCardSetId)) {
           return (
             <div key={item.id} style={{ display: 'table' }}>
               <PathItem>
