@@ -422,14 +422,6 @@ export function initializeCardsetStudio(id) {
   };
 }
 
-export function initializeCardsetPage(id) {
-  return async (dispatch) => {
-    await dispatch(loadRootCardsets());
-    await dispatch(loadCardsetInfo(id));
-    await dispatch(loadCardsetChildren(id));
-  };
-}
-
 export function setNotesHidden(isNotesHidden) {
   return {
     type: 'setNotesHidden',
@@ -453,13 +445,6 @@ export function initializeLearnPage(id) {
     dispatch(setCards([]));
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
-  };
-}
-
-export function deleteClickedCardset(cardsetId) {
-  return async (dispatch) => {
-    await deleteCardset(cardsetId);
-    dispatch(loadRootCardsets());
   };
 }
 
@@ -541,6 +526,21 @@ export function loadRootCardsets() {
   };
 }
 
+export function deleteClickedCardset(cardsetId) {
+  return async (dispatch) => {
+    await deleteCardset(cardsetId);
+    dispatch(loadRootCardsets());
+  };
+}
+
+export function initializeCardsetPage(id) {
+  return async (dispatch) => {
+    await dispatch(loadRootCardsets());
+    await dispatch(loadCardsetInfo(id));
+    await dispatch(loadCardsetChildren(id));
+  };
+}
+
 export function loginWithGoogle(code, navigate) {
   return async (dispatch) => {
     try {
@@ -599,6 +599,16 @@ export function signUp({ email, name, password }) {
     if (response.email) {
       dispatch(login({ email, password }));
     }
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('rootCardSetId');
+    dispatch(setToken(null));
+    dispatch(setUserInfo({ email: '', rootCardsetId: null }));
   };
 }
 

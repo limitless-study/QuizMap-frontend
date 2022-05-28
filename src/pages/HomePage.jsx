@@ -9,7 +9,7 @@ import Header from '../components/home/Header';
 import { get } from '../utils';
 
 import {
-  setToggleDropDown, setToken, setUserInfo,
+  setToggleDropDown, logout,
 } from '../actions';
 
 import img from '../img/Saly-1.svg';
@@ -69,11 +69,7 @@ export default function HomePage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('email');
-    localStorage.removeItem('rootCardSetId');
-    dispatch(setToken(null));
-    dispatch(setUserInfo({ email: '', rootCardsetId: null }));
+    dispatch(logout());
   };
 
   return (

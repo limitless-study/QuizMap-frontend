@@ -9,11 +9,14 @@ import SideMenuBar from '../components/main/SideMenuBar';
 import SubTitle from '../components/main/SubTitle';
 import CardsetBox from '../components/main/CardsetBox';
 import CardBox from '../components/main/CardBox';
+import UserInfoField from '../components/common/UserInfoField';
 
 import { get } from '../utils';
 
 import {
   deleteClickedCardset,
+
+  setToggleDropDown, setToken, setUserInfo, logout,
 } from '../actions';
 
 export default function CardsetContainer({ cardsetId }) {
@@ -21,6 +24,7 @@ export default function CardsetContainer({ cardsetId }) {
 
   const navigate = useNavigate();
 
+  const toggleDropDown = useSelector(get('toggleDropDown'));
   const menus = useSelector(get('rootCardsets'));
   const userInfo = useSelector(get('userInfo'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
@@ -37,11 +41,27 @@ export default function CardsetContainer({ cardsetId }) {
     }
   };
 
+  const handleToggleDropDown = (toggleDropdown) => {
+    dispatch(setToggleDropDown(toggleDropdown));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
       <SideMenuBar
         menus={menus}
       />
+      <div style={{ position: 'absolute', left: '10px', bottom: '10px' }}>
+        <UserInfoField
+          email={userInfo.email}
+          toggleDropDown={toggleDropDown}
+          onClickToggle={handleToggleDropDown}
+          onClickLogout={handleLogout}
+        />
+      </div>
       <div style={{ width: '100%', padding: '20px' }}>
         <div style={{ width: '100%' }}>
           <HistoryButtons />
