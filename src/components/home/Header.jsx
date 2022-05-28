@@ -99,9 +99,10 @@ const ToggleDropDown = styled.div(
   }),
 );
 
-export default function Header({ toggleDropDown, onClickToggle, onClickLogout }) {
+export default function Header({
+  email, toggleDropDown, onClickToggle, onClickLogout,
+}) {
   const accessToken = loadItem('accessToken');
-  const email = 'kim.eunseo@kakao.com'; // TODO: CHANGE!!
 
   return (
     <MenuBar>

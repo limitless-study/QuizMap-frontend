@@ -17,6 +17,7 @@ import {
   postLogin,
   googleLogin,
   kakaoLogin,
+  fetchUserInfo,
 } from './services/api';
 
 import { saveItem } from './services/storage';
@@ -305,17 +306,6 @@ export function contractViewMoreButton() {
   };
 }
 
-export function loadRootCardsets() {
-  return async (dispatch, getState) => {
-    const { rootCardSetId } = getState('rootCardSetId');
-
-    const root = await fetchCardsetChildren(rootCardSetId); // TODO: change no rootCardSetId
-
-    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
-    dispatch(setRootCardsets(rootCardsets));
-  };
-}
-
 export function initializeCards(cards) {
   return (dispatch, getState) => {
     dispatch(setNewCardIndex(1));
@@ -518,10 +508,36 @@ export function setToken(accessToken) {
   };
 }
 
-export function setRootCardSetId(rootCardSetId) {
+export function setUserInfo(userInfo) {
   return {
-    type: 'setRootCardSetId',
-    payload: { rootCardSetId },
+    type: 'setUserInfo',
+    payload: { userInfo },
+  };
+}
+
+export function getUserInfo() {
+  return async (dispatch) => {
+    const userInfo = await fetchUserInfo();
+    const { email, rootCardSetId } = userInfo;
+
+    saveItem('email', email);
+    saveItem('rootCardSetId', rootCardSetId);
+
+    dispatch(setUserInfo(userInfo));
+
+    return userInfo;
+  };
+}
+
+export function loadRootCardsets() {
+  return async (dispatch, getState) => {
+    const { userInfo } = getState();
+    const { rootCardSetId } = userInfo;
+
+    const root = await fetchCardsetChildren(rootCardSetId);
+
+    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
+    dispatch(setRootCardsets(rootCardsets));
   };
 }
 
@@ -535,6 +551,7 @@ export function loginWithGoogle(code, navigate) {
       if (accessToken) {
         dispatch(setToken(accessToken));
         saveItem('accessToken', accessToken);
+        await dispatch(getUserInfo());
         navigate('/root');
       }
     } catch (e) {
@@ -552,6 +569,7 @@ export function loginWithKakao(code, navigate) {
       if (accessToken) {
         dispatch(setToken(accessToken));
         saveItem('accessToken', accessToken);
+        await dispatch(getUserInfo());
         navigate('/root');
       }
     } catch (e) {
@@ -565,15 +583,11 @@ export function login({ email, password }) {
   return async (dispatch) => {
     const response = await postLogin({ email, password });
 
-    const { accessToken, rootCardSetId } = response;
+    const { accessToken } = response;
 
     if (accessToken) {
       dispatch(setToken(accessToken));
       saveItem('accessToken', accessToken);
-    }
-
-    if (rootCardSetId) {
-      dispatch(setRootCardSetId(rootCardSetId));
     }
   };
 }

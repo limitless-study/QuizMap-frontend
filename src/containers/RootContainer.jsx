@@ -25,7 +25,8 @@ export default function RootContainer() {
 
   const navigate = useNavigate();
 
-  const rootCardSetId = useSelector(get('rootCardSetId'));
+  const userInfo = useSelector(get('userInfo'));
+  const { rootCardSetId } = userInfo;
   const rootCardsets = useSelector(get('rootCardsets'));
   const cardsetId = useSelector(get('cardsetId'));
   const clickedCardsetId = useSelector(get('clickedCardsetId'));

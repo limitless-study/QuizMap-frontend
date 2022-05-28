@@ -1,7 +1,5 @@
 import { loadItem } from './storage';
 
-import KAKAO_AUTH_URL from './KakaoOAuth';
-
 export async function fetchCardsetInfo(cardsetId) {
   const accessToken = loadItem('accessToken');
   const url = `https://www.quizmap.co.kr/api/cardsets/${cardsetId}/info`;
@@ -18,6 +16,19 @@ export async function fetchCardsetInfo(cardsetId) {
 export async function fetchCardsetChildren(cardsetId) {
   const accessToken = loadItem('accessToken');
   const url = `https://www.quizmap.co.kr/api/cardsets/${cardsetId}/children`;
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchUserInfo() {
+  const accessToken = loadItem('accessToken');
+  const url = 'https://www.quizmap.co.kr/api/users/info';
   const response = await fetch(url, {
     method: 'GET',
     headers: {

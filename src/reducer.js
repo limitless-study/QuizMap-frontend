@@ -1,9 +1,12 @@
 const initialState = {
   // homepage
   toggleDropDown: false,
+  userInfo: {
+    email: '',
+    rootCardSetId: null,
+  },
 
   // cardsets page
-  rootCardSetId: null,
   cardsets: [],
   cardsetInfo: {},
   rootCardsets: [],
@@ -233,17 +236,17 @@ const reducers = {
     };
   },
 
-  setRootCardSetId(state, { payload: { rootCardSetId } }) {
-    return {
-      ...state,
-      rootCardSetId,
-    };
-  },
-
   setToggleDropDown(state, { payload: { toggleDropDown } }) {
     return {
       ...state,
       toggleDropDown,
+    };
+  },
+
+  setUserInfo(state, { payload: { userInfo } }) {
+    return {
+      ...state,
+      userInfo,
     };
   },
 };

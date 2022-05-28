@@ -6,14 +6,15 @@ import { useParams, Link } from 'react-router-dom';
 
 const Wrapper = styled.div({
   height: '100vh',
-  backgroundColor: '#EDEDED',
+  backgroundColor: '#6c80f6',
 });
 
 const Logo = styled.h1({
   width: '7em',
   marginBottom: '5px',
-  paddingLeft: '5px',
+  margin: '5px',
   '& a': {
+    fontWeight: 'lighter',
     fontSize: '28px',
     color: 'white',
   },
@@ -69,7 +70,7 @@ export default function SideMenuBar({ menus, cardsetId }) {
     <Wrapper>
       <Logo>
         <Link to="/">
-          Limitless
+          QuizMap
         </Link>
       </Logo>
       <MenuContainer>
