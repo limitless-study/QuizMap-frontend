@@ -525,27 +525,38 @@ export function setRootCardSetId(rootCardSetId) {
   };
 }
 
-export function loginWithGoogle() {
+export function loginWithGoogle(code, navigate) {
   return async (dispatch) => {
-    const response = await googleLogin();
+    try {
+      const response = await googleLogin(code, navigate);
 
-    const { accessToken } = response;
+      const { accessToken } = response;
 
-    if (accessToken) {
-      dispatch(setToken(accessToken));
-      saveItem('accessToken', accessToken);
+      if (accessToken) {
+        dispatch(setToken(accessToken));
+        saveItem('accessToken', accessToken);
+        navigate('/root');
+      }
+    } catch (e) {
+      localStorage.removeItem('accessToken');
+      navigate('/login');
     }
   };
 }
 
 export function loginWithKakao(code, navigate) {
   return async (dispatch) => {
-    const { accessToken } = await kakaoLogin(code);
+    try {
+      const { accessToken } = await kakaoLogin(code, navigate);
 
-    if (accessToken) {
-      dispatch(setToken(accessToken));
-      saveItem('accessToken', accessToken);
-      navigate('/root');
+      if (accessToken) {
+        dispatch(setToken(accessToken));
+        saveItem('accessToken', accessToken);
+        navigate('/root');
+      }
+    } catch (e) {
+      localStorage.removeItem('accessToken');
+      navigate('/login');
     }
   };
 }

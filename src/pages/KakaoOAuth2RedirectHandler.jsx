@@ -10,7 +10,7 @@ import {
 
 import Loading from '../components/common/Loading';
 
-function OAuth2RedirectHandler() {
+function KakaoOAuth2RedirectHandler() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -37,4 +37,4 @@ function OAuth2RedirectHandler() {
   );
 }
 
-export default OAuth2RedirectHandler;
+export default KakaoOAuth2RedirectHandler;
