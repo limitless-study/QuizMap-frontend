@@ -8,6 +8,7 @@ import RootPage from './pages/RootPage';
 import MindMapPage from './pages/MindMapPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
+import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler';
 
 // TODO: delete these and make each pages
 function AboutPage() { return (<div>about</div>); }
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/mindmap/:id" element={<MindMapPage />} />
+        <Route path="/kakao/callback" element={<OAuth2RedirectHandler />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </div>
