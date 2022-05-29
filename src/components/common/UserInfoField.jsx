@@ -5,9 +5,11 @@ import { HiLogout } from 'react-icons/hi';
 const UserButton = styled.button({
   verticalAlign: 'middle',
   padding: '4px 10px',
-  border: 'none',
+  border: '1px solid #ccccff',
   borderRadius: '10em',
+  background: 'transparent',
   height: '100%',
+  color: 'white',
   transition: 'opacity 0.4s',
   ':hover': {
     cursor: 'pointer',
@@ -43,7 +45,11 @@ export default function UserInfoField({
   email, toggleDropDown, onClickToggle, onClickLogout,
 }) {
   return (
-    <div>
+    <div style={{
+      display: 'flex',
+      textAlign: 'center',
+    }}
+    >
       <UserButton
         type="button"
         onClick={() => onClickToggle(true)}

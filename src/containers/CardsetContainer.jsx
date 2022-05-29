@@ -16,7 +16,7 @@ import { get } from '../utils';
 import {
   deleteClickedCardset,
 
-  setToggleDropDown, setToken, setUserInfo, logout,
+  setToggleDropDown, logout,
 } from '../actions';
 
 export default function CardsetContainer({ cardsetId }) {

@@ -43,10 +43,12 @@ const MenuItems = styled.ul({
 const UserButton = styled.button({
   verticalAlign: 'middle',
   padding: '4px 10px',
-  border: 'none',
+  border: '1px solid #624de6',
   borderRadius: '10em',
   height: '100%',
   transition: 'opacity 0.4s',
+  background: 'transparent',
+  color: '#624de6',
   ':hover': {
     cursor: 'pointer',
     opacity: '0.8',

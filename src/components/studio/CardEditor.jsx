@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 import MilkDown from './MilkDown';
 
+import Loading from '../common/Loading';
+
 const Wrapper = styled.div({
   width: '100vw',
   height: '100vh',
@@ -19,7 +21,17 @@ const CreateCardField = styled.div({
 export default function CardEditor({ currentCard, onChange }) {
   if (!currentCard) {
     return (
-      <div>Loading...</div>
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      >
+        <Loading
+          size={80}
+        />
+      </div>
     );
   }
 
