@@ -9,11 +9,14 @@ import SideMenuBar from '../components/main/SideMenuBar';
 import SubTitle from '../components/main/SubTitle';
 import CardsetBox from '../components/main/CardsetBox';
 import CardBox from '../components/main/CardBox';
+import UserInfoField from '../components/common/UserInfoField';
 
 import { get } from '../utils';
 
 import {
   deleteClickedCardset,
+
+  setToggleDropDown, logout,
 } from '../actions';
 
 export default function CardsetContainer({ cardsetId }) {
@@ -21,20 +24,29 @@ export default function CardsetContainer({ cardsetId }) {
 
   const navigate = useNavigate();
 
+  const toggleDropDown = useSelector(get('toggleDropDown'));
   const menus = useSelector(get('rootCardsets'));
+  const userInfo = useSelector(get('userInfo'));
   const cardsetInfo = useSelector(get('cardsetInfo'));
   const cardsetChildren = useSelector(get('cardsetChildren'));
   const { path, parentId, dueDate } = cardsetInfo;
   const date = dueDate ? new Date(dueDate) : null;
 
-  const handleDeleteCardset = () => {
-    dispatch(deleteClickedCardset(cardsetId));
-
-    if (path.length() === 1) {
+  const handleDeleteCardset = async () => {
+    await dispatch(deleteClickedCardset(cardsetId));
+    if (parentId === Number(userInfo.rootCardSetId)) {
       navigate('/root');
     } else {
       navigate(`/cardsets/${parentId}`);
     }
+  };
+
+  const handleToggleDropDown = (toggleDropdown) => {
+    dispatch(setToggleDropDown(toggleDropdown));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -42,10 +54,18 @@ export default function CardsetContainer({ cardsetId }) {
       <SideMenuBar
         menus={menus}
       />
+      <div style={{ position: 'absolute', left: '10px', bottom: '10px' }}>
+        <UserInfoField
+          email={userInfo.email}
+          toggleDropDown={toggleDropDown}
+          onClickToggle={handleToggleDropDown}
+          onClickLogout={handleLogout}
+        />
+      </div>
       <div style={{ width: '100%', padding: '20px' }}>
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', display: 'flex' }}>
           <HistoryButtons />
-          <CardsetPath path={path} cardsetId={cardsetId} />
+          <CardsetPath rootCardSetId={userInfo.rootCardSetId} path={path} cardsetId={cardsetId} />
         </div>
         <CardsetInfo
           cardsetInfo={cardsetInfo}

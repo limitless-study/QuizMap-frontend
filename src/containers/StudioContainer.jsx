@@ -27,6 +27,7 @@ import SaveButton from '../components/studio/SaveButton';
 import SideBarCard from '../components/studio/SideBarCard';
 import DateTimePicker from '../components/studio/DateTimePicker';
 import ViewMoreButtons from '../components/common/ViewMoreButtons';
+import Loading from '../components/common/Loading';
 
 export default function StudioContainer({ id }) {
   const dispatch = useDispatch();
@@ -92,7 +93,17 @@ export default function StudioContainer({ id }) {
 
   if (cards.length === 0) {
     return (
-      <div>Loading...</div>
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      >
+        <Loading
+          size={80}
+        />
+      </div>
     );
   }
 

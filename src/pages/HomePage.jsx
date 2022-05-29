@@ -9,7 +9,7 @@ import Header from '../components/home/Header';
 import { get } from '../utils';
 
 import {
-  setToggleDropDown, setToken,
+  setToggleDropDown, logout,
 } from '../actions';
 
 import img from '../img/Saly-1.svg';
@@ -60,6 +60,7 @@ const Image = styled.img({
 export default function HomePage() {
   const dispatch = useDispatch();
 
+  const userInfo = useSelector(get('userInfo'));
   const accessToken = useSelector(get('accessToken'));
   const toggleDropDown = useSelector(get('toggleDropDown'));
 
@@ -68,8 +69,7 @@ export default function HomePage() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    dispatch(setToken(null));
+    dispatch(logout());
   };
 
   return (
@@ -86,6 +86,7 @@ export default function HomePage() {
     >
       <header>
         <Header
+          email={userInfo.email}
           toggleDropDown={toggleDropDown}
           onClickToggle={handleToggleDropDown}
           onClickLogout={handleLogout}

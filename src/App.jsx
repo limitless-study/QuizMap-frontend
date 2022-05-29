@@ -26,8 +26,8 @@ export default function App() {
         <Route path="/cardsets/:id" element={accessToken ? <CardsetPage /> : <Navigate replace to="/login" />} />
         <Route path="/learn/:id" element={accessToken ? <LearnPage /> : <Navigate replace to="/login" />} />
         <Route path="/root" element={accessToken ? <RootPage /> : <Navigate replace to="/login" />} />
-        <Route path="/login" element={accessToken ? <RootPage /> : <LoginPage />} />
-        <Route path="/signup" element={accessToken ? <RootPage /> : <SignUpPage />} />
+        <Route path="/login" element={accessToken ? <Navigate replace to="/root" /> : <LoginPage />} />
+        <Route path="/signup" element={accessToken ? <Navigate replace to="/root" /> : <SignUpPage />} />
         <Route path="/mindmap/:id" element={accessToken ? <MindMapPage /> : <Navigate replace to="/login" />} />
         <Route path="/kakao/callback" element={<KakaoOAuth2RedirectHandler />} />
         <Route path="/google/callback" element={<GoogleOAuth2RedirectHandler />} />

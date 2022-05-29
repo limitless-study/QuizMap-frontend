@@ -43,10 +43,12 @@ const MenuItems = styled.ul({
 const UserButton = styled.button({
   verticalAlign: 'middle',
   padding: '4px 10px',
-  border: 'none',
+  border: '1px solid #624de6',
   borderRadius: '10em',
   height: '100%',
   transition: 'opacity 0.4s',
+  background: 'transparent',
+  color: '#624de6',
   ':hover': {
     cursor: 'pointer',
     opacity: '0.8',
@@ -99,9 +101,10 @@ const ToggleDropDown = styled.div(
   }),
 );
 
-export default function Header({ toggleDropDown, onClickToggle, onClickLogout }) {
+export default function Header({
+  email, toggleDropDown, onClickToggle, onClickLogout,
+}) {
   const accessToken = loadItem('accessToken');
-  const email = 'kim.eunseo@kakao.com'; // TODO: CHANGE!!
 
   return (
     <MenuBar>
