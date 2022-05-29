@@ -63,7 +63,7 @@ export default function CardsetContainer({ cardsetId }) {
         />
       </div>
       <div style={{ width: '100%', padding: '20px' }}>
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', display: 'flex' }}>
           <HistoryButtons />
           <CardsetPath rootCardSetId={userInfo.rootCardSetId} path={path} cardsetId={cardsetId} />
         </div>

@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 
 import { useEffect } from 'react';
 
+import Loading from '../common/Loading';
+
 const MindMapField = styled.div({
   width: '82vw',
   height: '100vh',
@@ -12,7 +14,17 @@ const MindMapField = styled.div({
 export default function MindMap({ mindMapCards }) {
   if (mindMapCards.length === 0) {
     return (
-      <div>마인드맵으로 변환 중...</div>
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '60%',
+        transform: 'translate(-40%, -50%)',
+      }}
+      >
+        <Loading
+          size={80}
+        />
+      </div>
     );
   }
 
