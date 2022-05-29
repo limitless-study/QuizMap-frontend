@@ -135,7 +135,7 @@ export default function LearnCardsContainer({ id }) {
           <FinishButton
             type="button"
           >
-            <Link to={`/cardsets/${id}`}>끝내기</Link>
+            <Link to={`/cardsets/${id}`}>Finish</Link>
           </FinishButton>
         </div>
       </Header>
