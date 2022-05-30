@@ -384,16 +384,17 @@ export function clickCorrectCard(id) {
 
     const today = new Date();
     const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = (today.getDate()).toString().padStart(2, '0');
-    const hour = (today.getHours()).toString().padStart(2, '0');
-    const minute = (today.getMinutes()).toString().padStart(2, '0');
+    const month = (`00${today.getMonth() + 1}`).slice(-2);
+    const day = (`00${today.getDate()}`).slice(-2);
+    const hour = (`00${today.getHours()}`).slice(-2);
+    const minute = (`00${today.getMinutes()}`).slice(-2);
     const learningDateTime = `${year}${month}${day}${hour}${minute}`;
 
     const { tryCount } = cards[0];
 
     // patch starCount if changed
     const { starCount, starCountChanged } = cards[0];
+
     if (starCountChanged) {
       await patchStarCount({ id, starCount });
     }
