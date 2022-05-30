@@ -13,7 +13,14 @@ import {
   postCardTryCount,
   deleteCard,
   patchCardsetDueDateTime,
+  postSignUp,
+  postLogin,
+  googleLogin,
+  kakaoLogin,
+  fetchUserInfo,
 } from './services/api';
+
+import { saveItem } from './services/storage';
 
 export function setFlipped(flipped) {
   return {
@@ -299,14 +306,6 @@ export function contractViewMoreButton() {
   };
 }
 
-export function loadRootCardsets() {
-  return async (dispatch) => {
-    const root = await fetchCardsetChildren(1);
-    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
-    dispatch(setRootCardsets(rootCardsets));
-  };
-}
-
 export function initializeCards(cards) {
   return (dispatch, getState) => {
     dispatch(setNewCardIndex(1));
@@ -429,28 +428,29 @@ export function initializeCardsetStudio(id) {
   };
 }
 
-export function initializeCardsetPage(id) {
-  return async (dispatch) => {
-    await dispatch(loadRootCardsets());
-    await dispatch(loadCardsetInfo(id));
-    await dispatch(loadCardsetChildren(id));
+export function setNotesHidden(isNotesHidden) {
+  return {
+    type: 'setNotesHidden',
+    payload: { isNotesHidden },
+  };
+}
+
+export function setNotes(notes) {
+  return {
+    type: 'setNotes',
+    payload: { notes },
   };
 }
 
 export function initializeLearnPage(id) {
   return async (dispatch) => {
+    dispatch(setNotesHidden(true));
+    dispatch(setNotes(''));
     dispatch(setIsLastPage(false));
     dispatch(setFlipped(false));
     dispatch(setCards([]));
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
-  };
-}
-
-export function deleteClickedCardset(cardsetId) {
-  return async (dispatch) => {
-    await deleteCardset(cardsetId);
-    dispatch(loadRootCardsets());
   };
 }
 
@@ -473,5 +473,169 @@ export function changeStarCount({ id, starCount }) {
     changedCards[starChangedCardIndex].starCount = starCount;
     changedCards[starChangedCardIndex].starCountChanged = true;
     dispatch(setCards(changedCards));
+  };
+}
+
+// sign-up
+export function setSignUpField({ key, value }) {
+  return {
+    type: 'setSignUpField',
+    payload: { key, value },
+  };
+}
+
+// login
+export function setLoginField({ key, value }) {
+  return {
+    type: 'setLoginField',
+    payload: { key, value },
+  };
+}
+
+export function setToken(accessToken) {
+  return {
+    type: 'setToken',
+    payload: { accessToken },
+  };
+}
+
+export function setUserInfo(userInfo) {
+  return {
+    type: 'setUserInfo',
+    payload: { userInfo },
+  };
+}
+
+export function getUserInfo() {
+  return async (dispatch) => {
+    const userInfo = await fetchUserInfo();
+    const { email, rootCardSetId } = userInfo;
+
+    saveItem('email', email);
+    saveItem('rootCardSetId', rootCardSetId);
+
+    dispatch(setUserInfo(userInfo));
+
+    return userInfo;
+  };
+}
+
+export function loadRootCardsets() {
+  return async (dispatch, getState) => {
+    const { userInfo } = getState();
+    const { rootCardSetId } = userInfo;
+
+    const root = await fetchCardsetChildren(rootCardSetId);
+
+    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
+    dispatch(setRootCardsets(rootCardsets));
+  };
+}
+
+export function deleteClickedCardset(cardsetId) {
+  return async (dispatch) => {
+    await deleteCardset(cardsetId);
+    dispatch(loadRootCardsets());
+  };
+}
+
+export function initializeCardsetPage(id) {
+  return async (dispatch) => {
+    await dispatch(loadRootCardsets());
+    await dispatch(loadCardsetInfo(id));
+    await dispatch(loadCardsetChildren(id));
+  };
+}
+
+export function loginWithGoogle(code, navigate) {
+  return async (dispatch) => {
+    try {
+      const response = await googleLogin(code, navigate);
+
+      const { accessToken } = response;
+
+      if (accessToken) {
+        dispatch(setToken(accessToken));
+        saveItem('accessToken', accessToken);
+        await dispatch(getUserInfo());
+        navigate('/root');
+      }
+    } catch (e) {
+      localStorage.removeItem('accessToken');
+      navigate('/login');
+    }
+  };
+}
+
+export function loginWithKakao(code, navigate) {
+  return async (dispatch) => {
+    try {
+      const { accessToken } = await kakaoLogin(code, navigate);
+
+      if (accessToken) {
+        dispatch(setToken(accessToken));
+        saveItem('accessToken', accessToken);
+        await dispatch(getUserInfo());
+        navigate('/root');
+      }
+    } catch (e) {
+      localStorage.removeItem('accessToken');
+      navigate('/login');
+    }
+  };
+}
+
+export function login({ email, password }) {
+  return async (dispatch) => {
+    const response = await postLogin({ email, password });
+
+    const { accessToken } = response;
+
+    if (accessToken) {
+      dispatch(setToken(accessToken));
+      saveItem('accessToken', accessToken);
+    }
+  };
+}
+
+export function signUp({ email, name, password }) {
+  return async (dispatch) => {
+    const response = await postSignUp({ email, name, password });
+
+    if (response.email) {
+      dispatch(login({ email, password }));
+    }
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('rootCardSetId');
+    dispatch(setToken(null));
+    dispatch(setUserInfo({ email: '', rootCardsetId: null }));
+  };
+}
+
+export function initializeLoginFields() {
+  return (dispatch) => {
+    dispatch(setLoginField({ key: 'email', value: '' }));
+    dispatch(setLoginField({ key: 'password', value: '' }));
+  };
+}
+
+export function initializeSignUpFields() {
+  return (dispatch) => {
+    dispatch(setSignUpField({ key: 'email', value: '' }));
+    dispatch(setSignUpField({ key: 'name', value: '' }));
+    dispatch(setSignUpField({ key: 'password', value: '' }));
+  };
+}
+
+export function setToggleDropDown(toggleDropDown) {
+  return {
+    type: 'setToggleDropDown',
+    payload: { toggleDropDown },
   };
 }

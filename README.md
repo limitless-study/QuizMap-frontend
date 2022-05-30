@@ -1,27 +1,19 @@
-# 📖온라인 학습도구 웹 사이트 Limitless
+# QuizMap
+QuizMap is a Metacognition-based Online Learning Tool Website.
 
-## 기능
-### ① 플래시 카드 기능
+![thursday social](https://user-images.githubusercontent.com/67737432/170854249-5bb847ae-2759-48cc-b68e-0bffe36f0621.png)
 
-|![5_경로 탐색](https://user-images.githubusercontent.com/67737432/166664776-77fa7d90-7439-4f65-a203-4dc64a931b02.gif)|
-|------|
-|**플래시카드 보기 기능**|
+---
 
-|![1_카드_카드셋 편집 기능](https://user-images.githubusercontent.com/67737432/166664103-90bc9acb-4f64-4261-9e87-84edae7efee1.gif)|
-|------|
-|**플래시카드 편집 기능**|
+## 🚀Features
+![image](https://user-images.githubusercontent.com/67737432/170857424-26ddf2ec-49db-4eb3-a09b-2b92ddb60a35.png)
+1. **Make a flash card.** Flash cards can be created in a hierarchical directory structure.
+2. **Convert your flash card to a mind map.** You can organize your knowledge systematically.
+3. The color of the mind map varies depending on the learner's learning progress. **The higher the learning progress, the green, and the lower the learning progress, the red.** Therefore, you can easily recognize what you know and don't know.
 
-|![3_학습 알고리즘](https://user-images.githubusercontent.com/67737432/166665083-810f99b3-490f-4752-b28d-261367094efc.gif)|
-|------|
-|**플래시카드 학습 기능**|
+---
 
+### ⚠Warning
+> QuizMap is in beta. During this period of current instability, issues such as unexpected bugs and server instability due to external/internal factors may occur. Please consider the above before using QuizMap.
 
-### ② 플래시카드 체계화 기능 (플래시카드 → 마인드맵 변환)
-
-|![2_마인드맵](https://user-images.githubusercontent.com/67737432/166665167-2bb5b2d7-6325-4c1e-93d8-340947d34546.gif)|
-|------|
-
-### ③ 메타인지 시각화 기능
-
-|![4_메타인지 시각화](https://user-images.githubusercontent.com/67737432/166665271-2c2c0b4b-df99-4353-a471-9ff8c626bbc1.gif)|
-|------|
+> QuizMap 베타 버전입니다. 베타 테스트 기간 동안에는 사전에 예창시 못한 버그 및 외부/내부 요인에 따른 서버 불안정 등의 이슈가 발생할 수 있습니다. QuizMap을 사용하기 전에 상기 사항을 충분히 고려해주시기 바랍니다. :)

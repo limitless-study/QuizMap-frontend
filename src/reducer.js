@@ -1,4 +1,11 @@
 const initialState = {
+  // homepage
+  toggleDropDown: false,
+  userInfo: {
+    email: '',
+    rootCardSetId: null,
+  },
+
   // cardsets page
   cardsets: [],
   cardsetInfo: {},
@@ -20,9 +27,25 @@ const initialState = {
   // learn page
   isLastPage: false,
   flipped: false,
+  isNotesHidden: true,
+  notes: '',
 
   // mind map page
   mindMapCards: [],
+
+  // sign-up page
+  signup: {
+    email: '',
+    name: '',
+    password: '',
+  },
+
+  // login page
+  accessToken: null,
+  login: {
+    email: '',
+    password: '',
+  },
 };
 
 const reducers = {
@@ -168,6 +191,62 @@ const reducers = {
     return {
       ...state,
       mindMapCards,
+    };
+  },
+
+  setNotesHidden(state, { payload: { isNotesHidden } }) {
+    return {
+      ...state,
+      isNotesHidden,
+    };
+  },
+
+  setNotes(state, { payload: { notes } }) {
+    return {
+      ...state,
+      notes,
+    };
+  },
+
+  // sign-up
+  setSignUpField(state, { payload: { key, value } }) {
+    return {
+      ...state,
+      signup: {
+        ...state.signup,
+        [key]: value,
+      },
+    };
+  },
+
+  setLoginField(state, { payload: { key, value } }) {
+    return {
+      ...state,
+      login: {
+        ...state.login,
+        [key]: value,
+      },
+    };
+  },
+
+  setToken(state, { payload: { accessToken } }) {
+    return {
+      ...state,
+      accessToken,
+    };
+  },
+
+  setToggleDropDown(state, { payload: { toggleDropDown } }) {
+    return {
+      ...state,
+      toggleDropDown,
+    };
+  },
+
+  setUserInfo(state, { payload: { userInfo } }) {
+    return {
+      ...state,
+      userInfo,
     };
   },
 };

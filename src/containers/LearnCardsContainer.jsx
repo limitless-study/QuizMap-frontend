@@ -8,6 +8,9 @@ import Card from '../components/learn/Card';
 import CardButtons from '../components/learn/CardButtons';
 import NoMoreCards from '../components/learn/NoMoreCards';
 import CardsetPath from '../components/learn/CardsetPath';
+import Notes from '../components/learn/Notes';
+import LearningSidebar from '../components/learn/LearningSidebar';
+import Loading from '../components/common/Loading';
 
 import { get } from '../utils';
 
@@ -16,6 +19,8 @@ import {
   clickWrongCard,
   clickCorrectCard,
   changeStarCount,
+  setNotesHidden,
+  setNotes,
 } from '../actions';
 
 const Header = styled.div({
@@ -46,9 +51,11 @@ const FinishButton = styled.button({
 });
 
 const CardItemsContainer = styled.div({
+  display: 'flex',
   width: '100vw',
   height: '90vh',
   position: 'relative',
+  justifyContent: 'right',
 });
 
 const CardItemsWrapper = styled.div({
@@ -64,6 +71,8 @@ export default function LearnCardsContainer({ id }) {
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
   const isLastPage = useSelector(get('isLastPage'));
+  const isNotesHidden = useSelector(get('isNotesHidden'));
+  const notes = useSelector(get('notes'));
 
   if (isLastPage) {
     return (
@@ -73,7 +82,17 @@ export default function LearnCardsContainer({ id }) {
 
   if (cards.length === 0) {
     return (
-      <div>Loading...</div>
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      >
+        <Loading
+          size={80}
+        />
+      </div>
     );
   }
 
@@ -86,10 +105,12 @@ export default function LearnCardsContainer({ id }) {
   };
 
   const handleClickWrong = () => {
+    dispatch(setNotes(''));
     dispatch(clickWrongCard(cardId));
   };
 
   const handleClickCorrect = () => {
+    dispatch(setNotes(''));
     dispatch(clickCorrectCard(cardId));
   };
 
@@ -97,32 +118,54 @@ export default function LearnCardsContainer({ id }) {
     dispatch(changeStarCount({ id: cardId, starCount: changedStarCount }));
   };
 
+  const handleClickSideBarButton = () => {
+    dispatch(setNotesHidden(!isNotesHidden));
+  };
+
+  const handleChangeNotes = (e) => {
+    const { value } = e.target;
+    dispatch(setNotes(value));
+  };
+
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <Header>
         <CardsetPath path={path} />
         <div>
           <FinishButton
             type="button"
           >
-            <Link to={`/cardsets/${id}`}>끝내기</Link>
+            <Link to={`/cardsets/${id}`}>Finish</Link>
           </FinishButton>
         </div>
       </Header>
-      <CardItemsContainer>
-        <CardItemsWrapper>
-          <Card
-            content={flipped ? answer : topic}
-            starCount={starCount}
-            onChangeStarCount={handleChangeStarCount}
+      <div style={{ display: 'flex' }}>
+        <CardItemsContainer>
+          <CardItemsWrapper>
+            <Card
+              id={id}
+              flipped={flipped}
+              content={flipped ? answer : topic}
+              starCount={starCount}
+              onChangeStarCount={handleChangeStarCount}
+            />
+            <CardButtons
+              onFlip={handleFlip}
+              onClickWrong={handleClickWrong}
+              onClickCorrect={handleClickCorrect}
+            />
+          </CardItemsWrapper>
+          <Notes
+            notes={notes}
+            isNotesHidden={isNotesHidden}
+            onChange={handleChangeNotes}
           />
-          <CardButtons
-            onFlip={handleFlip}
-            onClickWrong={handleClickWrong}
-            onClickCorrect={handleClickCorrect}
-          />
-        </CardItemsWrapper>
-      </CardItemsContainer>
+        </CardItemsContainer>
+        <LearningSidebar
+          isNotesHidden={isNotesHidden}
+          onClick={handleClickSideBarButton}
+        />
+      </div>
     </div>
   );
 }
