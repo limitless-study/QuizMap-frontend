@@ -10,11 +10,12 @@
 ## CodeceptJS
 output
 
-## Node.js
-node_modules
-
 ## Jest
 coverage
 
 ## gh-pages
-dist
+/dist
+
+## Node.js
+node_modules/*
+!node_modules/mind-elixir
