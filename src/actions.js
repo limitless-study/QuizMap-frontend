@@ -182,7 +182,7 @@ export function initializeCardset() {
 }
 
 export function saveCardset(cardsetId) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     // patch topic
     const { isTitleChanged, isDueDateTimeChanged } = getState();
 
@@ -206,22 +206,17 @@ export function saveCardset(cardsetId) {
     // patch cards
     const { cards } = getState();
 
-    cards.forEach((card) => {
-      if (card.cardDeleted) {
-        if (!card.cardAdded) {
-          // delete origin cards
-          deleteCard(card.id);
-        }
+    for (const card of cards) {
+      if (card.cardDeleted && !card.cardAdded) {
+        await deleteCard(card.id);
       } else if (card.cardAdded) {
-        // post added cards
-        postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
+        await postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
       } else if (card.cardChanged) {
-        // patch changed cards
-        patchCardsetCard({
+        await patchCardsetCard({
           cardsetId, cardId: card.id, topic: card.topic, answer: card.answer,
         });
       }
-    });
+    }
   };
 }
 
