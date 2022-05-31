@@ -6,12 +6,14 @@ import RootContainer from '../containers/RootContainer';
 
 import {
   loadRootCardsets,
+  initializeRootPage,
 } from '../actions';
 
 export default function RootPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(initializeRootPage());
     dispatch(loadRootCardsets());
   });
 
