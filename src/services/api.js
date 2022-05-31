@@ -184,7 +184,7 @@ export async function postCardTryCount({
 }) {
   const accessToken = loadItem('accessToken');
   const url = `https://www.quizmap.co.kr/api/cards/${id}/learning-log`;
-  const response = await fetch(url, {
+  await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -194,8 +194,6 @@ export async function postCardTryCount({
       tryCount, learningDateTime, learningSeconds,
     }), // TODO: learningSecond's'
   });
-  const data = await response.json();
-  return data;
 }
 
 export async function patchStarCount({ id, starCount }) {
