@@ -207,8 +207,10 @@ export function saveCardset(cardsetId) {
     const { cards } = getState();
 
     for (const card of cards) {
-      if (card.cardDeleted && !card.cardAdded) {
-        await deleteCard(card.id);
+      if (card.cardDeleted) {
+        if (!card.cardAdded) {
+          await deleteCard(card.id);
+        }
       } else if (card.cardAdded) {
         await postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
       } else if (card.cardChanged) {
