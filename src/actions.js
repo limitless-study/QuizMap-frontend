@@ -223,9 +223,14 @@ export function saveCardset(cardsetId) {
 }
 
 export function addNewCardset(id) {
-  return async (dispatch) => {
-    await dispatch(saveCardset(id));
-    // TODO: Saving... 뜨도록?
+  return async (dispatch, getState) => {
+    const { userInfo } = getState();
+    const { rootCardSetId } = userInfo;
+
+    if (id !== rootCardSetId) {
+      await dispatch(saveCardset(id));
+    }
+
     dispatch(setCardsetId(await postNewCardset(id)));
   };
 }
@@ -449,6 +454,14 @@ export function initializeLearnPage(id) {
     dispatch(setCards([]));
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
+  };
+}
+
+export function initializeRootPage() {
+  return (dispatch) => {
+    dispatch(setTitleChanged(false));
+    dispatch(setDueDateTimeChanged(false));
+    dispatch(initializeCards([]));
   };
 }
 
