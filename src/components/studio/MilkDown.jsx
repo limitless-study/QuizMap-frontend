@@ -75,7 +75,7 @@ const uploader = async (files, schema) => {
       const { imageName } = await uploadImage(image);
       const alt = image.name;
       return schema.nodes.image.createAndFill({
-        src: `http://localhost:1205/api/images/${imageName}`,
+        src: `https://quizmap.co.kr/api/images/${imageName}`,
         alt,
       });
     }),
