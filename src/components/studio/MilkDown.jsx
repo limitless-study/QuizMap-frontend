@@ -16,6 +16,9 @@ import { commonmark } from '@milkdown/preset-commonmark';
 import { slash } from '@milkdown/plugin-slash';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { uploadPlugin, upload } from '@milkdown/plugin-upload';
+
+import { uploadImage } from '../../services/api';
 
 const EditorField = styled.div({
   width: '19em',
@@ -28,7 +31,7 @@ const EditorField = styled.div({
     backgroundColor: 'transparent',
     border: '1px solid lightgray',
     boxShadow: 'rgba(0, 0, 0, 0.09) 0px 3px 12px',
-    color: 'black',
+    color: '1b1c1d',
   },
   '.milkdown .editor': {
     overflow: 'auto',
@@ -56,6 +59,31 @@ const EditorField = styled.div({
   },
 });
 
+const uploader = async (files, schema) => {
+  const images = [];
+
+  for (let i = 0; i < files.length; i += 1) {
+    const file = files.item(i);
+    // You can handle whatever the file type you want, we handle image here.
+    if (file && file.type.includes('image')) {
+      images.push(file);
+    }
+  }
+
+  const nodes = await Promise.all(
+    images.map(async (image) => {
+      const { imageName } = await uploadImage(image);
+      const alt = image.name;
+      return schema.nodes.image.createAndFill({
+        src: `http://localhost:1205/api/images/${imageName}`,
+        alt,
+      });
+    }),
+  );
+
+  return nodes;
+};
+
 function getEditor(value, cardindex, onChange) {
   const editor = useEditor((root) => Editor.make()
     .config((ctx) => {
@@ -69,6 +97,11 @@ function getEditor(value, cardindex, onChange) {
     .use(commonmark)
     .use(slash)
     .use(history)
+    .use(
+      upload.configure(uploadPlugin, {
+        uploader,
+      }),
+    )
     .use(nordLight)
     .use(listener));
 

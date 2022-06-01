@@ -196,6 +196,23 @@ export async function postCardTryCount({
   });
 }
 
+export async function uploadImage(imageFile) {
+  const accessToken = loadItem('accessToken');
+  const url = 'https://www.quizmap.co.kr/api/images/upload';
+  const formData = new FormData();
+  formData.append('image', imageFile);
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: formData,
+  });
+  const data = await response.json();
+  return data;
+}
+
 export async function patchStarCount({ id, starCount }) {
   const accessToken = loadItem('accessToken');
   const url = `https://www.quizmap.co.kr/api/cards/${id}/star`;

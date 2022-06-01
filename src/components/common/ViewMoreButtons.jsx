@@ -22,7 +22,7 @@ const ThreeDotsButton = styled.button({
     cursor: 'pointer',
   },
   ':focus': {
-    color: 'black',
+    color: '1b1c1d',
   },
 });
 
@@ -35,7 +35,7 @@ const DeleteButton = styled.span({
   backgroundColor: 'white',
   border: 'none',
   boxShadow: 'rgba(0, 0, 0, 0.2) 0px 3px 10px',
-  color: 'black',
+  color: '1b1c1d',
   ':hover': {
     backgroundColor: '#EEEBFF',
   },
