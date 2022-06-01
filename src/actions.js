@@ -13,7 +13,14 @@ import {
   postCardTryCount,
   deleteCard,
   patchCardsetDueDateTime,
+  postSignUp,
+  postLogin,
+  googleLogin,
+  kakaoLogin,
+  fetchUserInfo,
 } from './services/api';
+
+import { saveItem } from './services/storage';
 
 export function setFlipped(flipped) {
   return {
@@ -175,7 +182,7 @@ export function initializeCardset() {
 }
 
 export function saveCardset(cardsetId) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     // patch topic
     const { isTitleChanged, isDueDateTimeChanged } = getState();
 
@@ -199,29 +206,31 @@ export function saveCardset(cardsetId) {
     // patch cards
     const { cards } = getState();
 
-    cards.forEach((card) => {
+    for (const card of cards) {
       if (card.cardDeleted) {
         if (!card.cardAdded) {
-          // delete origin cards
-          deleteCard(card.id);
+          await deleteCard(card.id);
         }
       } else if (card.cardAdded) {
-        // post added cards
-        postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
+        await postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
       } else if (card.cardChanged) {
-        // patch changed cards
-        patchCardsetCard({
+        await patchCardsetCard({
           cardsetId, cardId: card.id, topic: card.topic, answer: card.answer,
         });
       }
-    });
+    }
   };
 }
 
 export function addNewCardset(id) {
-  return async (dispatch) => {
-    await dispatch(saveCardset(id));
-    // TODO: Saving... 뜨도록?
+  return async (dispatch, getState) => {
+    const { userInfo } = getState();
+    const { rootCardSetId } = userInfo;
+
+    if (id !== rootCardSetId) {
+      await dispatch(saveCardset(id));
+    }
+
     dispatch(setCardsetId(await postNewCardset(id)));
   };
 }
@@ -296,14 +305,6 @@ export function contractViewMoreButton() {
   return (dispatch) => {
     dispatch(setClickedCardsetId(null));
     dispatch(setClickedCardIndex(null));
-  };
-}
-
-export function loadRootCardsets() {
-  return async (dispatch) => {
-    const root = await fetchCardsetChildren(1);
-    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
-    dispatch(setRootCardsets(rootCardsets));
   };
 }
 
@@ -382,14 +383,21 @@ export function clickCorrectCard(id) {
   return async (dispatch, getState) => {
     const { cards } = getState();
     const filteredCards = cards.filter((card) => card.id !== id);
-    const learningDateTime = '202205031830'; // TODO : fix
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (`00${today.getMonth() + 1}`).slice(-2);
+    const day = (`00${today.getDate()}`).slice(-2);
+    const hour = (`00${today.getHours()}`).slice(-2);
+    const minute = (`00${today.getMinutes()}`).slice(-2);
+    const learningDateTime = `${year}${month}${day}${hour}${minute}`;
+
     const { tryCount } = cards[0];
 
     // patch starCount if changed
     const { starCount, starCountChanged } = cards[0];
-    console.log('STARCOUNT:', starCount, starCountChanged, 'Card Id', id);
+
     if (starCountChanged) {
-      console.log('PATCH');
       await patchStarCount({ id, starCount });
     }
 
@@ -423,14 +431,6 @@ export function initializeCardsetStudio(id) {
   };
 }
 
-export function initializeCardsetPage(id) {
-  return async (dispatch) => {
-    await dispatch(loadRootCardsets());
-    await dispatch(loadCardsetInfo(id));
-    await dispatch(loadCardsetChildren(id));
-  };
-}
-
 export function setNotesHidden(isNotesHidden) {
   return {
     type: 'setNotesHidden',
@@ -457,10 +457,11 @@ export function initializeLearnPage(id) {
   };
 }
 
-export function deleteClickedCardset(cardsetId) {
-  return async (dispatch) => {
-    await deleteCardset(cardsetId);
-    dispatch(loadRootCardsets());
+export function initializeRootPage() {
+  return (dispatch) => {
+    dispatch(setTitleChanged(false));
+    dispatch(setDueDateTimeChanged(false));
+    dispatch(initializeCards([]));
   };
 }
 
@@ -483,5 +484,169 @@ export function changeStarCount({ id, starCount }) {
     changedCards[starChangedCardIndex].starCount = starCount;
     changedCards[starChangedCardIndex].starCountChanged = true;
     dispatch(setCards(changedCards));
+  };
+}
+
+// sign-up
+export function setSignUpField({ key, value }) {
+  return {
+    type: 'setSignUpField',
+    payload: { key, value },
+  };
+}
+
+// login
+export function setLoginField({ key, value }) {
+  return {
+    type: 'setLoginField',
+    payload: { key, value },
+  };
+}
+
+export function setToken(accessToken) {
+  return {
+    type: 'setToken',
+    payload: { accessToken },
+  };
+}
+
+export function setUserInfo(userInfo) {
+  return {
+    type: 'setUserInfo',
+    payload: { userInfo },
+  };
+}
+
+export function getUserInfo() {
+  return async (dispatch) => {
+    const userInfo = await fetchUserInfo();
+    const { email, rootCardSetId } = userInfo;
+
+    saveItem('email', email);
+    saveItem('rootCardSetId', rootCardSetId);
+
+    dispatch(setUserInfo(userInfo));
+
+    return userInfo;
+  };
+}
+
+export function loadRootCardsets() {
+  return async (dispatch, getState) => {
+    const { userInfo } = getState();
+    const { rootCardSetId } = userInfo;
+
+    const root = await fetchCardsetChildren(rootCardSetId);
+
+    const rootCardsets = root.filter((cardset) => cardset.type === 'CARDSET');
+    dispatch(setRootCardsets(rootCardsets));
+  };
+}
+
+export function deleteClickedCardset(cardsetId) {
+  return async (dispatch) => {
+    await deleteCardset(cardsetId);
+    dispatch(loadRootCardsets());
+  };
+}
+
+export function initializeCardsetPage(id) {
+  return async (dispatch) => {
+    await dispatch(loadRootCardsets());
+    await dispatch(loadCardsetInfo(id));
+    await dispatch(loadCardsetChildren(id));
+  };
+}
+
+export function loginWithGoogle(code, navigate) {
+  return async (dispatch) => {
+    try {
+      const response = await googleLogin(code, navigate);
+
+      const { accessToken } = response;
+
+      if (accessToken) {
+        dispatch(setToken(accessToken));
+        saveItem('accessToken', accessToken);
+        await dispatch(getUserInfo());
+        navigate('/root');
+      }
+    } catch (e) {
+      localStorage.removeItem('accessToken');
+      navigate('/login');
+    }
+  };
+}
+
+export function loginWithKakao(code, navigate) {
+  return async (dispatch) => {
+    try {
+      const { accessToken } = await kakaoLogin(code, navigate);
+
+      if (accessToken) {
+        dispatch(setToken(accessToken));
+        saveItem('accessToken', accessToken);
+        await dispatch(getUserInfo());
+        navigate('/root');
+      }
+    } catch (e) {
+      localStorage.removeItem('accessToken');
+      navigate('/login');
+    }
+  };
+}
+
+export function login({ email, password }) {
+  return async (dispatch) => {
+    const response = await postLogin({ email, password });
+
+    const { accessToken } = response;
+
+    if (accessToken) {
+      dispatch(setToken(accessToken));
+      saveItem('accessToken', accessToken);
+    }
+  };
+}
+
+export function signUp({ email, name, password }) {
+  return async (dispatch) => {
+    const response = await postSignUp({ email, name, password });
+
+    if (response.email) {
+      dispatch(login({ email, password }));
+    }
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('email');
+    localStorage.removeItem('rootCardSetId');
+    dispatch(setToken(null));
+    dispatch(setUserInfo({ email: '', rootCardsetId: null }));
+  };
+}
+
+export function initializeLoginFields() {
+  return (dispatch) => {
+    dispatch(setLoginField({ key: 'email', value: '' }));
+    dispatch(setLoginField({ key: 'password', value: '' }));
+  };
+}
+
+export function initializeSignUpFields() {
+  return (dispatch) => {
+    dispatch(setSignUpField({ key: 'email', value: '' }));
+    dispatch(setSignUpField({ key: 'name', value: '' }));
+    dispatch(setSignUpField({ key: 'password', value: '' }));
+  };
+}
+
+export function setToggleDropDown(toggleDropDown) {
+  return {
+    type: 'setToggleDropDown',
+    payload: { toggleDropDown },
   };
 }

@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 import { Link } from 'react-router-dom';
 
+import { TailSpin } from 'react-loader-spinner';
+
 const CardsetPathContainer = styled.ul({
   display: 'flex',
   marginTop: '5px',
@@ -34,15 +36,21 @@ const Slash = styled.span(
   }),
 );
 
-export default function CardsetPath({ cardsetId, path }) {
+export default function CardsetPath({ rootCardSetId, cardsetId, path }) {
   if (!path) {
-    return <>loading...</>;
+    return (
+      <TailSpin
+        width="30"
+        height="30"
+        color="#5658ff"
+      />
+    );
   }
 
   return (
     <CardsetPathContainer>
       {path.map((item) => {
-        if (item.id === 1) {
+        if (item.id === Number(rootCardSetId)) {
           return (
             <div key={item.id} style={{ display: 'table' }}>
               <PathItem>

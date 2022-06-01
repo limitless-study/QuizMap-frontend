@@ -10,6 +10,7 @@ import NoMoreCards from '../components/learn/NoMoreCards';
 import CardsetPath from '../components/learn/CardsetPath';
 import Notes from '../components/learn/Notes';
 import LearningSidebar from '../components/learn/LearningSidebar';
+import Loading from '../components/common/Loading';
 
 import { get } from '../utils';
 
@@ -81,7 +82,17 @@ export default function LearnCardsContainer({ id }) {
 
   if (cards.length === 0) {
     return (
-      <div>Loading...</div>
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      >
+        <Loading
+          size={80}
+        />
+      </div>
     );
   }
 
@@ -124,7 +135,7 @@ export default function LearnCardsContainer({ id }) {
           <FinishButton
             type="button"
           >
-            <Link to={`/cardsets/${id}`}>끝내기</Link>
+            <Link to={`/cardsets/${id}`}>Finish</Link>
           </FinishButton>
         </div>
       </Header>
@@ -132,6 +143,8 @@ export default function LearnCardsContainer({ id }) {
         <CardItemsContainer>
           <CardItemsWrapper>
             <Card
+              id={id}
+              flipped={flipped}
               content={flipped ? answer : topic}
               starCount={starCount}
               onChangeStarCount={handleChangeStarCount}

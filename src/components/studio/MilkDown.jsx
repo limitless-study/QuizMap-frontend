@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 import { useRef, useEffect } from 'react';
-import { Slice } from '@milkdown/prose';
+import { Slice } from '@milkdown/prose/model';
 
 import {
   Editor,
@@ -10,7 +10,7 @@ import {
   editorViewCtx,
   parserCtx,
 } from '@milkdown/core';
-import { nord } from '@milkdown/theme-nord';
+import { nord, nordDark, nordLight } from '@milkdown/theme-nord';
 import { ReactEditor, useEditor } from '@milkdown/react';
 import { commonmark } from '@milkdown/preset-commonmark';
 import { slash } from '@milkdown/plugin-slash';
@@ -102,6 +102,7 @@ function getEditor(value, cardindex, onChange) {
         uploader,
       }),
     )
+    .use(nordLight)
     .use(listener));
 
   return editor;
@@ -125,13 +126,7 @@ export default function MilkDown({ cardIndex, value, onChange }) {
           const doc = parser(value);
           if (!doc) return;
           const { state } = view;
-          view.dispatch(
-            state.tr.replace(
-              0,
-              state.doc.content.size,
-              new Slice(doc.content, 0, 0),
-            ),
-          );
+          view.dispatch(state.tr.replace(0, state.doc.content.size, new Slice(doc.content, 0, 0)));
         });
       }
     }

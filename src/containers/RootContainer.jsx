@@ -11,6 +11,7 @@ import SideMenuBar from '../components/main/SideMenuBar';
 import RootCard from '../components/main/RootCard';
 import AddCardsetButton from '../components/studio/AddCardsetButton';
 import ViewMoreButtons from '../components/common/ViewMoreButtons';
+import UserInfoField from '../components/common/UserInfoField';
 
 import {
   addNewCardset,
@@ -18,6 +19,8 @@ import {
   contractViewMoreButton,
   deleteClickedCardset,
   deleteClickedCard,
+  setToggleDropDown,
+  logout,
 } from '../actions';
 
 export default function RootContainer() {
@@ -25,6 +28,9 @@ export default function RootContainer() {
 
   const navigate = useNavigate();
 
+  const toggleDropDown = useSelector(get('toggleDropDown'));
+  const userInfo = useSelector(get('userInfo'));
+  const { rootCardSetId } = userInfo;
   const rootCardsets = useSelector(get('rootCardsets'));
   const cardsetId = useSelector(get('cardsetId'));
   const clickedCardsetId = useSelector(get('clickedCardsetId'));
@@ -34,7 +40,7 @@ export default function RootContainer() {
   }, [cardsetId]);
 
   const handleAddNewCardset = () => {
-    dispatch(addNewCardset(1));
+    dispatch(addNewCardset(rootCardSetId));
   };
 
   const handleClickViewMoreButton = (target) => {
@@ -53,11 +59,27 @@ export default function RootContainer() {
     }
   };
 
+  const handleToggleDropDown = (toggleDropdown) => {
+    dispatch(setToggleDropDown(toggleDropdown));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
       <SideMenuBar
         menus={[]}
       />
+      <div style={{ position: 'absolute', left: '10px', bottom: '10px' }}>
+        <UserInfoField
+          email={userInfo.email}
+          toggleDropDown={toggleDropDown}
+          onClickToggle={handleToggleDropDown}
+          onClickLogout={handleLogout}
+        />
+      </div>
       <div style={{ padding: '30px', width: '100%' }}>
         <SubTitle
           text="Cardsets"

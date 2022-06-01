@@ -20,6 +20,11 @@ const CardsetBoxField = styled.li({
 
 const CardsetBoxTitle = styled.div({
   display: 'flex',
+  width: '80%',
+  '& a': {
+    width: '100%',
+    display: 'block',
+  },
   '& a:hover': {
     textDecoration: 'underline',
   },

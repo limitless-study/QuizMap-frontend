@@ -9,12 +9,14 @@ if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: path.resolve(__dirname, '.env.production') });
 }
 
+const REACT_TOASTIFY = path.resolve(__dirname, './node_modules/react-toastify');
+
 module.exports = {
   entry: path.resolve(__dirname, 'src/index.jsx'),
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$|jsx/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
@@ -24,6 +26,14 @@ module.exports = {
           {
             loader: 'file-loader',
           },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'sass-loader', // compiles Sass to CSS, using Node Sass by default
         ],
       },
     ],
