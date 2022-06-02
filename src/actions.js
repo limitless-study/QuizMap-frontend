@@ -565,7 +565,7 @@ export function saveCardset(cardsetId) {
 export function loginWithGoogle(code, navigate) {
   return async (dispatch) => {
     try {
-      const response = await googleLogin(code, navigate);
+      const response = await googleLogin(code);
 
       const { accessToken } = response;
 
@@ -585,7 +585,7 @@ export function loginWithGoogle(code, navigate) {
 export function loginWithKakao(code, navigate) {
   return async (dispatch) => {
     try {
-      const { accessToken } = await kakaoLogin(code, navigate);
+      const { accessToken } = await kakaoLogin(code);
 
       if (accessToken) {
         dispatch(setToken(accessToken));

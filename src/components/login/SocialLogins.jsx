@@ -16,6 +16,11 @@ const SocialLoginBox = styled.button({
   borderRadius: '10em',
   cursor: 'pointer',
   fontSize: '16px',
+  '& a': {
+    lineHeight: '59px',
+    height: '59px',
+    display: 'block',
+  },
   ':hover': {
     backgroundColor: 'white',
     boxShadow: 'rgba(0, 0, 0, 0.05) 0px 3px 5px',
