@@ -97,7 +97,7 @@ export default function LearnCardsContainer({ id }) {
   }
 
   const {
-    id: cardId, topic, answer, path, starCount,
+    id: cardId, topic, answer, pathDtos, starCount,
   } = cards[0];
 
   const handleFlip = () => {
@@ -130,7 +130,7 @@ export default function LearnCardsContainer({ id }) {
   return (
     <div style={{ height: '100vh' }}>
       <Header>
-        <CardsetPath path={path} />
+        <CardsetPath path={pathDtos} />
         <div>
           <FinishButton
             type="button"

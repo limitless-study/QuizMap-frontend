@@ -1,6 +1,7 @@
 import { RiArrowRightSLine } from 'react-icons/ri';
 
 export default function CardsetPath({ path }) {
+  console.log('path', path);
   if (!path) {
     return <>loading...</>;
   }

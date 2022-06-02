@@ -181,47 +181,6 @@ export function initializeCardset() {
   };
 }
 
-export function saveCardset(cardsetId) {
-  return async (dispatch, getState) => {
-    // patch topic
-    const { isTitleChanged, isDueDateTimeChanged } = getState();
-
-    if (isTitleChanged) {
-      const { cardsetTitle } = getState();
-      patchCardsetTitle({ id: cardsetId, topic: cardsetTitle });
-    }
-
-    // patch due date
-    if (isDueDateTimeChanged) {
-      const { dueDateTime } = getState();
-      const year = dueDateTime.getFullYear();
-      const month = (`00${dueDateTime.getMonth() + 1}`).slice(-2);
-      const day = (`00${dueDateTime.getDate()}`).slice(-2);
-      const hour = (`00${dueDateTime.getHours()}`).slice(-2);
-      const minute = (`00${dueDateTime.getMinutes()}`).slice(-2);
-      const date = `${year}${month}${day}${hour}${minute}`;
-      patchCardsetDueDateTime({ id: cardsetId, dueDateTime: date });
-    }
-
-    // patch cards
-    const { cards } = getState();
-
-    for (const card of cards) {
-      if (card.cardDeleted) {
-        if (!card.cardAdded) {
-          await deleteCard(card.id);
-        }
-      } else if (card.cardAdded) {
-        await postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
-      } else if (card.cardChanged) {
-        await patchCardsetCard({
-          cardsetId, cardId: card.id, topic: card.topic, answer: card.answer,
-        });
-      }
-    }
-  };
-}
-
 export function addNewCardset(id) {
   return async (dispatch, getState) => {
     const { userInfo } = getState();
@@ -555,6 +514,51 @@ export function initializeCardsetPage(id) {
     await dispatch(loadRootCardsets());
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadCardsetChildren(id));
+  };
+}
+
+export function saveCardset(cardsetId) {
+  return async (dispatch, getState) => {
+    // patch topic
+    const { isTitleChanged, isDueDateTimeChanged } = getState();
+
+    if (isTitleChanged) {
+      const { cardsetTitle } = getState();
+      await patchCardsetTitle({ id: cardsetId, topic: cardsetTitle });
+    }
+
+    // patch due date
+    if (isDueDateTimeChanged) {
+      const { dueDateTime } = getState();
+      const year = dueDateTime.getFullYear();
+      const month = (`00${dueDateTime.getMonth() + 1}`).slice(-2);
+      const day = (`00${dueDateTime.getDate()}`).slice(-2);
+      const hour = (`00${dueDateTime.getHours()}`).slice(-2);
+      const minute = (`00${dueDateTime.getMinutes()}`).slice(-2);
+      const date = `${year}${month}${day}${hour}${minute}`;
+      await patchCardsetDueDateTime({ id: cardsetId, dueDateTime: date });
+    }
+
+    // patch cards
+    const { cards } = getState();
+
+    for (const card of cards) {
+      if (card.cardDeleted) {
+        if (!card.cardAdded) {
+          await deleteCard(card.id);
+        }
+      } else if (card.cardAdded) {
+        await postNewCard({ cardsetId, topic: card.topic, answer: card.answer });
+      } else if (card.cardChanged) {
+        await patchCardsetCard({
+          cardsetId, cardId: card.id, topic: card.topic, answer: card.answer,
+        });
+      }
+    }
+
+    await dispatch(loadRootCardsets());
+    await dispatch(loadCardsetInfo(cardsetId));
+    await dispatch(loadCardsetChildren(cardsetId));
   };
 }
 
