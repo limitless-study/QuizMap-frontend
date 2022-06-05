@@ -35,6 +35,13 @@ const CardsetBoxTitle = styled.div({
   },
 });
 
+const IconContainer = styled.div({
+  position: 'absolute',
+  display: 'flex',
+  left: '10px',
+  bottom: '10px',
+});
+
 const IconBox = styled.button({
   width: '28px',
   height: '28px',
@@ -63,19 +70,19 @@ export default function CardsetBox({ cardset }) {
       <CardsetBoxTitle>
         <Link to={`/cardsets/${id}`}>
           {topic}
-          <div>
-            <IconBox type="button">
-              <Link to={`/studio/${id}`}>
-                <FaPen />
-              </Link>
-            </IconBox>
-            <IconBox type="button">
-              <Link to={`/learn/${id}`}>
-                <FaPlayCircle />
-              </Link>
-            </IconBox>
-          </div>
         </Link>
+        <IconContainer>
+          <IconBox type="button">
+            <Link to={`/studio/${id}`}>
+              <FaPen />
+            </Link>
+          </IconBox>
+          <IconBox type="button">
+            <Link to={`/learn/${id}`}>
+              <FaPlayCircle />
+            </Link>
+          </IconBox>
+        </IconContainer>
       </CardsetBoxTitle>
     </CardsetBoxField>
   );
