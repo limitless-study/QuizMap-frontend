@@ -6,8 +6,6 @@ import styled from '@emotion/styled';
 
 import { HiLogout } from 'react-icons/hi';
 
-import { loadItem } from '../../services/storage';
-
 const MenuBar = styled.header({
   background: 'white',
   padding: '0 80px',
