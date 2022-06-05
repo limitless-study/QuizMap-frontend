@@ -10,6 +10,7 @@ import RootPage from './pages/RootPage';
 import MindMapPage from './pages/MindMapPage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
+import FeedbackPage from './pages/FeedbackPage';
 import KakaoOAuth2RedirectHandler from './pages/KakaoOAuth2RedirectHandler';
 import GoogleOAuth2RedirectHandler from './pages/GoogleOAuth2RedirectHandler';
 
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/mindmap/:id" element={accessToken ? <MindMapPage /> : <Navigate replace to="/login" />} />
         <Route path="/kakao/callback" element={<KakaoOAuth2RedirectHandler />} />
         <Route path="/google/callback" element={<GoogleOAuth2RedirectHandler />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="*" element={<div>not found</div>} />
       </Routes>
     </div>
