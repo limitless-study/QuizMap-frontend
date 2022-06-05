@@ -115,15 +115,19 @@ export default function LearnCardsContainer({ id }) {
   };
 
   const handleKeyDown = (event) => {
-    event.preventDefault();
+    const { classList } = event.target;
+    if (!classList.contains('notes')) {
+      event.preventDefault();
 
-    const { keyCode } = event;
-    if (KEY_CODE[keyCode] === 'SPACE') {
-      handleFlip();
-    } else if (KEY_CODE[keyCode] === 'LEFT') {
-      handleClickWrong();
-    } else if (KEY_CODE[keyCode] === 'RIGHT') {
-      handleClickCorrect();
+      const { keyCode } = event;
+
+      if (KEY_CODE[keyCode] === 'SPACE') {
+        handleFlip();
+      } else if (KEY_CODE[keyCode] === 'LEFT') {
+        handleClickWrong();
+      } else if (KEY_CODE[keyCode] === 'RIGHT') {
+        handleClickCorrect();
+      }
     }
   };
 
