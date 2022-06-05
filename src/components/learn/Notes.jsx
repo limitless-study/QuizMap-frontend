@@ -43,7 +43,7 @@ export default function Notes({ notes, isNotesHidden, onChange }) {
   return (
     <NotesContainer isNotesHidden={isNotesHidden}>
       <Title>Notes</Title>
-      <TextArea value={notes} onChange={onChange} placeholder="write the answer in your own words!" />
+      <TextArea className="notes" value={notes} onChange={onChange} placeholder="write the answer in your own words!" />
     </NotesContainer>
   );
 }
