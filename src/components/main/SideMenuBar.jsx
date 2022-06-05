@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 const Wrapper = styled.div({
   height: '100vh',
   width: '220px',
+  maxHeight: '100vh',
   backgroundColor: '#6c80f6',
 });
 
