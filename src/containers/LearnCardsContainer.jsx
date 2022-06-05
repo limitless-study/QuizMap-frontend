@@ -55,13 +55,18 @@ const CardItemsContainer = styled.div({
   height: '90vh',
   position: 'relative',
   justifyContent: 'right',
+  overflow: 'auto',
 });
 
 const CardItemsWrapper = styled.div({
   position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  maxWidth: '500px',
+  height: '70vh',
+  top: 0,
+  right: 0,
+  left: 0,
+  bottom: 0,
+  margin: 'auto',
 });
 
 export default function LearnCardsContainer({ id }) {
@@ -150,7 +155,7 @@ export default function LearnCardsContainer({ id }) {
           </FinishButton>
         </div>
       </Header>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', flex: 1 }}>
         <CardItemsContainer>
           <CardItemsWrapper>
             <Card
@@ -166,12 +171,12 @@ export default function LearnCardsContainer({ id }) {
               onClickCorrect={handleClickCorrect}
             />
           </CardItemsWrapper>
-          <Notes
-            notes={notes}
-            isNotesHidden={isNotesHidden}
-            onChange={handleChangeNotes}
-          />
         </CardItemsContainer>
+        <Notes
+          notes={notes}
+          isNotesHidden={isNotesHidden}
+          onChange={handleChangeNotes}
+        />
         <LearningSidebar
           isNotesHidden={isNotesHidden}
           onClick={handleClickSideBarButton}

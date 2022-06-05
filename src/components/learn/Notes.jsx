@@ -8,8 +8,8 @@ const NotesContainer = styled.div(
   {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
-    minHeight: '90vh',
+    height: '90vh',
+    flex: 1,
     backgroundColor: 'white',
     boxShadow: '0 2px 6px 0 rgb(0 0 0 / 10%), 0 0 1px 0 rgb(0 0 0 / 32%)',
     transition: 'width .2s ease, opacity .2s ease',

@@ -12,6 +12,7 @@ const CardBox = styled.div({
   justifyContent: 'center',
   alignItems: 'center',
   minWidth: '350px',
+  maxWidth: '500px',
   minHeight: '300px',
   border: '1px solid lightgray',
   borderRadius: '10px',
