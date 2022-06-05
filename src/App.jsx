@@ -21,7 +21,7 @@ export default function App() {
   return (
     <div style={{ fontFamily: 'arial' }}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={accessToken ? <Navigate replace to="/root" /> : <HomePage />} />
         <Route path="/studio/:id" element={accessToken ? <StudioPage /> : <Navigate replace to="/login" />} />
         <Route path="/cardsets/:id" element={accessToken ? <CardsetPage /> : <Navigate replace to="/login" />} />
         <Route path="/learn/:id" element={accessToken ? <LearnPage /> : <Navigate replace to="/login" />} />

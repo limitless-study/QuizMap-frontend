@@ -16,8 +16,11 @@ import {
 export default function LoginContainer() {
   const dispatch = useDispatch();
 
+  const accessToken = useSelector(get('accessToken'));
   const logIn = useSelector(get('login'));
   const { email, password } = logIn;
+
+  console.log('ACCESSTOKEN?', accessToken);
 
   const handleChange = ({ name: key, value }) => {
     dispatch(setLoginField({ key, value }));
@@ -38,7 +41,9 @@ export default function LoginContainer() {
       padding: '5em 0',
     }}
     >
-      <Header />
+      <Header
+        accessToken={accessToken}
+      />
       <SocialLogins />
       {
       /*

@@ -87,6 +87,7 @@ export default function HomePage() {
       <header>
         <Header
           email={userInfo.email}
+          accessToken={accessToken}
           toggleDropDown={toggleDropDown}
           onClickToggle={handleToggleDropDown}
           onClickLogout={handleLogout}
