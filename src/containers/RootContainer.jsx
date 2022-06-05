@@ -9,6 +9,7 @@ import { get } from '../utils';
 import SubTitle from '../components/main/SubTitle';
 import SideMenuBar from '../components/main/SideMenuBar';
 import RootCard from '../components/main/RootCard';
+import FeedbackButton from '../components/common/FeedbackButton';
 import AddCardsetButton from '../components/studio/AddCardsetButton';
 import ViewMoreButtons from '../components/common/ViewMoreButtons';
 import UserInfoField from '../components/common/UserInfoField';
@@ -110,6 +111,7 @@ export default function RootContainer() {
           />
         </div>
       </div>
+      <FeedbackButton/>
     </div>
   );
 }
