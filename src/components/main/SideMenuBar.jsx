@@ -59,13 +59,15 @@ const Menu = styled.div(
   }),
 );
 
-export default function SideMenuBar({ menus, cardsetId }) {
+export default function SideMenuBar({ menus, accessToken, cardsetId }) {
   const { id } = cardsetId || useParams();
+
+  const path = accessToken ? '/root' : '/';
 
   return (
     <Wrapper>
       <Logo>
-        <Link to="/">
+        <Link to={path}>
           QuizMap
         </Link>
       </Logo>

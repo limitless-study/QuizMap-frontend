@@ -50,6 +50,7 @@ export default function MindMapPage({ params }) {
 
   const dispatch = useDispatch();
 
+  const accessToken = useSelector(get('accessToken'));
   const menus = useSelector(get('rootCardsets'));
   const mindMapCards = useSelector(get('mindMapCards'));
 
@@ -60,7 +61,11 @@ export default function MindMapPage({ params }) {
 
   return (
     <Wrapper>
-      <SideMenuBar menus={menus} />
+      <SideMenuBar
+        menus={menus}
+        accessToken={accessToken}
+        cardsetId={id}
+      />
       <BackButton>
         <Link to={`/cardsets/${id}`}>
           <CgArrowLeftO className="icon" />

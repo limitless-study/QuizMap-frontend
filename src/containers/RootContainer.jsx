@@ -28,6 +28,7 @@ export default function RootContainer() {
 
   const navigate = useNavigate();
 
+  const accessToken = useSelector(get('accessToken'));
   const toggleDropDown = useSelector(get('toggleDropDown'));
   const userInfo = useSelector(get('userInfo'));
   const { rootCardSetId } = userInfo;
@@ -71,6 +72,7 @@ export default function RootContainer() {
     <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
       <SideMenuBar
         menus={[]}
+        accessToken={accessToken}
       />
       <div style={{ position: 'absolute', left: '10px', bottom: '10px' }}>
         <UserInfoField

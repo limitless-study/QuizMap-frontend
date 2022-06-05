@@ -16,6 +16,7 @@ import {
 export default function SignUpContainer() {
   const dispatch = useDispatch();
 
+  const accessToken = useSelector(get('accessToken'));
   const signup = useSelector(get('signup'));
   const { email, name, password } = signup;
 
@@ -38,7 +39,9 @@ export default function SignUpContainer() {
       padding: '5em 0',
     }}
     >
-      <Header />
+      <Header
+        accessToken={accessToken}
+      />
       <SocialLogins />
       {
         /*

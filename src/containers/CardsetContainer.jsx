@@ -24,6 +24,7 @@ export default function CardsetContainer({ cardsetId }) {
 
   const navigate = useNavigate();
 
+  const accessToken = useSelector(get('accessToken'));
   const toggleDropDown = useSelector(get('toggleDropDown'));
   const menus = useSelector(get('rootCardsets'));
   const userInfo = useSelector(get('userInfo'));
@@ -53,6 +54,8 @@ export default function CardsetContainer({ cardsetId }) {
     <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
       <SideMenuBar
         menus={menus}
+        accessToken={accessToken}
+        cardsetId={cardsetId}
       />
       <div style={{ position: 'absolute', left: '10px', bottom: '10px' }}>
         <UserInfoField

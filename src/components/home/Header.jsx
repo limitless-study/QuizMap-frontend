@@ -102,14 +102,14 @@ const ToggleDropDown = styled.div(
 );
 
 export default function Header({
-  email, toggleDropDown, onClickToggle, onClickLogout,
+  email, accessToken, toggleDropDown, onClickToggle, onClickLogout,
 }) {
-  const accessToken = loadItem('accessToken');
+  const path = accessToken ? '/root' : '/';
 
   return (
     <MenuBar>
       <Title className="logo">
-        <Link to="/">QuizMap</Link>
+        <Link to={path}>QuizMap</Link>
       </Title>
       <MenuItems>
         {accessToken

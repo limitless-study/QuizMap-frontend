@@ -34,10 +34,12 @@ const MoveToSignIn = styled.div({
   },
 });
 
-export default function Header() {
+export default function Header({ accessToken }) {
+  const path = accessToken ? '/root' : '/';
+
   return (
     <div style={{ width: '400px' }}>
-      <Logo><Link to="/">QuizMap</Link></Logo>
+      <Logo><Link to={path}>QuizMap</Link></Logo>
       <Title>Login Your Account</Title>
       <MoveToSignIn>
         <span>New to QuizMap?</span>

@@ -67,6 +67,7 @@ const CardItemsWrapper = styled.div({
 export default function LearnCardsContainer({ id }) {
   const dispatch = useDispatch();
 
+  const accessToken = useSelector(get('accessToken'));
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
   const isNotesHidden = useSelector(get('isNotesHidden'));
@@ -133,7 +134,9 @@ export default function LearnCardsContainer({ id }) {
 
   return (
     <div style={{ height: '100vh' }}>
-      <Header>
+      <Header
+        accessToken={accessToken}
+      >
         <CardsetPath path={pathDtos} />
         <div>
           <FinishButton
