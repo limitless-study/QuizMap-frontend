@@ -57,18 +57,6 @@ export function setIsLastPage(isLastPage) {
   };
 }
 
-export function nextCard() {
-  return (dispatch, getState) => {
-    const { cards } = getState();
-
-    if (cards.length > 0) {
-      dispatch(setFlipped(false));
-    } else {
-      dispatch(setIsLastPage(true));
-    }
-  };
-}
-
 export function setTitleChanged(isTitleChanged) {
   return {
     type: 'setTitleChanged',
@@ -333,8 +321,14 @@ export function clickWrongCard(id) {
 
     const filteredCards = cards.filter((card) => card.id !== id);
     const newCards = filteredCards.concat([cards[index]]);
+
+    if (newCards.length > 0) {
+      dispatch(setFlipped(false));
+    } else {
+      dispatch(setIsLastPage(true));
+    }
+
     dispatch(setCards(newCards));
-    dispatch(nextCard(id));
   };
 }
 
@@ -364,8 +358,14 @@ export function clickCorrectCard(id) {
     await postCardTryCount({
       id, tryCount, learningDateTime, learningSeconds,
     });
+
+    if (filteredCards.length > 0) {
+      dispatch(setFlipped(false));
+    } else {
+      dispatch(setIsLastPage(true));
+    }
+
     dispatch(setCards(filteredCards));
-    dispatch(nextCard(id));
   };
 }
 
