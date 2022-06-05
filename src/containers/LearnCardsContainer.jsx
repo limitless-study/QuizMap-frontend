@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
 
+import { useEffect } from 'react';
 import Card from '../components/learn/Card';
 import CardButtons from '../components/learn/CardButtons';
-import NoMoreCards from '../components/learn/NoMoreCards';
 import CardsetPath from '../components/learn/CardsetPath';
 import Notes from '../components/learn/Notes';
 import LearningSidebar from '../components/learn/LearningSidebar';
-import Loading from '../components/common/Loading';
 
 import { get } from '../utils';
 
@@ -70,47 +69,34 @@ export default function LearnCardsContainer({ id }) {
 
   const cards = useSelector(get('cards'));
   const flipped = useSelector(get('flipped'));
-  const isLastPage = useSelector(get('isLastPage'));
   const isNotesHidden = useSelector(get('isNotesHidden'));
   const notes = useSelector(get('notes'));
-
-  if (isLastPage) {
-    return (
-      <NoMoreCards id={id} />
-    );
-  }
-
-  if (cards.length === 0) {
-    return (
-      <div style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-      >
-        <Loading
-          size={80}
-        />
-      </div>
-    );
-  }
 
   const {
     id: cardId, topic, answer, pathDtos, starCount,
   } = cards[0];
+
+  const KEY_CODE = {
+    32: 'SPACE',
+    37: 'LEFT',
+    39: 'RIGHT',
+  };
+
+  const clearNote = () => {
+    dispatch(setNotes(''));
+  };
 
   const handleFlip = () => {
     dispatch(flipCard());
   };
 
   const handleClickWrong = () => {
-    dispatch(setNotes(''));
+    clearNote();
     dispatch(clickWrongCard(cardId));
   };
 
   const handleClickCorrect = () => {
-    dispatch(setNotes(''));
+    clearNote();
     dispatch(clickCorrectCard(cardId));
   };
 
@@ -126,6 +112,24 @@ export default function LearnCardsContainer({ id }) {
     const { value } = e.target;
     dispatch(setNotes(value));
   };
+
+  const handleKeyDown = (event) => {
+    event.preventDefault();
+
+    const { keyCode } = event;
+    if (KEY_CODE[keyCode] === 'SPACE') {
+      handleFlip();
+    } else if (KEY_CODE[keyCode] === 'LEFT') {
+      handleClickWrong();
+    } else if (KEY_CODE[keyCode] === 'RIGHT') {
+      handleClickCorrect();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [cards]);
 
   return (
     <div style={{ height: '100vh' }}>
