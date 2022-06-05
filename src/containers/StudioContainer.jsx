@@ -152,7 +152,7 @@ export default function StudioContainer({ id }) {
       </div>
       <div style={{ display: 'flex', height: '100vh' }}>
         <div style={{
-          width: '12.5em',
+          width: '13em',
           padding: '10px',
           overflowY: 'scroll',
           marginTop: '60px',
