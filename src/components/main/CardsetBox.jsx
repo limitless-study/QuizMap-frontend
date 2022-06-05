@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
-import { FaFolder, FaPen, FaPlayCircle } from 'react-icons/fa';
+import { FaPen, FaPlayCircle } from 'react-icons/fa';
 
 const CardsetBoxField = styled.li({
   border: '1.5px solid #F1F1F1',
