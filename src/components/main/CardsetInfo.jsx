@@ -148,7 +148,7 @@ export default function CardsetInfo({ cardsetInfo, onDelete, date }) {
         </div>
       </TopField>
       <BottomField>
-        {`${cardSetCount} Cardsets, ${cardCount} Cards`}
+        {`${cardSetCount || '0'} Cardsets, ${cardCount || '0'} Cards`}
       </BottomField>
     </Wrapper>
 
