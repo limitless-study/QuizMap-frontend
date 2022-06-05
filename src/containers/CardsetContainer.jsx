@@ -51,7 +51,10 @@ export default function CardsetContainer({ cardsetId }) {
   };
 
   return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex' }}>
+    <div style={{
+      width: '100vw', height: '100vh', maxHeight: '100vh', display: 'flex',
+    }}
+    >
       <SideMenuBar
         menus={menus}
         accessToken={accessToken}
@@ -65,7 +68,7 @@ export default function CardsetContainer({ cardsetId }) {
           onClickLogout={handleLogout}
         />
       </div>
-      <div style={{ width: '100%', padding: '20px' }}>
+      <div style={{ width: '100%', padding: '20px', overflow: 'auto' }}>
         <div style={{ width: '100%', display: 'flex' }}>
           <HistoryButtons />
           <CardsetPath rootCardSetId={userInfo.rootCardSetId} path={path} cardsetId={cardsetId} />
@@ -76,7 +79,10 @@ export default function CardsetContainer({ cardsetId }) {
           date={date}
         />
         <SubTitle text="Cards" />
-        <div style={{ width: '100%' }}>
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', marginTop: '10px', gap: '10px',
+        }}
+        >
           {cardsetChildren.map((child) => {
             if (child.type === 'CARDSET') {
               return (

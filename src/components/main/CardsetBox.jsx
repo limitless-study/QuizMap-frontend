@@ -2,32 +2,44 @@ import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
-import { FaFolder, FaPen, FaPlayCircle } from 'react-icons/fa';
+import { FaPen, FaPlayCircle } from 'react-icons/fa';
 
 const CardsetBoxField = styled.li({
+  border: '1.5px solid #F1F1F1',
+  position: 'relative',
+  display: 'inline-block',
+  width: '230px',
+  height: '170px',
   fontWeight: 'bold',
-  backgroundColor: 'transparent',
-  padding: '15px',
-  display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  borderBottom: '1px solid #F1F1F1',
-  transition: 'background-color 0.3s',
+  backgroundColor: '#f3f3f3',
+  borderRadius: '5px',
+  transition: 'all .3s',
   ':hover': {
-    backgroundColor: '#f3f3f3',
+    border: '1px solid #c2c2c2',
   },
 });
 
 const CardsetBoxTitle = styled.div({
   display: 'flex',
-  width: '80%',
+  width: '230px',
+  height: '170px',
   '& a': {
+    padding: '15px',
     width: '100%',
     display: 'block',
   },
   '& a:hover': {
     textDecoration: 'underline',
   },
+});
+
+const IconContainer = styled.div({
+  position: 'absolute',
+  display: 'flex',
+  left: '10px',
+  bottom: '10px',
 });
 
 const IconBox = styled.button({
@@ -45,6 +57,8 @@ const IconBox = styled.button({
     border: 'none',
     color: 'white',
     textAlign: 'center',
+    padding: '0',
+    lineHeight: '30px',
   },
 });
 
@@ -54,25 +68,22 @@ export default function CardsetBox({ cardset }) {
   return (
     <CardsetBoxField>
       <CardsetBoxTitle>
-        <IconBox type="button">
-          <FaFolder />
-        </IconBox>
         <Link to={`/cardsets/${id}`}>
           {topic}
         </Link>
+        <IconContainer>
+          <IconBox type="button">
+            <Link to={`/studio/${id}`}>
+              <FaPen />
+            </Link>
+          </IconBox>
+          <IconBox type="button">
+            <Link to={`/learn/${id}`}>
+              <FaPlayCircle />
+            </Link>
+          </IconBox>
+        </IconContainer>
       </CardsetBoxTitle>
-      <div>
-        <IconBox type="button">
-          <Link to={`/studio/${id}`}>
-            <FaPen />
-          </Link>
-        </IconBox>
-        <IconBox type="button">
-          <Link to={`/learn/${id}`}>
-            <FaPlayCircle />
-          </Link>
-        </IconBox>
-      </div>
     </CardsetBoxField>
   );
 }

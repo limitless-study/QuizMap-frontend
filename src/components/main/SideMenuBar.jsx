@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
 
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div({
   height: '100vh',
   width: '220px',
+  maxHeight: '100vh',
   backgroundColor: '#6c80f6',
 });
 
@@ -60,8 +61,6 @@ const Menu = styled.div(
 );
 
 export default function SideMenuBar({ menus, accessToken, cardsetId }) {
-  const { id } = cardsetId || useParams();
-
   const path = accessToken ? '/root' : '/';
 
   return (
@@ -75,10 +74,10 @@ export default function SideMenuBar({ menus, accessToken, cardsetId }) {
         {menus.map((menu) => (
           <li key={menu.id} style={{ display: 'flex', height: '45px' }}>
             <Clicked
-              isCurrentCardset={menu.id === Number(id)}
+              isCurrentCardset={menu.id === Number(cardsetId)}
             />
             <Menu
-              isCurrentCardset={menu.id === Number(id)}
+              isCurrentCardset={menu.id === Number(cardsetId)}
             >
               <Link to={`/cardsets/${menu.id}`}>{menu.topic}</Link>
             </Menu>
