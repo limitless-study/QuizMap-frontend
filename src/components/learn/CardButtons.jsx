@@ -4,7 +4,7 @@ const CardButtonsWrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
   marginTop: '15px',
-  paddingBottom: '100px',
+  paddingBottom: '40px',
   height: '50px',
 });
 

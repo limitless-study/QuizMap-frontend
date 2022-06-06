@@ -2,6 +2,19 @@ import styled from '@emotion/styled';
 
 import { MdEditNote } from 'react-icons/md';
 
+const SideBarWrapper = styled.div({
+  right: '0',
+  display: 'flex',
+  position: 'fixed',
+  paddingTop: '60px',
+  flexDirection: 'column',
+  textAlign: 'center',
+  width: '68px',
+  height: '100%',
+  backgroundColor: '#F1F1EF',
+  borderLeft: '1px solid #DDDDDD',
+});
+
 const SideBarMenu = styled.div(
   {
     display: 'inline-block',
@@ -18,18 +31,6 @@ const SideBarMenu = styled.div(
     color: props.isNotesHidden ? '#868e96' : '#1b1c1d',
   }),
 );
-
-const SideBarWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  textAlign: 'center',
-  width: '68px',
-  height: '100%',
-  minHeight: '90vh',
-  backgroundColor: '#F1F1EF',
-  borderLeft: '1px solid #DDDDDD',
-  zIndex: '10',
-});
 
 export default function LearningSidebar({ isNotesHidden, onClick }) {
   return (

@@ -23,11 +23,18 @@ import {
 } from '../actions';
 
 const Header = styled.div({
+  padding: '10px 40px',
   display: 'flex',
-  justifyContent: 'space-between',
-  padding: '10px',
+  position: 'fixed',
+  width: '100vw',
+  maxWidth: '100vw',
+  height: '60px',
+  zIndex: '100',
   fontSize: '24px',
   fontWeight: 'bolder',
+  boxSizing: 'border-box',
+  backgroundColor: 'white',
+  justifyContent: 'space-between',
   borderBottom: '1px solid #DDDDDD',
 });
 
@@ -49,24 +56,16 @@ const FinishButton = styled.button({
   },
 });
 
-const CardItemsContainer = styled.div({
-  display: 'flex',
-  width: '100vw',
-  height: '90vh',
-  position: 'relative',
-  justifyContent: 'right',
-  overflow: 'auto',
-});
-
 const CardItemsWrapper = styled.div({
   position: 'absolute',
+  width: '500px',
   maxWidth: '500px',
-  height: '70vh',
   top: 0,
   right: 0,
   left: 0,
   bottom: 0,
   margin: 'auto',
+  marginTop: '100px',
 });
 
 export default function LearnCardsContainer({ id }) {
@@ -147,31 +146,27 @@ export default function LearnCardsContainer({ id }) {
         accessToken={accessToken}
       >
         <CardsetPath path={pathDtos} />
-        <div>
-          <FinishButton
-            type="button"
-          >
-            <Link to={`/cardsets/${id}`}>Finish</Link>
-          </FinishButton>
-        </div>
+        <FinishButton
+          type="button"
+        >
+          <Link to={`/cardsets/${id}`}>Finish</Link>
+        </FinishButton>
       </Header>
       <div style={{ display: 'flex', flex: 1 }}>
-        <CardItemsContainer>
-          <CardItemsWrapper>
-            <Card
-              id={id}
-              flipped={flipped}
-              content={flipped ? answer : topic}
-              starCount={starCount}
-              onChangeStarCount={handleChangeStarCount}
-            />
-            <CardButtons
-              onFlip={handleFlip}
-              onClickWrong={handleClickWrong}
-              onClickCorrect={handleClickCorrect}
-            />
-          </CardItemsWrapper>
-        </CardItemsContainer>
+        <CardItemsWrapper>
+          <Card
+            id={id}
+            flipped={flipped}
+            content={flipped ? answer : topic}
+            starCount={starCount}
+            onChangeStarCount={handleChangeStarCount}
+          />
+          <CardButtons
+            onFlip={handleFlip}
+            onClickWrong={handleClickWrong}
+            onClickCorrect={handleClickCorrect}
+          />
+        </CardItemsWrapper>
         <Notes
           notes={notes}
           isNotesHidden={isNotesHidden}

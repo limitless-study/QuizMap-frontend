@@ -3,13 +3,16 @@ import styled from '@emotion/styled';
 const NotesContainer = styled.div(
   (props) => ({
     opacity: props.isNotesHidden ? 0 : 1,
-    width: props.isNotesHidden ? 0 : '200px',
+    width: props.isNotesHidden ? 0 : '250px',
   }),
   {
     display: 'flex',
+    position: 'fixed',
+    right: '68px',
+    paddingTop: '60px',
     flexDirection: 'column',
-    height: '90vh',
-    flex: 1,
+    height: '100vh',
+    maxHeight: '100vh',
     backgroundColor: 'white',
     boxShadow: '0 2px 6px 0 rgb(0 0 0 / 10%), 0 0 1px 0 rgb(0 0 0 / 32%)',
     transition: 'width .2s ease, opacity .2s ease',
@@ -25,7 +28,7 @@ const Title = styled.h3({
 const TextArea = styled.textarea({
   margin: '0 10px',
   padding: '5px',
-  fontSize: '15px',
+  fontSize: '18px',
   height: '100%',
   fontFamily: 'arial',
   border: '1px solid #F1F1EF',
