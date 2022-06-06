@@ -11,8 +11,9 @@ const CardBox = styled.div({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  minWidth: '350px',
-  minHeight: '300px',
+  minWidth: '500px',
+  maxWidth: '500px',
+  minHeight: '350px',
   border: '1px solid lightgray',
   borderRadius: '10px',
   boxShadow: '0 2px 8px rgb(0 0 0 / 8%)',
@@ -27,7 +28,6 @@ const RatingField = styled.div({
   position: 'absolute',
   padding: '15px',
   color: '#FFCD01',
-  zIndex: 999,
 });
 
 export default function Card({

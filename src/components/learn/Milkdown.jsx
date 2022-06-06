@@ -23,7 +23,8 @@ const MilkdownContainer = styled.div({
     background: 'none',
     boxShadow: 'none',
     height: '100%',
-    width: '100%',
+    wordBreak: 'break-all',
+    maxWidth: '500px',
   },
   '.milkdown .editor': {
     fontSize: '20px',
