@@ -57,15 +57,13 @@ const FinishButton = styled.button({
 });
 
 const CardItemsWrapper = styled.div({
-  position: 'absolute',
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
   width: '500px',
   maxWidth: '500px',
-  top: 0,
-  right: 0,
-  left: 0,
-  bottom: 0,
   margin: 'auto',
-  marginTop: '100px',
+  paddingTop: '80px',
 });
 
 export default function LearnCardsContainer({ id }) {
@@ -152,7 +150,10 @@ export default function LearnCardsContainer({ id }) {
           <Link to={`/cardsets/${id}`}>Finish</Link>
         </FinishButton>
       </Header>
-      <div style={{ display: 'flex', flex: 1 }}>
+      <div style={{
+        display: 'flex', flex: 1, position: 'relative', height: '100vh',
+      }}
+      >
         <CardItemsWrapper>
           <Card
             id={id}
