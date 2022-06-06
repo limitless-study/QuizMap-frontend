@@ -6,16 +6,23 @@ import Loading from '../common/Loading';
 
 const Wrapper = styled.div({
   width: '100vw',
-  height: '100vh',
+  marginTop: '60px',
   display: 'flex',
+  position: 'relative',
+  overflow: 'auto',
 });
 
 const CreateCardField = styled.div({
   position: 'absolute',
   display: 'flex',
-  top: '55%',
-  left: '51%',
-  transform: 'translate(-40%, -50%)',
+  top: 0,
+  right: 0,
+  left: 0,
+  bottom: 0,
+  margin: 'auto',
+  marginLeft: '15px',
+  padding: '0 1em',
+  height: '21em',
 });
 
 export default function CardEditor({ currentCard, onChange }) {

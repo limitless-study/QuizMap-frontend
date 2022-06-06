@@ -21,9 +21,8 @@ import { uploadPlugin, upload } from '@milkdown/plugin-upload';
 import { uploadImage } from '../../services/api';
 
 const EditorField = styled.div({
-  width: '19em',
-  height: '14em',
-  margin: '15px',
+  flex: 1,
+  marginRight: '15px',
   fontSize: '20px',
   fontFamily: 'sans-serif',
   '.milkdown': {
@@ -36,13 +35,13 @@ const EditorField = styled.div({
   '.milkdown .editor': {
     overflow: 'auto',
     padding: '10px',
-    height: '14em',
+    height: '16em',
     lineHeight: '1',
     '::-webkit-scrollbar': {
       width: '15px',
     },
     '::-webkit-scrollbar-thumb': {
-      backgroundColor: '#8773FF',
+      backgroundColor: '#f1f1f1',
       borderRadius: '10px',
       backgroundClip: 'padding-box',
       border: '3px solid transparent',
