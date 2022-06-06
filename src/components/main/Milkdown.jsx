@@ -29,6 +29,7 @@ const MilkdownContainer = styled.div({
     whiteSpace: 'break-spaces',
     wordBreak: 'break-all',
     fontSize: '15px',
+    fontWeight: 'normal',
     padding: '10px',
   },
   '.milkdown .editor p': {

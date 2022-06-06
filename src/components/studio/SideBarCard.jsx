@@ -12,6 +12,7 @@ const Card = styled.button(
       overflow: 'hidden',
       whiteSpace: 'normal',
       textOverflow: 'ellipsis',
+      maxHeight: '4.5em',
     },
   },
   (props) => ({
