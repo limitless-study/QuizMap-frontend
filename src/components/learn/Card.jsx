@@ -24,7 +24,7 @@ const CardBox = styled.div(
     backfaceVisibility: 'hidden',
     WebkitBackfaceVisibility: 'hidden',
     transformStyle: 'preserve-3d',
-    transition: 'all 1s',
+    transition: 'all 0.3s ease 0s',
   },
   (props) => ({
     zIndex: props.zIndex,

@@ -65,20 +65,9 @@ const CardItemsWrapper = styled.div({
 const CardContainer = styled.div({
   position: 'relative',
   height: '380px',
-  transformStyle: 'preserve-3d',
-  transition: 'all .5s',
-  WebkitBackfaceVisibility: 'hidden',
-  backfaceVisibility: 'hidden',
   '.is-flipped': {
     transform: 'rotateX(180deg)',
   },
-  'swipe-left': {
-
-  },
-  'swipe-right': {
-
-  },
-
 });
 
 export default function LearnCardsContainer({ id }) {
@@ -103,9 +92,24 @@ export default function LearnCardsContainer({ id }) {
     dispatch(setNotes(''));
   };
 
-  const initializeFlipped = () => {
+  const moveCardToLeft = () => {
     const front = document.querySelector('.front');
     const back = document.querySelector('.back');
+    /* when clicked 'X' don't flip card */
+    front.style.transition = 'none';
+    back.style.transition = 'none';
+
+    front.classList.remove('is-flipped');
+    back.classList.add('is-flipped');
+  };
+
+  const moveCardToRight = () => {
+    const front = document.querySelector('.front');
+    const back = document.querySelector('.back');
+    /* when clicked 'O' don't flip card */
+    front.style.transition = 'none';
+    back.style.transition = 'none';
+
     front.classList.remove('is-flipped');
     back.classList.add('is-flipped');
   };
@@ -113,18 +117,21 @@ export default function LearnCardsContainer({ id }) {
   const handleFlip = () => {
     const front = document.querySelector('.front');
     const back = document.querySelector('.back');
+    /* refresh cardset animation */
+    front.style.transition = null;
+    back.style.transition = null;
     front.classList.toggle('is-flipped');
     back.classList.toggle('is-flipped');
   };
 
   const handleClickWrong = () => {
-    initializeFlipped();
+    moveCardToLeft();
     clearNote();
     dispatch(clickWrongCard(cardId));
   };
 
   const handleClickCorrect = () => {
-    initializeFlipped();
+    moveCardToRight();
     clearNote();
     dispatch(clickCorrectCard(cardId));
   };
