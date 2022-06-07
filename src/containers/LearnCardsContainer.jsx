@@ -14,7 +14,6 @@ import LearningSidebar from '../components/learn/LearningSidebar';
 import { get } from '../utils';
 
 import {
-  flipCard,
   clickWrongCard,
   clickCorrectCard,
   changeStarCount,
@@ -57,13 +56,29 @@ const FinishButton = styled.button({
 });
 
 const CardItemsWrapper = styled.div({
-  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  width: '500px',
-  maxWidth: '500px',
   margin: 'auto',
-  paddingTop: '80px',
+  width: '500px',
+});
+
+const CardContainer = styled.div({
+  position: 'relative',
+  height: '380px',
+  transformStyle: 'preserve-3d',
+  transition: 'all .5s',
+  WebkitBackfaceVisibility: 'hidden',
+  backfaceVisibility: 'hidden',
+  '.is-flipped': {
+    transform: 'rotateX(180deg)',
+  },
+  'swipe-left': {
+
+  },
+  'swipe-right': {
+
+  },
+
 });
 
 export default function LearnCardsContainer({ id }) {
@@ -71,7 +86,6 @@ export default function LearnCardsContainer({ id }) {
 
   const accessToken = useSelector(get('accessToken'));
   const cards = useSelector(get('cards'));
-  const flipped = useSelector(get('flipped'));
   const isNotesHidden = useSelector(get('isNotesHidden'));
   const notes = useSelector(get('notes'));
 
@@ -89,16 +103,28 @@ export default function LearnCardsContainer({ id }) {
     dispatch(setNotes(''));
   };
 
+  const initializeFlipped = () => {
+    const front = document.querySelector('.front');
+    const back = document.querySelector('.back');
+    front.classList.remove('is-flipped');
+    back.classList.add('is-flipped');
+  };
+
   const handleFlip = () => {
-    dispatch(flipCard());
+    const front = document.querySelector('.front');
+    const back = document.querySelector('.back');
+    front.classList.toggle('is-flipped');
+    back.classList.toggle('is-flipped');
   };
 
   const handleClickWrong = () => {
+    initializeFlipped();
     clearNote();
     dispatch(clickWrongCard(cardId));
   };
 
   const handleClickCorrect = () => {
+    initializeFlipped();
     clearNote();
     dispatch(clickCorrectCard(cardId));
   };
@@ -155,13 +181,22 @@ export default function LearnCardsContainer({ id }) {
       }}
       >
         <CardItemsWrapper>
-          <Card
-            id={id}
-            flipped={flipped}
-            content={flipped ? answer : topic}
-            starCount={starCount}
-            onChangeStarCount={handleChangeStarCount}
-          />
+          <CardContainer>
+            <Card
+              id={id}
+              className="front"
+              content={topic}
+              starCount={starCount}
+              onChangeStarCount={handleChangeStarCount}
+            />
+            <Card
+              id={id}
+              className="back"
+              content={answer}
+              starCount={starCount}
+              onChangeStarCount={handleChangeStarCount}
+            />
+          </CardContainer>
           <CardButtons
             onFlip={handleFlip}
             onClickWrong={handleClickWrong}

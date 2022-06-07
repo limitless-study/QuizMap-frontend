@@ -26,7 +26,6 @@ const initialState = {
 
   // learn page
   isLastPage: false,
-  flipped: false,
   isNotesHidden: true,
   notes: '',
 
@@ -49,13 +48,6 @@ const initialState = {
 };
 
 const reducers = {
-  setFlipped(state, { payload: { flipped } }) {
-    return {
-      ...state,
-      flipped,
-    };
-  },
-
   setCardsetId(state, { payload: { cardsetId } }) {
     return {
       ...state,

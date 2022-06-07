@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 const CardButtonsWrapper = styled.div({
+  position: 'relative',
   display: 'flex',
   justifyContent: 'center',
   marginTop: '15px',
@@ -28,7 +29,6 @@ const FlipButton = styled.button({
   marginRight: '15px',
   border: 'none',
   borderRadius: '30px',
-  transition: 'box-shadow 0.3s',
   zIndex: 999,
   ':hover': {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
