@@ -116,7 +116,7 @@ export default function LearnCardsContainer({ id }) {
     initializeFlip();
     flipCard.addEventListener('animationend', () => {
       handleAfterSwipeLeft(flipCard);
-    });
+    }, { once: true });
   };
 
   const handleClickCorrect = () => {
@@ -132,7 +132,7 @@ export default function LearnCardsContainer({ id }) {
     flipCard.classList.add('swipe-right');
     flipCard.addEventListener('animationend', () => {
       handleAfterSwipeRight(flipCard);
-    });
+    }, { once: true });
   };
 
   const handleChangeStarCount = (changedStarCount) => {
