@@ -128,6 +128,10 @@ a {
     z-index: auto;
 }
 
+.card-flip:hover {
+    cursor: pointer;
+}
+
 .card-flipper {
     position: relative;
     width: 100%;

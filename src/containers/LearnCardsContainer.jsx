@@ -59,6 +59,28 @@ const FinishButton = styled.button({
 export default function LearnCardsContainer({ id }) {
   const dispatch = useDispatch();
 
+  const handleFlip = () => {
+    const front = document.querySelector('.card-front');
+    const back = document.querySelector('.card-back');
+    if (front.style.transform === 'rotateY(-180deg)') {
+      front.style.transform = 'rotateY(0deg)';
+      back.style.transform = 'rotateY(-180deg)';
+      front.style.position = 'relative';
+      back.style.position = 'absolute';
+    } else {
+      front.style.transform = 'rotateY(-180deg)';
+      back.style.transform = 'rotateY(0deg)';
+      front.style.position = 'absolute';
+      back.style.position = 'relative';
+    }
+  };
+
+  useEffect(() => {
+    const cardFlip = document.querySelector('.card-flip');
+    cardFlip.addEventListener('click', handleFlip);
+    return () => { cardFlip.removeEventListener('click', handleFlip); };
+  });
+
   const accessToken = useSelector(get('accessToken'));
   const cards = useSelector(get('cards'));
   const isNotesHidden = useSelector(get('isNotesHidden'));
@@ -85,22 +107,6 @@ export default function LearnCardsContainer({ id }) {
     back.style.transform = '';
     front.style.position = 'relative';
     back.style.position = 'absolute';
-  };
-
-  const handleFlip = () => {
-    const front = document.querySelector('.card-front');
-    const back = document.querySelector('.card-back');
-    if (front.style.transform === 'rotateY(-180deg)') {
-      front.style.transform = 'rotateY(0deg)';
-      back.style.transform = 'rotateY(-180deg)';
-      front.style.position = 'relative';
-      back.style.position = 'absolute';
-    } else {
-      front.style.transform = 'rotateY(-180deg)';
-      back.style.transform = 'rotateY(0deg)';
-      front.style.position = 'absolute';
-      back.style.position = 'relative';
-    }
   };
 
   const handleClickWrong = () => {
@@ -171,7 +177,7 @@ export default function LearnCardsContainer({ id }) {
   }, [cards]);
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh', overflowX: 'hidden' }}>
       <Header
         accessToken={accessToken}
       >
