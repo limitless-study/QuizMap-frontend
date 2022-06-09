@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
 import { useEffect } from 'react';
+
 import Card from '../components/learn/Card';
 import CardButtons from '../components/learn/CardButtons';
 import CardsetPath from '../components/learn/CardsetPath';
@@ -14,7 +15,6 @@ import LearningSidebar from '../components/learn/LearningSidebar';
 import { get } from '../utils';
 
 import {
-  flipCard,
   clickWrongCard,
   clickCorrectCard,
   changeStarCount,
@@ -26,10 +26,10 @@ const Header = styled.div({
   padding: '10px 40px',
   display: 'flex',
   position: 'fixed',
-  width: '100vw',
-  maxWidth: '100vw',
-  height: '60px',
-  zIndex: '100',
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: '50',
   fontSize: '24px',
   fontWeight: 'bolder',
   boxSizing: 'border-box',
@@ -56,24 +56,11 @@ const FinishButton = styled.button({
   },
 });
 
-const CardItemsWrapper = styled.div({
-  position: 'absolute',
-  width: '500px',
-  maxWidth: '500px',
-  top: 0,
-  right: 0,
-  left: 0,
-  bottom: 0,
-  margin: 'auto',
-  marginTop: '100px',
-});
-
 export default function LearnCardsContainer({ id }) {
   const dispatch = useDispatch();
 
   const accessToken = useSelector(get('accessToken'));
   const cards = useSelector(get('cards'));
-  const flipped = useSelector(get('flipped'));
   const isNotesHidden = useSelector(get('isNotesHidden'));
   const notes = useSelector(get('notes'));
 
@@ -91,18 +78,61 @@ export default function LearnCardsContainer({ id }) {
     dispatch(setNotes(''));
   };
 
+  const initializeFlip = () => {
+    const front = document.querySelector('.card-front');
+    const back = document.querySelector('.card-back');
+    front.style.transform = '';
+    back.style.transform = '';
+    front.style.position = 'relative';
+    back.style.position = 'absolute';
+  };
+
   const handleFlip = () => {
-    dispatch(flipCard());
+    const front = document.querySelector('.card-front');
+    const back = document.querySelector('.card-back');
+    if (front.style.transform === 'rotateY(-180deg)') {
+      front.style.transform = 'rotateY(0deg)';
+      back.style.transform = 'rotateY(-180deg)';
+      front.style.position = 'relative';
+      back.style.position = 'absolute';
+    } else {
+      front.style.transform = 'rotateY(-180deg)';
+      back.style.transform = 'rotateY(0deg)';
+      front.style.position = 'absolute';
+      back.style.position = 'relative';
+    }
   };
 
   const handleClickWrong = () => {
-    clearNote();
-    dispatch(clickWrongCard(cardId));
+    const handleAfterSwipeLeft = (flipCard) => {
+      dispatch(clickWrongCard(cardId));
+      clearNote();
+      flipCard.classList.add('swipe-initial');
+      flipCard.classList.remove('swipe-left');
+    };
+
+    const flipCard = document.querySelector('.flip-card');
+    flipCard.classList.add('swipe-left');
+    initializeFlip();
+    flipCard.addEventListener('animationend', () => {
+      handleAfterSwipeLeft(flipCard);
+    }, { once: true });
   };
 
   const handleClickCorrect = () => {
-    clearNote();
-    dispatch(clickCorrectCard(cardId));
+    const handleAfterSwipeRight = (flipCard) => {
+      dispatch(clickCorrectCard(cardId));
+      clearNote();
+      flipCard.classList.add('swipe-initial');
+      flipCard.classList.remove('swipe-right');
+    };
+
+    const flipCard = document.querySelector('.flip-card');
+    initializeFlip();
+    flipCard.classList.add('swipe-right');
+    flipCard.addEventListener('animationend', () => {
+      handleAfterSwipeRight(flipCard);
+    }, { once: true });
   };
 
   const handleChangeStarCount = (changedStarCount) => {
@@ -141,7 +171,7 @@ export default function LearnCardsContainer({ id }) {
   }, [cards]);
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh', overflowX: 'hidden' }}>
       <Header
         accessToken={accessToken}
       >
@@ -152,31 +182,46 @@ export default function LearnCardsContainer({ id }) {
           <Link to={`/cardsets/${id}`}>Finish</Link>
         </FinishButton>
       </Header>
-      <div style={{ display: 'flex', flex: 1 }}>
-        <CardItemsWrapper>
-          <Card
-            id={id}
-            flipped={flipped}
-            content={flipped ? answer : topic}
-            starCount={starCount}
-            onChangeStarCount={handleChangeStarCount}
-          />
+      <div className="card-player">
+        <div className="swipe-wrapper">
+          <div className="flip-card swipe-initial">
+            <div className="flip-card-wrapper">
+              <div className="card-flip">
+                <div className="card-flipper">
+                  <Card
+                    id={id}
+                    className="front"
+                    content={topic}
+                    starCount={starCount}
+                    onChangeStarCount={handleChangeStarCount}
+                  />
+                  <Card
+                    id={id}
+                    className="back"
+                    content={answer}
+                    starCount={starCount}
+                    onChangeStarCount={handleChangeStarCount}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
           <CardButtons
             onFlip={handleFlip}
             onClickWrong={handleClickWrong}
             onClickCorrect={handleClickCorrect}
           />
-        </CardItemsWrapper>
-        <Notes
-          notes={notes}
-          isNotesHidden={isNotesHidden}
-          onChange={handleChangeNotes}
-        />
-        <LearningSidebar
-          isNotesHidden={isNotesHidden}
-          onClick={handleClickSideBarButton}
-        />
+        </div>
       </div>
+      <Notes
+        notes={notes}
+        isNotesHidden={isNotesHidden}
+        onChange={handleChangeNotes}
+      />
+      <LearningSidebar
+        isNotesHidden={isNotesHidden}
+        onClick={handleClickSideBarButton}
+      />
     </div>
   );
 }

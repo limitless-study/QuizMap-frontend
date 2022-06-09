@@ -52,7 +52,7 @@ function getEditor(content) {
   return editor;
 }
 
-export default function Milkdown({ id, flipped, content }) {
+export default function Milkdown({ id, content }) {
   const editorRef = useRef();
 
   const editor = getEditor(content);
@@ -71,7 +71,7 @@ export default function Milkdown({ id, flipped, content }) {
         });
       }
     }
-  }, [id, flipped, content]);
+  }, [id, content]);
 
   return (
     <MilkdownContainer>

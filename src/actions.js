@@ -22,13 +22,6 @@ import {
 
 import { saveItem } from './services/storage';
 
-export function setFlipped(flipped) {
-  return {
-    type: 'setFlipped',
-    payload: { flipped },
-  };
-}
-
 export function setCurrentCardIndex(currentCardIndex) {
   return {
     type: 'setCurrentCardIndex',
@@ -40,13 +33,6 @@ export function setNewCardIndex(newCardIndex) {
   return {
     type: 'setNewCardIndex',
     payload: { newCardIndex },
-  };
-}
-
-export function flipCard() {
-  return (dispatch, getState) => {
-    const { flipped } = getState();
-    dispatch(setFlipped(!flipped));
   };
 }
 
@@ -322,9 +308,7 @@ export function clickWrongCard(id) {
     const filteredCards = cards.filter((card) => card.id !== id);
     const newCards = filteredCards.concat([cards[index]]);
 
-    if (newCards.length > 0) {
-      dispatch(setFlipped(false));
-    } else {
+    if (newCards.length === 0) {
       dispatch(setIsLastPage(true));
     }
 
@@ -359,9 +343,7 @@ export function clickCorrectCard(id) {
       id, tryCount, learningDateTime, learningSeconds,
     });
 
-    if (filteredCards.length > 0) {
-      dispatch(setFlipped(false));
-    } else {
+    if (filteredCards.length === 0) {
       dispatch(setIsLastPage(true));
     }
 
@@ -409,7 +391,6 @@ export function initializeLearnPage(id) {
     dispatch(setNotesHidden(true));
     dispatch(setNotes(''));
     dispatch(setIsLastPage(false));
-    dispatch(setFlipped(false));
     dispatch(setCards([]));
     await dispatch(loadCardsetInfo(id));
     await dispatch(loadLearnCardsInSequence(id));
