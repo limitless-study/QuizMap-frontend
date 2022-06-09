@@ -6,6 +6,7 @@ const NotesContainer = styled.div(
     width: props.isNotesHidden ? 0 : '250px',
   }),
   {
+    top: 0,
     display: 'flex',
     position: 'fixed',
     right: '68px',

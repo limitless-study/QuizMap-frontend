@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
 import { useEffect } from 'react';
+
 import Card from '../components/learn/Card';
 import CardButtons from '../components/learn/CardButtons';
 import CardsetPath from '../components/learn/CardsetPath';
@@ -25,10 +26,10 @@ const Header = styled.div({
   padding: '10px 40px',
   display: 'flex',
   position: 'fixed',
-  width: '100vw',
-  maxWidth: '100vw',
-  height: '60px',
-  zIndex: '100',
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: '50',
   fontSize: '24px',
   fontWeight: 'bolder',
   boxSizing: 'border-box',
@@ -55,21 +56,6 @@ const FinishButton = styled.button({
   },
 });
 
-const CardItemsWrapper = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  margin: 'auto',
-  width: '500px',
-});
-
-const CardContainer = styled.div({
-  position: 'relative',
-  height: '380px',
-  '.is-flipped': {
-    transform: 'rotateX(180deg)',
-  },
-});
-
 export default function LearnCardsContainer({ id }) {
   const dispatch = useDispatch();
 
@@ -92,48 +78,61 @@ export default function LearnCardsContainer({ id }) {
     dispatch(setNotes(''));
   };
 
-  const moveCardToLeft = () => {
-    const front = document.querySelector('.front');
-    const back = document.querySelector('.back');
-    /* when clicked 'X' don't flip card */
-    front.style.transition = 'none';
-    back.style.transition = 'none';
-
-    front.classList.remove('is-flipped');
-    back.classList.add('is-flipped');
-  };
-
-  const moveCardToRight = () => {
-    const front = document.querySelector('.front');
-    const back = document.querySelector('.back');
-    /* when clicked 'O' don't flip card */
-    front.style.transition = 'none';
-    back.style.transition = 'none';
-
-    front.classList.remove('is-flipped');
-    back.classList.add('is-flipped');
+  const initializeFlip = () => {
+    const front = document.querySelector('.card-front');
+    const back = document.querySelector('.card-back');
+    front.style.transform = '';
+    back.style.transform = '';
+    front.style.position = 'relative';
+    back.style.position = 'absolute';
   };
 
   const handleFlip = () => {
-    const front = document.querySelector('.front');
-    const back = document.querySelector('.back');
-    /* refresh cardset animation */
-    front.style.transition = null;
-    back.style.transition = null;
-    front.classList.toggle('is-flipped');
-    back.classList.toggle('is-flipped');
+    const front = document.querySelector('.card-front');
+    const back = document.querySelector('.card-back');
+    if (front.style.transform === 'rotateY(-180deg)') {
+      front.style.transform = 'rotateY(0deg)';
+      back.style.transform = 'rotateY(-180deg)';
+      front.style.position = 'relative';
+      back.style.position = 'absolute';
+    } else {
+      front.style.transform = 'rotateY(-180deg)';
+      back.style.transform = 'rotateY(0deg)';
+      front.style.position = 'absolute';
+      back.style.position = 'relative';
+    }
   };
 
   const handleClickWrong = () => {
-    moveCardToLeft();
-    clearNote();
-    dispatch(clickWrongCard(cardId));
+    const handleAfterSwipeLeft = (flipCard) => {
+      dispatch(clickWrongCard(cardId));
+      clearNote();
+      flipCard.classList.add('swipe-initial');
+      flipCard.classList.remove('swipe-left');
+    };
+
+    const flipCard = document.querySelector('.flip-card');
+    flipCard.classList.add('swipe-left');
+    initializeFlip();
+    flipCard.addEventListener('animationend', () => {
+      handleAfterSwipeLeft(flipCard);
+    });
   };
 
   const handleClickCorrect = () => {
-    moveCardToRight();
-    clearNote();
-    dispatch(clickCorrectCard(cardId));
+    const handleAfterSwipeRight = (flipCard) => {
+      dispatch(clickCorrectCard(cardId));
+      clearNote();
+      flipCard.classList.add('swipe-initial');
+      flipCard.classList.remove('swipe-right');
+    };
+
+    const flipCard = document.querySelector('.flip-card');
+    initializeFlip();
+    flipCard.classList.add('swipe-right');
+    flipCard.addEventListener('animationend', () => {
+      handleAfterSwipeRight(flipCard);
+    });
   };
 
   const handleChangeStarCount = (changedStarCount) => {
@@ -183,43 +182,46 @@ export default function LearnCardsContainer({ id }) {
           <Link to={`/cardsets/${id}`}>Finish</Link>
         </FinishButton>
       </Header>
-      <div style={{
-        display: 'flex', flex: 1, position: 'relative', height: '100vh',
-      }}
-      >
-        <CardItemsWrapper>
-          <CardContainer>
-            <Card
-              id={id}
-              className="front"
-              content={topic}
-              starCount={starCount}
-              onChangeStarCount={handleChangeStarCount}
-            />
-            <Card
-              id={id}
-              className="back"
-              content={answer}
-              starCount={starCount}
-              onChangeStarCount={handleChangeStarCount}
-            />
-          </CardContainer>
-          <CardButtons
-            onFlip={handleFlip}
-            onClickWrong={handleClickWrong}
-            onClickCorrect={handleClickCorrect}
-          />
-        </CardItemsWrapper>
-        <Notes
-          notes={notes}
-          isNotesHidden={isNotesHidden}
-          onChange={handleChangeNotes}
-        />
-        <LearningSidebar
-          isNotesHidden={isNotesHidden}
-          onClick={handleClickSideBarButton}
-        />
+      <div className="card-player">
+        <div className="swipe-wrapper">
+          <div className="flip-card swipe-initial">
+            <div className="flip-card-wrapper">
+              <div className="card-flip">
+                <div className="card-flipper">
+                  <Card
+                    id={id}
+                    className="front"
+                    content={topic}
+                    starCount={starCount}
+                    onChangeStarCount={handleChangeStarCount}
+                  />
+                  <Card
+                    id={id}
+                    className="back"
+                    content={answer}
+                    starCount={starCount}
+                    onChangeStarCount={handleChangeStarCount}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <CardButtons
+        onFlip={handleFlip}
+        onClickWrong={handleClickWrong}
+        onClickCorrect={handleClickCorrect}
+      />
+      <Notes
+        notes={notes}
+        isNotesHidden={isNotesHidden}
+        onChange={handleChangeNotes}
+      />
+      <LearningSidebar
+        isNotesHidden={isNotesHidden}
+        onClick={handleClickSideBarButton}
+      />
     </div>
   );
 }

@@ -6,29 +6,8 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import Milkdown from './Milkdown';
 
 const CardBox = styled.div(
-  {
-    whiteSpace: 'pre-line',
-    position: 'absolute',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '500px',
-    maxWidth: '500px',
-    minHeight: '350px',
-    border: '1px solid lightgray',
-    borderRadius: '10px',
-    boxShadow: '0 2px 8px rgb(0 0 0 / 8%)',
-    textAlign: 'center',
-    padding: '5px',
-    backgroundColor: 'white',
-    backfaceVisibility: 'hidden',
-    WebkitBackfaceVisibility: 'hidden',
-    transformStyle: 'preserve-3d',
-    transition: 'all 0.3s ease 0s',
-  },
   (props) => ({
     zIndex: props.zIndex,
-    backgroundColor: props.background,
   }),
 );
 
@@ -51,22 +30,23 @@ export default function Card({
 
   return (
     <CardBox
-      className={className === 'front' ? className : `${className} is-flipped`}
-      background={className === 'front' ? 'white' : '#FAFAFA'}
+      className={className === 'front' ? `${className} card-front` : `${className} card-back`}
     >
-      <RatingField>
-        <Rating
-          stop={4}
-          emptySymbol={<AiOutlineStar />}
-          fullSymbol={<AiFillStar />}
-          initialRating={starCount}
-          onChange={handleChange}
+      <div className="flip-card-side">
+        <RatingField>
+          <Rating
+            stop={4}
+            emptySymbol={<AiOutlineStar />}
+            fullSymbol={<AiFillStar />}
+            initialRating={starCount}
+            onChange={handleChange}
+          />
+        </RatingField>
+        <Milkdown
+          id={id}
+          content={content}
         />
-      </RatingField>
-      <Milkdown
-        id={id}
-        content={content}
-      />
+      </div>
     </CardBox>
   );
 }

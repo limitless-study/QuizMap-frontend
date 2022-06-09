@@ -4,6 +4,7 @@ import { MdEditNote } from 'react-icons/md';
 
 const SideBarWrapper = styled.div({
   right: '0',
+  top: 0,
   display: 'flex',
   position: 'fixed',
   paddingTop: '60px',
