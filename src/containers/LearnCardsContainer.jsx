@@ -171,7 +171,7 @@ export default function LearnCardsContainer({ id }) {
   }, [cards]);
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100vh', overflowX: 'hidden' }}>
       <Header
         accessToken={accessToken}
       >
