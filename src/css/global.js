@@ -27,9 +27,9 @@ a {
 }
 
 .card-player {
-    max-width: 600px;
+    max-width: 500px;
     min-height: calc(100vh - 3em);
-    margin-bottom: 50px;
+    margin-bottom: 110px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,7 +39,8 @@ a {
 .swipe-wrapper {
     width: 100%;
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 110px;
+    margin-top: 80px;
 }
 
 .card-player .flip-card.swipe-initial {

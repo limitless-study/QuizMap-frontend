@@ -206,13 +206,13 @@ export default function LearnCardsContainer({ id }) {
               </div>
             </div>
           </div>
+          <CardButtons
+            onFlip={handleFlip}
+            onClickWrong={handleClickWrong}
+            onClickCorrect={handleClickCorrect}
+          />
         </div>
       </div>
-      <CardButtons
-        onFlip={handleFlip}
-        onClickWrong={handleClickWrong}
-        onClickCorrect={handleClickCorrect}
-      />
       <Notes
         notes={notes}
         isNotesHidden={isNotesHidden}

@@ -1,20 +1,31 @@
 import styled from '@emotion/styled';
 
+import { CgEditFlipH } from 'react-icons/cg';
+
 const CardButtonsWrapper = styled.div({
-  position: 'relative',
+  position: 'fixed',
+  left: 0,
+  right: 0,
+  bottom: 0,
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '15px',
-  paddingBottom: '40px',
-  height: '50px',
+  alignItems: 'center',
+  height: '70px',
+  padding: '20px',
+  '& button': {
+    height: '100%',
+    fontSize: '20px',
+    fontWeight: 'bolder',
+  },
+  background: 'linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.1))',
 });
 
 const WrongButton = styled.button({
-  width: '50px',
+  width: '70px',
   marginRight: '15px',
   backgroundColor: '#e44b88',
   border: 'none',
-  borderRadius: '30px',
+  borderRadius: '10em',
   color: 'white',
   transition: 'box-shadow 0.3s',
   zIndex: 999,
@@ -25,11 +36,14 @@ const WrongButton = styled.button({
 });
 
 const FlipButton = styled.button({
-  flex: 1,
+  width: '300px',
   marginRight: '15px',
   border: 'none',
-  borderRadius: '30px',
+  borderRadius: '10em',
   zIndex: 999,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   ':hover': {
     boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;',
     cursor: 'pointer',
@@ -37,10 +51,10 @@ const FlipButton = styled.button({
 });
 
 const CorrectButton = styled.button({
-  width: '50px',
+  width: '70px',
   backgroundColor: '#01dca4',
   border: 'none',
-  borderRadius: '30px',
+  borderRadius: '10em',
   color: 'white',
   transition: 'box-shadow 0.3s',
   zIndex: 999,
@@ -71,7 +85,8 @@ export default function CardButtons({ onFlip, onClickWrong, onClickCorrect }) {
         type="button"
         onClick={onFlip}
       >
-        FLIP
+        <CgEditFlipH size={30} style={{ paddingRight: '5px' }} />
+        Flip
       </FlipButton>
       <CorrectButton
         type="button"
